@@ -1,0 +1,11 @@
+<launch>
+
+	<node name="map_server" pkg="map_server" type="map_server" args="$(find scitos_2d_navigation)/maps/map.yaml"/>
+
+    <!-- launch AMCL -->
+    <include file="$(find scitos_2d_navigation)/launch/amcl.launch"/>
+
+    <!-- launch move base -->
+    <include file="$(find scitos_2d_navigation)/launch/move_base.launch"/>
+
+</launch>
