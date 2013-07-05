@@ -1,8 +1,4 @@
 <launch>
-	<node name="map_server" pkg="map_server" type="map_server" args="$(find scitos_2d_navigation)/maps/map.yaml"/>
-
-  <!-- launch AMCL -->
-  <include file="$(find scitos_2d_navigation)/launch/amcl.launch"/>
 
 	<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen" clear_params="true">
     <param name="footprint_padding" value="0.01" />
@@ -16,4 +12,5 @@
     <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" />
     <rosparam file="$(find scitos_2d_navigation_config)/scitos_move_base/dwa_planner_ros.yaml" command="load" />
 	</node>
+
 </launch>
