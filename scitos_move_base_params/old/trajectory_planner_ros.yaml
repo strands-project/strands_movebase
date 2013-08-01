@@ -1,4 +1,3 @@
-#config file for an alternative local planner to dwa planner. not being used
 TrajectoryPlannerROS:
   max_vel_x: 0.95
   min_vel_x: 0.1
