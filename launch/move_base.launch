@@ -1,7 +1,8 @@
 <launch>
 
 	<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen" clear_params="true">
-    <param name="controller_frequency" value="20.0" />
+    <!-- default:20.0. with this value dwa planner fails to find a valid plan a lot more -->
+    <param name="controller_frequency" value="10.0" />
     <param name="controller_patience" value="15.0" />
     <param name="planner_frequency" value="2.0" />
     <rosparam file="$(find scitos_2d_navigation)/scitos_move_base_params/costmap_common_params.yaml" command="load" ns="global_costmap" />
