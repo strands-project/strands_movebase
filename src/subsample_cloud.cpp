@@ -1,9 +1,9 @@
 #include <ros/ros.h>
 #include <sensor_msgs/PointCloud2.h>
 #include <pcl_ros/point_cloud.h>
-#include <pcl/io/pcd_io.h>
 #include <pcl/point_types.h>
-#include <pcl/visualization/pcl_visualizer.h>
+#include <pcl/filters/voxel_grid.h>
+#include <pcl/filters/statistical_outlier_removal.h>
 #include <boost/thread/thread.hpp>
 
 ros::Publisher pub;
@@ -13,21 +13,34 @@ void callback(const sensor_msgs::PointCloud2::ConstPtr& msg)
     pcl::PointCloud<pcl::PointXYZ> cloud;
     pcl::fromROSMsg(*msg, cloud);
     
-	int skip = 50;
+	int skip = 97;
     int nbr = cloud.size();
 	int new_nbr = nbr / skip;
-	pcl::PointCloud<pcl::PointXYZ> new_cloud;
-	new_cloud.resize(new_nbr);
+	pcl::PointCloud<pcl::PointXYZ>::Ptr new_cloud(new pcl::PointCloud<pcl::PointXYZ>());
+	new_cloud->resize(new_nbr);
     
 	int counter = 0;
 	for (int i = 0; i < nbr; i += skip) {
-		new_cloud[counter] = cloud[i];
+		new_cloud->points[counter] = cloud[i];
 		++counter;
 	}
 
+	pcl::PointCloud<pcl::PointXYZ> voxel_cloud;
+	
+	/*pcl::VoxelGrid<pcl::PointXYZ> sor;
+	sor.setInputCloud(new_cloud);
+	sor.setLeafSize(0.01f, 0.01f, 0.01f);
+	sor.filter(voxel_cloud);*/
+
+	pcl::StatisticalOutlierRemoval<pcl::PointXYZ> sor;
+	sor.setInputCloud(new_cloud);
+	sor.setMeanK(20);
+	sor.setStddevMulThresh(1.0);
+	sor.filter(voxel_cloud);
+
 	sensor_msgs::PointCloud2 msg_cloud;
-    pcl::toROSMsg(new_cloud, msg_cloud);
-	msg_cloud.header.frame_id = "/chest_xtion_depth_optical_frame";
+    pcl::toROSMsg(voxel_cloud, msg_cloud);
+	msg_cloud.header.frame_id = msg->header.frame_id;
 
 	pub.publish(msg_cloud);
 }

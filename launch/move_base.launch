@@ -13,6 +13,8 @@
 
     <node pkg="scitos_2d_navigation" type="subsample_cloud" name="subsample_cloud" output="screen"/>
 
+	<node pkg="costmap_2d" type="costmap_2d_cloud" name="costmap_2d_cloud" output="screen"/>
+
 	<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen" clear_params="true">
         <!-- default:20.0. with this value dwa planner fails to find a valid plan a lot more -->
 	    <remap from="/move_base/local_costmap/voxel_grid" to="/voxel_grid"/>
