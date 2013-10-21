@@ -71,9 +71,7 @@ include_directories(
 )
 
 ## Declare a cpp library
-# add_library(scitos_2d_navigation
-#   src/${PROJECT_NAME}/scitos_2d_navigation.cpp
-# )
+add_library(noise_voxel_grid src/noise_voxel_grid.cpp)
 
 ## Declare a cpp executable
 add_executable(subsample_cloud src/subsample_cloud.cpp)
@@ -83,8 +81,12 @@ add_executable(subsample_cloud src/subsample_cloud.cpp)
 # add_dependencies(scitos_2d_navigation_node scitos_2d_navigation_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
+target_link_libraries(noise_voxel_grid
+  ${PCL_LIBRARIES}
+)
+
 target_link_libraries(subsample_cloud
-  ${catkin_LIBRARIES} ${PCL_LIBRARIES}
+  ${catkin_LIBRARIES} ${PCL_LIBRARIES} noise_voxel_grid
 )
 
 #############
