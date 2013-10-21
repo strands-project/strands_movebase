@@ -16,9 +16,9 @@ void callback(const sensor_msgs::PointCloud2::ConstPtr& msg)
 	pcl::PointCloud<pcl::PointXYZ> voxel_cloud;
 	
 	//pcl::VoxelGrid<pcl::PointXYZ> sor;
-    noise_voxel_grid sor(4, 50);
+    noise_voxel_grid sor(5, 20);
 	sor.setInputCloud(cloud);
-	sor.setLeafSize(0.1f, 0.1f, 0.1f);
+    sor.setLeafSize(0.05f, 0.05f, 0.05f);
 	sor.filter(voxel_cloud);
 
 	/*pcl::StatisticalOutlierRemoval<pcl::PointXYZ> sor;
