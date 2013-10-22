@@ -4,7 +4,7 @@
 #include <pcl/point_types.h>
 
 ros::Publisher pub;
-float cutoff;
+double cutoff;
 
 void callback(const sensor_msgs::PointCloud2::ConstPtr& msg)
 {
