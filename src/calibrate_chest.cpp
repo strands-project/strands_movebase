@@ -61,7 +61,7 @@ void extract_height_and_angle(const Eigen::Vector4f& plane)
     double height = fabs(plane(3)/plane.segment<3>(0).squaredNorm()); // height
     ROS_INFO("Distance to plane along camera axis: %f", dist);
     ROS_INFO("Height above ground: %f", height);
-    double angle = -asin(height/dist);
+    double angle = asin(height/dist);
     ROS_INFO("Angle radians: %f", angle);
     ROS_INFO("Angle degrees: %f", 180.0f*angle/M_PI);
 }
@@ -128,7 +128,7 @@ int main(int argc, char** argv)
     std::string camera_topic;
     n.getParam("/image_player_node/camera_topic", camera_topic);
     */
-    std::string camera_topic = "head_xtion";
+    std::string camera_topic = "chest_xtion";
     
 	ros::Subscriber sub = n.subscribe(camera_topic + "/depth/points", 1, callback);
     
