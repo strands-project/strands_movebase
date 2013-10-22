@@ -15,13 +15,13 @@ void callback(const sensor_msgs::PointCloud2::ConstPtr& msg)
     pcl::fromROSMsg(*msg, *cloud);
 	pcl::PointCloud<pcl::PointXYZ> voxel_cloud;
 	
-	//pcl::VoxelGrid<pcl::PointXYZ> sor;
-    noise_voxel_grid sor(5, 20);
+	//pcl::VoxelGrid<pcl::PointXYZ> sor; // doesn't do noise filtering
+    noise_voxel_grid sor(5, 20); // doesn't add voxel if too few points
 	sor.setInputCloud(cloud);
     sor.setLeafSize(0.05f, 0.05f, 0.05f);
 	sor.filter(voxel_cloud);
 
-	/*pcl::StatisticalOutlierRemoval<pcl::PointXYZ> sor;
+	/*pcl::StatisticalOutlierRemoval<pcl::PointXYZ> sor; // another possibility, slow
 	sor.setInputCloud(new_cloud);
 	sor.setMeanK(20);
 	sor.setStddevMulThresh(1.0);
@@ -39,7 +39,7 @@ int main(int argc, char** argv)
     ros::init(argc, argv, "subsample_cloud");
 	ros::NodeHandle n;
 	
-    // topic of the depth and rgb images
+    // which camera to use
     if (!n.hasParam("/subsample_cloud/camera")) {
         ROS_ERROR("Could not find parameter camera.");
         return -1;
@@ -48,7 +48,7 @@ int main(int argc, char** argv)
     n.getParam("/subsample_cloud/camera", camera_topic);
     
 	//ros::Subscriber sub = n.subscribe(camera_topic + "/depth/points", 1, callback);
-	ros::Subscriber sub = n.subscribe("/points", 1, callback);
+	ros::Subscriber sub = n.subscribe("/points", 1, callback); // TODO: remove when Rares fixes topic names
     pub = n.advertise<sensor_msgs::PointCloud2>(camera_topic + "/depth/points_subsampled", 1);
     
     ros::spin();

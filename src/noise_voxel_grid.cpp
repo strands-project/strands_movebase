@@ -155,21 +155,22 @@ void noise_voxel_grid::applyFilter(PointCloud &output)
 
   // Third pass: count output cells
   // we need to skip all the same, adjacenent idx values
-  unsigned int total = 0;
+  unsigned int total = 0; // points kept
   unsigned int index = 0;
-  unsigned int filtered = 0;
+  unsigned int filtered = 0; // points filtered out
   while (index < index_vector.size ()) 
   {
     int i = index + 1;
     int start = index;
     while (i < index_vector.size () && index_vector[i].idx == index_vector[index].idx) 
       ++i;
-    if (i - start < min_points) {
+    if (i - start < min_points) { // check if enough points in voxel
+      // remove points from points to add
       index_vector.erase(index_vector.begin() + start, index_vector.begin() + i); // i correct since > last
       index = start;
       ++filtered;
     }
-    else {
+    else { // add points
       ++total;
       index = i;
     }

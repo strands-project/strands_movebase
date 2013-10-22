@@ -3,8 +3,8 @@
 #include <pcl_ros/point_cloud.h>
 #include <pcl/point_types.h>
 
-ros::Publisher pub;
-double cutoff;
+ros::Publisher pub; // publishes pointcloud with removed edges
+double cutoff; // how many pixels to cut off in the depth image
 
 void callback(const sensor_msgs::PointCloud2::ConstPtr& msg)
 {
@@ -19,6 +19,7 @@ void callback(const sensor_msgs::PointCloud2::ConstPtr& msg)
 	Eigen::Vector3f p;
 	int counter = 0;
 	for (int i = 0; i < cloud.size(); ++i) {
+	    // transform points to image plane and make sure they are within bounds
 		p = K*cloud.points[i].getVector3fMap();
 		p = p / p(2); // we don't have any points at z = 0
 		if (p(0) > 0.0f + cutoff && p(0) < 629.0f - cutoff &&
@@ -40,7 +41,7 @@ int main(int argc, char** argv)
     ros::init(argc, argv, "remove_edges_cloud");
 	ros::NodeHandle n;	
 
-    // topic of the depth and rgb images
+    // which camera topic to use
     if (!n.hasParam("/remove_edges_cloud/camera")) {
         ROS_ERROR("Could not find parameter camera.");
         return -1;
@@ -48,6 +49,7 @@ int main(int argc, char** argv)
     std::string camera_topic;
     n.getParam("/remove_edges_cloud/camera", camera_topic);
 
+    // how many pixels to cut off in the depth image
 	if (!n.hasParam("/remove_edges_cloud/cutoff")) {
         ROS_ERROR("Could not find parameter cutoff.");
         return -1;
