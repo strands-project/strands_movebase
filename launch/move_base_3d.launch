@@ -13,17 +13,20 @@
     </node>
 	-->
 
+    <!-- This node downsamples cloud and removes voxels with too few points in them -->
     <node pkg="scitos_2d_navigation" type="subsample_cloud" name="subsample_cloud" output="screen">
         <param name="input" value="/points"/>
         <param name="output" value="/move_base/points_subsampled"/>
     </node>
 
+    <!-- This node removes the desired cutoff pixels from the cloud edges -->
     <node pkg="scitos_2d_navigation" type="remove_edges_cloud" name="remove_edges_cloud" output="screen">
         <param name="input" value="/move_base/points_subsampled"/>
         <param name="output" value="/move_base/points_clearing"/>
         <param name="cutoff" value="40.0"/>
     </node>
 
+    <!-- This node enables us to visualize the 3d occupancy of the costmap -->
 	<node pkg="costmap_2d" type="costmap_2d_cloud" name="costmap_2d_cloud" output="screen"/>
 
 	<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen" clear_params="true">
