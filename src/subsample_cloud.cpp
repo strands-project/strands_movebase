@@ -39,17 +39,24 @@ int main(int argc, char** argv)
     ros::init(argc, argv, "subsample_cloud");
 	ros::NodeHandle n;
 	
-    // which camera to use
-    if (!n.hasParam("/subsample_cloud/camera")) {
-        ROS_ERROR("Could not find parameter camera.");
+    // topic of input cloud
+    if (!n.hasParam("/subsample_cloud/input")) {
+        ROS_ERROR("Could not find parameter input.");
         return -1;
     }
-    std::string camera_topic;
-    n.getParam("/subsample_cloud/camera", camera_topic);
+    std::string input;
+    n.getParam("/subsample_cloud/input", input);
     
-	//ros::Subscriber sub = n.subscribe(camera_topic + "/depth/points", 1, callback);
-	ros::Subscriber sub = n.subscribe("/points", 1, callback); // TODO: remove when Rares fixes topic names
-    pub = n.advertise<sensor_msgs::PointCloud2>(camera_topic + "/depth/points_subsampled", 1);
+    // topic of output cloud
+    if (!n.hasParam("/subsample_cloud/output")) {
+        ROS_ERROR("Could not find parameter output.");
+        return -1;
+    }
+    std::string output;
+    n.getParam("/subsample_cloud/output", output);
+    
+	ros::Subscriber sub = n.subscribe(input, 1, callback);
+    pub = n.advertise<sensor_msgs::PointCloud2>(output, 1);
     
     ros::spin();
 	

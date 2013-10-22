@@ -41,13 +41,21 @@ int main(int argc, char** argv)
     ros::init(argc, argv, "remove_edges_cloud");
 	ros::NodeHandle n;	
 
-    // which camera topic to use
-    if (!n.hasParam("/remove_edges_cloud/camera")) {
-        ROS_ERROR("Could not find parameter camera.");
+    // topic of input cloud
+    if (!n.hasParam("/remove_edges_cloud/input")) {
+        ROS_ERROR("Could not find parameter input.");
         return -1;
     }
-    std::string camera_topic;
-    n.getParam("/remove_edges_cloud/camera", camera_topic);
+    std::string input;
+    n.getParam("/remove_edges_cloud/input", input);
+    
+    // topic of output cloud
+    if (!n.hasParam("/remove_edges_cloud/output")) {
+        ROS_ERROR("Could not find parameter output.");
+        return -1;
+    }
+    std::string output;
+    n.getParam("/remove_edges_cloud/output", output);
 
     // how many pixels to cut off in the depth image
 	if (!n.hasParam("/remove_edges_cloud/cutoff")) {
@@ -56,8 +64,8 @@ int main(int argc, char** argv)
     }
     n.getParam("/remove_edges_cloud/cutoff", cutoff);
     
-	ros::Subscriber sub = n.subscribe(camera_topic + "/depth/points_subsampled", 1, callback);
-    pub = n.advertise<sensor_msgs::PointCloud2>(camera_topic + "/depth/points_clearing", 1);
+	ros::Subscriber sub = n.subscribe(input, 1, callback);
+    pub = n.advertise<sensor_msgs::PointCloud2>(output, 1);
     
     ros::spin();
 	

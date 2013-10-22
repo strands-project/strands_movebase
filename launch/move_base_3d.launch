@@ -1,5 +1,7 @@
 <launch>
 
+    <arg name="camera"/>
+
     <!-- Run a VoxelGrid filter to clean NaNs and downsample the data -->
     <!--
     <node pkg="nodelet" type="nodelet" name="pcl_manager" args="manager" output="screen"/>
@@ -12,11 +14,13 @@
 	-->
 
     <node pkg="scitos_2d_navigation" type="subsample_cloud" name="subsample_cloud" output="screen">
-        <param name="camera" value="chest_xtion"/>
+        <param name="input" value="/points"/>
+        <param name="output" value="/move_base/points_subsampled"/>
     </node>
 
     <node pkg="scitos_2d_navigation" type="remove_edges_cloud" name="remove_edges_cloud" output="screen">
-        <param name="camera" value="chest_xtion"/>
+        <param name="input" value="/move_base/points_subsampled"/>
+        <param name="output" value="/move_base/points_clearing"/>
         <param name="cutoff" value="40.0"/>
     </node>
 
