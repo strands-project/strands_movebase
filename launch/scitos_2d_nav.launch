@@ -4,7 +4,7 @@
     <arg name="map"/>
     
     <!-- lanch map server -->
-	<node name="map_server" pkg="map_server" type="map_server" args="$(arg map)"/>
+    <node name="map_server" pkg="map_server" type="map_server" args="$(arg map)"/>
 
     <!-- launch AMCL -->
     <include file="$(find scitos_2d_navigation)/launch/amcl.launch"/>
