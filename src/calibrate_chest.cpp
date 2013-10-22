@@ -71,14 +71,16 @@ void extract_height_and_angle(const Eigen::Vector4f& plane)
     strands_datacentre::SetParam srv;
     char buffer[250];
     
+    // store height above ground in datacentre
     sprintf(buffer, "{\"path\":\"/chest_xtion_height\",\"value\":%f}", height);
-    srv.request.param = std::string(buffer);
+    srv.request.param = buffer;
     if (!client.call(srv)) {
         ROS_ERROR("Failed to call set height, is config manager running?");
     }
     
+    // store angle between camera and horizontal plane
     sprintf(buffer, "{\"path\":\"/chest_xtion_angle\",\"value\":%f}", angle);
-    srv.request.param = std::string(buffer);
+    srv.request.param = buffer;
     if (!client.call(srv)) {
         ROS_ERROR("Failed to call set angle, is config manager running?");
     }
@@ -92,11 +94,11 @@ void callback(const sensor_msgs::PointCloud2::ConstPtr& msg)
     
     int nbr = cloud.size();
     
-    int max = 1000;
-    double threshold = 0.02;
+    int max = 1000; // ransac iterations
+    double threshold = 0.02; // threshold for plane inliers
     
-    Eigen::Vector4f best_plane;
-    int best_inliers = -1;
+    Eigen::Vector4f best_plane; // best plane parameters found
+    int best_inliers = -1; // best number of inliers
     
     int inds[3];
     
@@ -105,16 +107,17 @@ void callback(const sensor_msgs::PointCloud2::ConstPtr& msg)
     for (int i = 0; i < max; ++i) {
         
         for (int j = 0; j < 3; ++j) {
-            inds[j] = rand() % nbr;
+            inds[j] = rand() % nbr; // get a random point
         }
         
+        // check that the points aren't the same
         if (inds[0] == inds[1] || inds[0] == inds[2] || inds[1] == inds[2]) {
             continue;
         }
         
         compute_plane(plane, cloud, inds);
         inliers = 0;
-        for (int j = 0; j < nbr; j += 30) {
+        for (int j = 0; j < nbr; j += 30) { // count number of inliers
             if (is_inlier(cloud[j].getVector3fMap(), plane, threshold)) {
                 ++inliers;
             }
@@ -126,8 +129,8 @@ void callback(const sensor_msgs::PointCloud2::ConstPtr& msg)
         }
     }
     
-    extract_height_and_angle(best_plane);
-    plot_best_plane(cloud, best_plane, threshold);
+    extract_height_and_angle(best_plane); // find parameters and feed them to datacentre
+    plot_best_plane(cloud, best_plane, threshold); // visually evaluate plane fit
     
     exit(0);
 }
@@ -137,17 +140,8 @@ int main(int argc, char** argv)
     ros::init(argc, argv, "calibrate_chest");
 	ros::NodeHandle n;
 	
-	/*
-    // topic of the depth and rgb images
-    if (!n.hasParam("/image_player_node/camera_topic")) {
-        ROS_ERROR("Could not find parameter camera_topic.");
-        return -1;
-    }
-    std::string camera_topic;
-    n.getParam("/image_player_node/camera_topic", camera_topic);
-    */
     std::string camera_topic = "chest_xtion";
-    client = n.serviceClient<strands_datacentre::SetParam>("config_manager/set_param");
+    client = n.serviceClient<strands_datacentre::SetParam>("/config_manager/set_param");
 	ros::Subscriber sub = n.subscribe(camera_topic + "/depth/points", 1, callback);
     
     ros::spin();
