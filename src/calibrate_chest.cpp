@@ -5,6 +5,9 @@
 #include <pcl/point_types.h>
 #include <pcl/visualization/pcl_visualizer.h>
 #include <boost/thread/thread.hpp>
+#include "strands_datacentre/SetParam.h"
+
+ros::ServiceClient client;
 
 bool is_inlier(const Eigen::Vector3f& point, const Eigen::Vector4f plane, double threshold)
 {
@@ -64,6 +67,21 @@ void extract_height_and_angle(const Eigen::Vector4f& plane)
     double angle = asin(height/dist);
     ROS_INFO("Angle radians: %f", angle);
     ROS_INFO("Angle degrees: %f", 180.0f*angle/M_PI);
+    
+    strands_datacentre::SetParam srv;
+    char buffer[250];
+    
+    sprintf(buffer, "{\"path\":\"/chest_xtion_height\",\"value\":%f}", height);
+    srv.request.param = std::string(buffer);
+    if (!client.call(srv)) {
+        ROS_ERROR("Failed to call set height, is config manager running?");
+    }
+    
+    sprintf(buffer, "{\"path\":\"/chest_xtion_angle\",\"value\":%f}", angle);
+    srv.request.param = std::string(buffer);
+    if (!client.call(srv)) {
+        ROS_ERROR("Failed to call set angle, is config manager running?");
+    }
 }
 
 void callback(const sensor_msgs::PointCloud2::ConstPtr& msg)
@@ -129,7 +147,7 @@ int main(int argc, char** argv)
     n.getParam("/image_player_node/camera_topic", camera_topic);
     */
     std::string camera_topic = "chest_xtion";
-    
+    client = n.serviceClient<strands_datacentre::SetParam>("config_manager/set_param");
 	ros::Subscriber sub = n.subscribe(camera_topic + "/depth/points", 1, callback);
     
     ros::spin();
