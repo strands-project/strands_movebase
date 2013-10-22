@@ -11,7 +11,14 @@
     </node>
 	-->
 
-    <node pkg="scitos_2d_navigation" type="subsample_cloud" name="subsample_cloud" output="screen"/>
+    <node pkg="scitos_2d_navigation" type="subsample_cloud" name="subsample_cloud" output="screen">
+        <param name="camera" value="chest_xtion"/>
+    </node>
+
+    <node pkg="scitos_2d_navigation" type="remove_edges_cloud" name="remove_edges_cloud" output="screen">
+        <param name="camera" value="chest_xtion"/>
+        <param name="cutoff" value="40.0"/>
+    </node>
 
 	<node pkg="costmap_2d" type="costmap_2d_cloud" name="costmap_2d_cloud" output="screen"/>
 

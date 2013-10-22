@@ -39,16 +39,13 @@ int main(int argc, char** argv)
     ros::init(argc, argv, "subsample_cloud");
 	ros::NodeHandle n;
 	
-	/*
     // topic of the depth and rgb images
-    if (!n.hasParam("/image_player_node/camera_topic")) {
-        ROS_ERROR("Could not find parameter camera_topic.");
+    if (!n.hasParam("/subsample_cloud/camera")) {
+        ROS_ERROR("Could not find parameter camera.");
         return -1;
     }
     std::string camera_topic;
-    n.getParam("/image_player_node/camera_topic", camera_topic);
-    */
-    std::string camera_topic = "chest_xtion";
+    n.getParam("/subsample_cloud/camera", camera_topic);
     
 	//ros::Subscriber sub = n.subscribe(camera_topic + "/depth/points", 1, callback);
 	ros::Subscriber sub = n.subscribe("/points", 1, callback);
