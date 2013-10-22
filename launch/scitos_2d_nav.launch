@@ -1,12 +1,16 @@
 <launch>
 
+    <arg name="with_camera" default="false"/>
     <arg name="map"/>
+    
+    <!-- lanch map server -->
 	<node name="map_server" pkg="map_server" type="map_server" args="$(arg map)"/>
 
     <!-- launch AMCL -->
     <include file="$(find scitos_2d_navigation)/launch/amcl.launch"/>
 
     <!-- launch move base -->
-    <include file="$(find scitos_2d_navigation)/launch/move_base.launch"/>
+    <include file="$(find scitos_2d_navigation)/launch/move_base_3d.launch" if="$(arg with_camera)"/>
+    <include file="$(find scitos_2d_navigation)/launch/move_base.launch" unless="$(arg with_camera)"/>
 
 </launch>
