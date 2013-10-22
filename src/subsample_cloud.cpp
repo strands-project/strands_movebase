@@ -50,8 +50,8 @@ int main(int argc, char** argv)
     */
     std::string camera_topic = "chest_xtion";
     
-	ros::Subscriber sub = n.subscribe(camera_topic + "/depth/points", 1, callback);
-	//ros::Subscriber sub = n.subscribe("/points", 1, callback);
+	//ros::Subscriber sub = n.subscribe(camera_topic + "/depth/points", 1, callback);
+	ros::Subscriber sub = n.subscribe("/points", 1, callback);
     pub = n.advertise<sensor_msgs::PointCloud2>(camera_topic + "/depth/points_subsampled", 1);
     
     ros::spin();

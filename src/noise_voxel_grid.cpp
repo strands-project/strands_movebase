@@ -175,7 +175,7 @@ void noise_voxel_grid::applyFilter(PointCloud &output)
     }
   }
   
-  std::cout << "Filtered: " << float(filtered)/float(total + filtered) << std::endl;
+  //std::cout << "Filtered: " << float(filtered)/float(total + filtered) << std::endl;
 
   // Fourth pass: compute centroids, insert them into their final position
   output.points.resize (total);
