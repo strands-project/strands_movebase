@@ -15,7 +15,7 @@
 
     <!-- This node downsamples cloud and removes voxels with too few points in them -->
     <node pkg="scitos_2d_navigation" type="subsample_cloud" name="subsample_cloud" output="screen">
-        <param name="input" value="/points"/>
+        <param name="input" value="$(arg camera)/depth/points"/>
         <param name="output" value="/move_base/points_subsampled"/>
     </node>
 
