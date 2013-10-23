@@ -24,6 +24,7 @@
         <param name="input" value="/move_base/points_subsampled"/>
         <param name="output" value="/move_base/points_clearing"/>
         <param name="cutoff" value="40.0"/>
+        <param name="cutoff_z" value="0.4"/>
     </node>
 
     <!-- This node enables us to visualize the 3d occupancy of the costmap -->

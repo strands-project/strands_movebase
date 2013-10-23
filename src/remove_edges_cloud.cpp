@@ -5,6 +5,7 @@
 
 ros::Publisher pub; // publishes pointcloud with removed edges
 double cutoff; // how many pixels to cut off in the depth image
+double cutoff_z; // how much to cut off along the z axis, meters
 
 void callback(const sensor_msgs::PointCloud2::ConstPtr& msg)
 {
@@ -19,6 +20,10 @@ void callback(const sensor_msgs::PointCloud2::ConstPtr& msg)
 	Eigen::Vector3f p;
 	int counter = 0;
 	for (int i = 0; i < cloud.size(); ++i) {
+	    // have a threshold for closeness as well
+	    if (cloud.points[i].z < cutoff_z) {
+	        continue;
+	    }
 	    // transform points to image plane and make sure they are within bounds
 		p = K*cloud.points[i].getVector3fMap();
 		p = p / p(2); // we don't have any points at z = 0
@@ -63,6 +68,12 @@ int main(int argc, char** argv)
         return -1;
     }
     n.getParam("/remove_edges_cloud/cutoff", cutoff);
+    
+    if (!n.hasParam("/remove_edges_cloud/cutoff_z")) {
+        ROS_ERROR("Could not find parameter cutoff_z.");
+        return -1;
+    }
+    n.getParam("/remove_edges_cloud/cutoff_z", cutoff_z);
     
 	ros::Subscriber sub = n.subscribe(input, 1, callback);
     pub = n.advertise<sensor_msgs::PointCloud2>(output, 1);
