@@ -72,6 +72,7 @@ void extract_height_and_angle(const Eigen::Vector4f& plane)
     char buffer[250];
     
     // store height above ground in datacentre
+    ros::param::set("/chest_xtion_height", height);
     sprintf(buffer, "{\"path\":\"/chest_xtion_height\",\"value\":%f}", height);
     srv.request.param = buffer;
     if (!client.call(srv)) {
@@ -79,6 +80,7 @@ void extract_height_and_angle(const Eigen::Vector4f& plane)
     }
     
     // store angle between camera and horizontal plane
+    ros::param::set("/chest_xtion_angle", angle);
     sprintf(buffer, "{\"path\":\"/chest_xtion_angle\",\"value\":%f}", angle);
     srv.request.param = buffer;
     if (!client.call(srv)) {
