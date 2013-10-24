@@ -22,9 +22,14 @@
     <!-- This node removes the desired cutoff pixels from the cloud edges -->
     <node pkg="scitos_2d_navigation" type="remove_edges_cloud" name="remove_edges_cloud" output="screen">
         <param name="input" value="/move_base/points_subsampled"/>
-        <param name="output" value="/move_base/points_clearing"/>
-        <param name="cutoff" value="40.0"/>
-        <param name="cutoff_z" value="0.4"/>
+        <param name="output" value="/move_base/points_obstacle"/>
+        <param name="cutoff" value="80.0"/>
+        <param name="cutoff_z" value="0.7"/>
+    </node>
+
+    <!-- This node adds a synthetic wall at the edge of raytrace range to remove high objects -->
+    <node pkg="scitos_2d_navigation" type="synthesize_wall_cloud" name="synthesize_wall_cloud" output="screen">
+        <param name="output" value="/move_base/clear_wall"/>
     </node>
 
     <!-- This node enables us to visualize the 3d occupancy of the costmap -->

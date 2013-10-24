@@ -76,6 +76,7 @@ add_library(noise_voxel_grid src/noise_voxel_grid.cpp)
 ## Declare a cpp executable
 add_executable(subsample_cloud src/subsample_cloud.cpp)
 add_executable(remove_edges_cloud src/remove_edges_cloud.cpp)
+add_executable(synthesize_wall_cloud src/synthesize_wall_cloud.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
@@ -91,6 +92,10 @@ target_link_libraries(subsample_cloud
 )
 
 target_link_libraries(remove_edges_cloud
+  ${catkin_LIBRARIES} ${PCL_LIBRARIES}
+)
+
+target_link_libraries(synthesize_wall_cloud
   ${catkin_LIBRARIES} ${PCL_LIBRARIES}
 )
 
