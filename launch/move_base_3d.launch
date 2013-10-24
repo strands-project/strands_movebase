@@ -41,6 +41,7 @@
         <param name="controller_frequency" value="10.0" />
         <param name="controller_patience" value="15.0" />
         <param name="planner_frequency" value="2.0" />
+        <param name="clearing_rotation_allowed" value="false" />
         <rosparam file="$(find scitos_2d_navigation)/scitos_move_base_params_3d/costmap_common_params.yaml" command="load" ns="global_costmap" />
         <rosparam file="$(find scitos_2d_navigation)/scitos_move_base_params_3d/costmap_common_params.yaml" command="load" ns="local_costmap" />
         <rosparam file="$(find scitos_2d_navigation)/scitos_move_base_params_3d/local_costmap_params.yaml" command="load" />
