@@ -3,6 +3,11 @@
 #include <pcl_ros/point_cloud.h>
 #include <pcl/point_types.h>
 
+/* This node creates a flat point cloud ahead
+of the robot to clear points above a certain
+height, this should not be needed in a
+working system. */
+
 int main(int argc, char** argv)
 {
     ros::init(argc, argv, "synthesize_wall_cloud");
@@ -18,16 +23,16 @@ int main(int argc, char** argv)
 
 	ros::Publisher pub = n.advertise<sensor_msgs::PointCloud2>(output, 1);
 
-	float width = 3.0;
-	float height = 1.2;
-	int width_res = 60;
-	int height_res = 24;
+	float width = 3.0; // width of point wall
+	float height = 1.2; // height of point wall
+	int width_res = 60; // number of points along width
+	int height_res = 24; // number of points along height
 	
 	pcl::PointCloud<pcl::PointXYZ> cloud;
 	cloud.resize(width_res*height_res);
 
 	float min_x = -0.5*width;
-	float min_y = 0.0;
+	float min_y = 0.0; // start at ground plane
 	float step_x = width/float(width_res);
 	float step_y = height/float(height_res);
 	
@@ -47,6 +52,8 @@ int main(int argc, char** argv)
     ros::Rate rate(10);
 	
 	while (n.ok()) {
+	    // just change the timestamp before publishing,
+	    // everything else the same
 		msg_cloud.header.stamp = ros::Time::now();
 		pub.publish(msg_cloud);
 		rate.sleep();
