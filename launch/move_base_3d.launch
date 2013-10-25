@@ -28,10 +28,12 @@
     </node>
 
     <!-- This node adds a synthetic wall at the edge of raytrace range to remove high objects -->
+    <!--
     <node pkg="scitos_2d_navigation" type="synthesize_wall_cloud" name="synthesize_wall_cloud" output="screen">
         <param name="output" value="/move_base/clear_wall"/>
     </node>
-
+    -->
+    
     <!-- This node enables us to visualize the 3d occupancy of the costmap -->
 	<node pkg="costmap_2d" type="costmap_2d_cloud" name="costmap_2d_cloud" output="screen"/>
 
