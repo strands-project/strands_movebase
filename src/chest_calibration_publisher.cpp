@@ -11,8 +11,8 @@ int main(int argc, char** argv) {
     n.param<double>("/chest_xtion_height", height, 1.10f); // get the height calibration
     n.param<double>("/chest_xtion_angle", angle, 0.72f); // get the angle calibration
     
-    ROS_INFO("Setting height of chest camera: %f", height);
-    ROS_INFO("Setting angle of chest camera: %f", angle);
+    //ROS_INFO("Setting height of chest camera: %f", height);
+    //ROS_INFO("Setting angle of chest camera: %f", angle);
     ros::Rate rate(1.0f);
     
     ros::Publisher pub = n.advertise<sensor_msgs::JointState>("/chest_calibration_publisher/state", 1);
