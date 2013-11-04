@@ -24,7 +24,7 @@
         <param name="input" value="/move_base/points_subsampled"/>
         <param name="output" value="/move_base/points_obstacle"/>
         <param name="cutoff" value="50.0"/>
-        <param name="cutoff_z" value="0.4"/>
+        <param name="cutoff_z" value="0.3"/>
     </node>
 
     <!-- This node adds a synthetic wall at the edge of raytrace range to remove high objects -->
