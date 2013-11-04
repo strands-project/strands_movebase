@@ -33,6 +33,9 @@
  *
  * $Id$
  *
+ * Class more or less copied from the PCL approximate voxel grid class,
+ * see www.pointclouds.org for details
+ *
  */
  
 #include "noise_approximate_voxel_grid.h"

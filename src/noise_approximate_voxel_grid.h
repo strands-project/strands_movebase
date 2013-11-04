@@ -1,61 +1,50 @@
+/*
+ * Software License Agreement (BSD License)
+ *
+ *  Copyright (c) 2009, Willow Garage, Inc.
+ *  All rights reserved.
+ *
+ *  Redistribution and use in source and binary forms, with or without
+ *  modification, are permitted provided that the following conditions
+ *  are met:
+ *
+ *   * Redistributions of source code must retain the above copyright
+ *     notice, this list of conditions and the following disclaimer.
+ *   * Redistributions in binary form must reproduce the above
+ *     copyright notice, this list of conditions and the following
+ *     disclaimer in the documentation and/or other materials provided
+ *     with the distribution.
+ *   * Neither the name of Willow Garage, Inc. nor the names of its
+ *     contributors may be used to endorse or promote products derived
+ *     from this software without specific prior written permission.
+ *
+ *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+ *  FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+ *  COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+ *  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+ *  BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ *  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ *  CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ *  LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ *  ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ *  POSSIBILITY OF SUCH DAMAGE.
+ *
+ * $Id$
+ *
+ * Class more or less copied from the PCL approximate voxel grid class,
+ * see www.pointclouds.org for details
+ *
+ */
+
 #ifndef NOISE_APPROXIMATE_VOXEL_GRID_H
 #define NOISE_APPROXIMATE_VOXEL_GRID_H
 
 #include <pcl/filters/filter.h>
 #include <pcl/point_types.h>
 #include <boost/mpl/size.hpp>
-
-/*namespace pcl
-{
-  // Helper functor structure for copying data between an Eigen::VectorXf and a PointT.
-  template <typename PointT>
-  struct xNdCopyEigenPointFunctor
-  {
-    typedef typename traits::POD<PointT>::type Pod;
-    
-    xNdCopyEigenPointFunctor (const Eigen::VectorXf &p1, PointT &p2)
-      : p1_ (p1),
-        p2_ (reinterpret_cast<Pod&>(p2)),
-        f_idx_ (0) { }
-
-    template<typename Key> inline void operator() ()
-    {
-      //boost::fusion::at_key<Key> (p2_) = p1_[f_idx_++];
-      typedef typename pcl::traits::datatype<PointT, Key>::type T;
-      uint8_t* data_ptr = reinterpret_cast<uint8_t*>(&p2_) + pcl::traits::offset<PointT, Key>::value;
-      *reinterpret_cast<T*>(data_ptr) = static_cast<T> (p1_[f_idx_++]);
-    }
-
-    private:
-      const Eigen::VectorXf &p1_;
-      Pod &p2_;
-      int f_idx_;
-  };
-
-  // Helper functor structure for copying data between an Eigen::VectorXf and a PointT.
-  template <typename PointT>
-  struct xNdCopyPointEigenFunctor
-  {
-    typedef typename traits::POD<PointT>::type Pod;
-    
-    xNdCopyPointEigenFunctor (const PointT &p1, Eigen::VectorXf &p2)
-      : p1_ (reinterpret_cast<const Pod&>(p1)), p2_ (p2), f_idx_ (0) { }
-
-    template<typename Key> inline void operator() ()
-    {
-      //p2_[f_idx_++] = boost::fusion::at_key<Key> (p1_);
-      typedef typename pcl::traits::datatype<PointT, Key>::type T;
-      const uint8_t* data_ptr = reinterpret_cast<const uint8_t*>(&p1_) + pcl::traits::offset<PointT, Key>::value;
-      p2_[f_idx_++] = static_cast<float> (*reinterpret_cast<const T*>(data_ptr));
-    }
-
-    private:
-      const Pod &p1_;
-      Eigen::VectorXf &p2_;
-      int f_idx_;
-  };
-}*/
-
+ 
 /** \brief ApproximateVoxelGrid assembles a local 3D grid over a given PointCloud, and downsamples + filters the data.
 *
 * \author James Bowman, Radu B. Rusu
@@ -203,33 +192,4 @@ protected:
   void 
   flush(PointCloud &output, size_t op, he *hhe, int rgba_index, int centroid_size);
 };
-
-/*class noise_approximate_voxel_grid : public pcl::ApproximateVoxelGrid<pcl::PointXYZ> {
-public:
-    typedef pcl::PointXYZ PointT;
-    typedef pcl::ApproximateVoxelGrid<PointT> super;
-    typedef typename Filter<PointT>::PointCloud PointCloud;
-    typedef typename PointCloud::Ptr PointCloudPtr;
-    typedef typename PointCloud::ConstPtr PointCloudConstPtr;
-private:
-    struct he
-    {
-        he () : ix (), iy (), iz (), count (0), centroid () {}
-        int ix, iy, iz;
-        int count;
-        Eigen::VectorXf centroid;
-    };
-protected:
-    using super::filter_name_;
-    using super::getClassName;
-    using super::input_;
-    using super::indices_;
-    void flush (PointCloud &output, size_t op, he *hhe, int rgba_index, int centroid_size);
-    void applyFilter(PointCloud &output);
-private:
-    int min_points;
-public:
-    noise_approximate_voxel_grid(int min_points);
-    
-};*/
 #endif // NOISE_APPROXIMATE_VOXEL_GRID
