@@ -6,6 +6,7 @@
 #include <pcl/filters/statistical_outlier_removal.h>
 #include <boost/thread/thread.hpp>
 #include "noise_voxel_grid.h"
+#include "noise_approximate_voxel_grid.h"
 
 ros::Publisher pub;
 
@@ -16,7 +17,8 @@ void callback(const sensor_msgs::PointCloud2::ConstPtr& msg)
 	pcl::PointCloud<pcl::PointXYZ> voxel_cloud;
 	
 	//pcl::VoxelGrid<pcl::PointXYZ> sor; // doesn't do noise filtering
-    noise_voxel_grid sor(5, 20); // doesn't add voxel if too few points
+    //noise_voxel_grid sor(5, 20); // doesn't add voxel if too few points
+    noise_approximate_voxel_grid sor(5, 20); // a bit faster than nvg, not as accurate
 	sor.setInputCloud(cloud);
     sor.setLeafSize(0.05f, 0.05f, 0.05f);
 	sor.filter(voxel_cloud);
@@ -58,7 +60,11 @@ int main(int argc, char** argv)
 	ros::Subscriber sub = n.subscribe(input, 1, callback);
     pub = n.advertise<sensor_msgs::PointCloud2>(output, 1);
     
-    ros::spin();
+    ros::Rate rate(5); // updating at 5 hz, slightly faster than move_base
+    while (n.ok()) {
+        rate.sleep();
+        ros::spinOnce();
+    }
 	
 	return 0;
 }

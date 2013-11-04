@@ -72,6 +72,7 @@ include_directories(
 
 ## Declare a cpp library
 add_library(noise_voxel_grid src/noise_voxel_grid.cpp)
+add_library(noise_approximate_voxel_grid src/noise_approximate_voxel_grid.cpp)
 
 ## Declare a cpp executable
 add_executable(subsample_cloud src/subsample_cloud.cpp)
@@ -87,8 +88,12 @@ target_link_libraries(noise_voxel_grid
   ${PCL_LIBRARIES}
 )
 
+target_link_libraries(noise_approximate_voxel_grid
+  ${PCL_LIBRARIES}
+)
+
 target_link_libraries(subsample_cloud
-  ${catkin_LIBRARIES} ${PCL_LIBRARIES} noise_voxel_grid
+  ${catkin_LIBRARIES} ${PCL_LIBRARIES} noise_voxel_grid noise_approximate_voxel_grid
 )
 
 target_link_libraries(remove_edges_cloud
