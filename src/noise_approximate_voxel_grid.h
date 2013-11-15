@@ -78,7 +78,8 @@ public:
     pcl::Filter<PointT> (),
     leaf_size_ (Eigen::Vector3f::Ones ()),
     inverse_leaf_size_ (Eigen::Array3f::Ones ()),
-    downsample_all_data_ (true), histsize_ (512),
+    downsample_all_data_ (true),
+    histsize_ (512),
     history_ (new he[histsize_]),
     min_points(min_points),
     skip_points(skip_points)
@@ -95,13 +96,17 @@ public:
     inverse_leaf_size_ (src.inverse_leaf_size_),
     downsample_all_data_ (src.downsample_all_data_), 
     histsize_ (src.histsize_),
-    history_ (),
+    history_ (new he[histsize_]),
     min_points(src.min_points),
     skip_points(src.skip_points)
   {
-    history_ = new he[histsize_];
     for (size_t i = 0; i < histsize_; i++)
       history_[i] = src.history_[i];
+  }
+
+  ~noise_approximate_voxel_grid ()
+  {
+    delete[] history_;
   }
 
   /** \brief Copy operator. 
@@ -114,6 +119,7 @@ public:
     inverse_leaf_size_ = src.inverse_leaf_size_;
     downsample_all_data_ = src.downsample_all_data_;
     histsize_ = src.histsize_;
+    delete[] history_;
     history_ = new he[histsize_];
     for (size_t i = 0; i < histsize_; i++)
       history_[i] = src.history_[i];
