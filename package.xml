@@ -3,9 +3,10 @@
   <name>calibrate_chest</name>
   <version>0.0.1</version>
   <description>
-    This package contains robot-specific definitions of the SCITOS robot such
-    as the URDF description of the robot's kinematics and dynamics and 3D
-    models of robot components.
+    This package contains one node that calculates the angle and height
+    between the camera publishing on topic /chest_xtion and the floor.
+    This data is saved in the strands_datacentre and published by another
+    node when starting the robot with the scitos_bringup launch file.
   </description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
