@@ -83,7 +83,7 @@ add_executable(chest_calibration_publisher src/chest_calibration_publisher.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
-# add_dependencies(calibrate_chest_node calibrate_chest_generate_messages_cpp)
+add_dependencies(calibrate_chest strands_datacentre_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(calibrate_chest

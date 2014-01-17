@@ -1,32 +1,28 @@
 <?xml version="1.0"?>
 <package>
   <name>calibrate_chest</name>
-  <version>0.0.0</version>
-  <description>The calibrate_chest package</description>
+  <version>0.0.1</version>
+  <description>
+    This package contains robot-specific definitions of the SCITOS robot such
+    as the URDF description of the robot's kinematics and dynamics and 3D
+    models of robot components.
+  </description>
 
-  <!-- One maintainer tag required, multiple allowed, one person per tag --> 
-  <!-- Example:  -->
-  <!-- <maintainer email="jane.doe@example.com">Jane Doe</maintainer> -->
-  <maintainer email="nbore@todo.todo">nbore</maintainer>
-
+  <!-- One maintainer tag required, multiple allowed, one person per tag -->
+  <maintainer email="nbore@kth.se">Nils Bore</maintainer>
 
   <!-- One license tag required, multiple allowed, one license per tag -->
   <!-- Commonly used license strings: -->
   <!--   BSD, MIT, Boost Software License, GPLv2, GPLv3, LGPLv2.1, LGPLv3 -->
-  <license>TODO</license>
-
+  <license>BSD</license>
 
   <!-- Url tags are optional, but mutiple are allowed, one per tag -->
   <!-- Optional attribute type can be: website, bugtracker, or repository -->
-  <!-- Example: -->
-  <!-- <url type="website">http://ros.org/wiki/calibrate_chest</url> -->
-
+  <url type="website">http://github.com/strands-project/scitos_common</url>
 
   <!-- Author tags are optional, mutiple are allowed, one per tag -->
   <!-- Authors do not have to be maintianers, but could be -->
-  <!-- Example: -->
-  <!-- <author email="jane.doe@example.com">Jane Doe</author> -->
-
+  <author email="nbore@kth.se">Nils Bore</author>
 
   <!-- The *_depend tags are used to specify dependencies -->
   <!-- Dependencies can be catkin packages or system dependencies -->
@@ -47,6 +43,7 @@
   <run_depend>sensor_msgs</run_depend>
   <run_depend>roscpp</run_depend>
   <run_depend>std_msgs</run_depend>
+  <run_depend>strands_datacenre</run_depend>
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>
