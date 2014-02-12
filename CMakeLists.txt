@@ -9,7 +9,7 @@ find_package(catkin REQUIRED COMPONENTS roscpp sensor_msgs std_msgs strands_data
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 
-find_package(PCL 1.7 REQUIRED COMPONENTS common visualization)
+find_package(PCL REQUIRED COMPONENTS common visualization)
 include_directories(${PCL_INCLUDE_DIRS})
 link_directories(${PCL_LIBRARY_DIRS})
 add_definitions(${PCL_DEFINITIONS})
