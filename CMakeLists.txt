@@ -4,13 +4,12 @@ project(calibrate_chest)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS roscpp sensor_msgs std_msgs strands_datacentre)
+find_package(catkin REQUIRED COMPONENTS roscpp sensor_msgs std_msgs strands_datacentre pcl_ros pcl_conversions)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 
-set(PCL_DIR "/opt/ros/groovy/share/pcl-1.6")
-find_package(PCL 1.6 REQUIRED)
+find_package(PCL 1.7 REQUIRED COMPONENTS common visualization)
 include_directories(${PCL_INCLUDE_DIRS})
 link_directories(${PCL_LIBRARY_DIRS})
 add_definitions(${PCL_DEFINITIONS})
