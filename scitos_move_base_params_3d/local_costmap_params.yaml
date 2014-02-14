@@ -12,6 +12,6 @@ local_costmap:
   origin_z: -0.08
   z_resolution: 0.2
   z_voxels: 6
-  unknown_threshold: 5
+  unknown_threshold: 6
   mark_threshold: 0
   publish_voxel_map: true
