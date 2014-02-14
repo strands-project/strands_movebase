@@ -4,7 +4,7 @@ project(scitos_2d_navigation)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED roscpp sensor_msgs std_msgs pcl_ros pcl_conversions)
+find_package(catkin REQUIRED roscpp sensor_msgs std_msgs pcl_ros)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -76,16 +76,10 @@ add_library(noise_approximate_voxel_grid src/noise_approximate_voxel_grid.cpp)
 ## Declare a cpp executable
 add_executable(subsample_cloud src/subsample_cloud.cpp)
 add_executable(remove_edges_cloud src/remove_edges_cloud.cpp)
-add_executable(synthesize_wall_cloud src/synthesize_wall_cloud.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
 # add_dependencies(scitos_2d_navigation_node scitos_2d_navigation_generate_messages_cpp)
-
-## Specify libraries to link a library or executable target against
-#target_link_libraries(noise_voxel_grid
-#  ${PCL_LIBRARIES}
-#)
 
 target_link_libraries(noise_approximate_voxel_grid
   ${PCL_LIBRARIES}
@@ -96,10 +90,6 @@ target_link_libraries(subsample_cloud
 )
 
 target_link_libraries(remove_edges_cloud
-  ${catkin_LIBRARIES} ${PCL_LIBRARIES}
-)
-
-target_link_libraries(synthesize_wall_cloud
   ${catkin_LIBRARIES} ${PCL_LIBRARIES}
 )
 
