@@ -5,7 +5,7 @@
 #include <pcl/filters/voxel_grid.h>
 #include <pcl/filters/statistical_outlier_removal.h>
 #include <boost/thread/thread.hpp>
-#include "noise_voxel_grid.h"
+//#include "noise_voxel_grid.h"
 #include "noise_approximate_voxel_grid.h"
 
 ros::Publisher pub;
