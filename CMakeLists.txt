@@ -9,8 +9,7 @@ find_package(catkin REQUIRED COMPONENTS roscpp sensor_msgs std_msgs ros_datacent
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 
-set(PCL_DIR "/opt/ros/groovy/share/pcl-1.6")
-find_package(PCL 1.6 REQUIRED)
+find_package(PCL REQUIRED COMPONENTS common visualization)
 include_directories(${PCL_INCLUDE_DIRS})
 link_directories(${PCL_LIBRARY_DIRS})
 add_definitions(${PCL_DEFINITIONS})
@@ -83,7 +82,7 @@ add_executable(chest_calibration_publisher src/chest_calibration_publisher.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
-add_dependencies(calibrate_chest ros_datacentre_generate_messages_cpp)
+add_dependencies(calibrate_chest strands_datacentre_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(calibrate_chest
