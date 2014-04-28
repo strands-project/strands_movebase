@@ -3,9 +3,14 @@
     <arg name="with_camera" default="false"/>
     <arg name="camera" default="chest_xtion"/>
     <arg name="map"/>
+    <arg name="with_no_go_map" default="false"/>
+    <arg name="no_go_map"/>
     
     <!-- lanch map server -->
     <node name="map_server" pkg="map_server" type="map_server" args="$(arg map)"/>
+    
+    <!-- lanch no-go map server -->
+    <node name="map_server" pkg="map_server" type="map_server" args="$(arg no_go_map)" if="$(arg with_no_go_map)"/>
 
     <!-- launch AMCL -->
     <include file="$(find scitos_2d_navigation)/launch/amcl.launch"/>

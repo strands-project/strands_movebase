@@ -12,6 +12,8 @@ footprint: [[0.235, 0.31], [-0.515, 0.31], [-0.515, -0.31], [0.235, -0.31]]
 static_layer:
   map_topic: /map
 
+static_layer:
+  map_topic: /no_go_map
 
 inflation_layer:
   inflation_radius: 0.8
