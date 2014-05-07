@@ -24,6 +24,7 @@
         <param name="input" value="/move_base/points_subsampled"/>
         <param name="obstacle_output" value="/move_base/points_clearing"/>
         <param name="floor_output" value="/move_base/points_cliff"/>
+        <param name="camera_frame" value="chest_xtion_rgb_optical_frame"/>
     </node>
 
     <!-- This node removes the desired cutoff pixels from the cloud edges -->
