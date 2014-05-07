@@ -13,13 +13,15 @@ Eigen::Vector3f normal;
 pcl::PointCloud<pcl::PointXYZ>::Ptr floor_cloud;
 pcl::PointCloud<pcl::PointXYZ>::Ptr obstacle_cloud;
 
+float below_threshold;
+
 void callback(const sensor_msgs::PointCloud2::ConstPtr& msg)
 {
     pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>());
     pcl::fromROSMsg(*msg, *cloud);
 	
-	Eigen::Vector3f p = -height*normal;
-	float d = -p.dot(normal); // = height
+	Eigen::Vector3f p = -height*normal; // a point in the floor plane
+	float d = -p.dot(normal); // = height, d in the plane equation
 	
 	obstacle_cloud->points.clear();
 	obstacle_cloud->points.reserve(cloud->size());
@@ -35,15 +37,17 @@ void callback(const sensor_msgs::PointCloud2::ConstPtr& msg)
 	        temp -= 0.06*normal;
 	    }*/
 
+        // check signed distance to floor
 	    floor_dist = normal.dot(cloud->points[i].getVector3fMap()) + d;
 	    //floor_dist = normal.dot(temp) + d; // DEBUG
 	    
-	    if (floor_dist < -0.05) {
+	    // if enough below, consider a stair point
+	    if (floor_dist < below_threshold) {
 	        temp = cloud->points[i].getVector3fMap(); // RELEASE
 	        point.getVector3fMap() = -(d/normal.dot(temp))*temp + normal*0.11;
 	        floor_cloud->points.push_back(point);
 	    }
-	    else {
+	    else { // add as a normal obstacle or clearing point
 	        obstacle_cloud->points.push_back(cloud->points[i]);
 	    }
 	}
@@ -102,6 +106,10 @@ int main(int argc, char** argv)
     std::string floor_output;
     pn.getParam("floor_output", floor_output);
     
+    double bt;
+    pn.param<double>("below_threshold", bt, 0.05);
+    below_threshold = -bt;
+    
 	ros::Subscriber sub = n.subscribe(input, 1, callback);
     obstacle_pub = n.advertise<sensor_msgs::PointCloud2>(obstacle_output, 1);
     floor_pub = n.advertise<sensor_msgs::PointCloud2>(floor_output, 1);
@@ -117,7 +125,7 @@ int main(int argc, char** argv)
     vin.header.frame_id = base_frame;
     vin.vector.x = 0; vin.vector.y = 0; vin.vector.z = 1;
     
-    ros::Rate rate(5); // updating at 5 hz, slightly faster than move_base
+    ros::Rate rate(20); // we can afford to update often since pointclouds rare
     while (n.ok()) {
         try {
             listener.transformPoint(base_frame, ros::Time(0), pin, camera_frame, pout);
