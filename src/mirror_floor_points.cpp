@@ -4,13 +4,14 @@
 #include <pcl/point_types.h>
 #include <boost/thread/thread.hpp>
 #include <tf/transform_listener.h>
-//#include <Eigen/Dense>
 
 ros::Publisher obstacle_pub;
 ros::Publisher floor_pub;
 
 float height;
 Eigen::Vector3f normal;
+pcl::PointCloud<pcl::PointXYZ>::Ptr floor_cloud;
+pcl::PointCloud<pcl::PointXYZ>::Ptr obstacle_cloud;
 
 void callback(const sensor_msgs::PointCloud2::ConstPtr& msg)
 {
@@ -19,29 +20,54 @@ void callback(const sensor_msgs::PointCloud2::ConstPtr& msg)
 	
 	Eigen::Vector3f p = -height*normal;
 	float d = -p.dot(normal); // = height
-	pcl::PointCloud<pcl::PointXYZ>::Ptr floor_cloud(new pcl::PointCloud<pcl::PointXYZ>());
+	
+	obstacle_cloud->points.clear();
+	obstacle_cloud->points.reserve(cloud->size());
+	floor_cloud->points.clear();
+	Eigen::Vector3f temp;
+	float floor_dist;
+	pcl::PointXYZ point;
 	for (size_t i = 0; i < cloud->size(); ++i) {
 	    
-	    if (i%640 < 300 && i%640 > 200 && i < 640*200 && i > 640*100) {
-	        cloud->points[i].getVector3fMap() -= 0.06*normal;
-	    }
+	    /*temp = cloud->points[i].getVector3fMap(); // DEBUG!
 	    
-	    if (fabs(normal.dot(cloud->points[i].getVector3fMap()) + d) < 0.1) {
-	        floor_cloud->points.push_back(cloud->points[i]);
+	    if (i%640 < 300 && i%640 > 200 && i < 640*200 && i > 640*100) {
+	        temp -= 0.06*normal;
+	    }*/
+
+	    floor_dist = normal.dot(cloud->points[i].getVector3fMap()) + d;
+	    //floor_dist = normal.dot(temp) + d; // DEBUG
+	    
+	    if (floor_dist < -0.05) {
+	        temp = cloud->points[i].getVector3fMap(); // RELEASE
+	        point.getVector3fMap() = -(d/normal.dot(temp))*temp + normal*0.11;
+	        floor_cloud->points.push_back(point);
+	    }
+	    else {
+	        obstacle_cloud->points.push_back(cloud->points[i]);
 	    }
 	}
 
-	sensor_msgs::PointCloud2 msg_cloud;
-    pcl::toROSMsg(*floor_cloud, msg_cloud);
-	msg_cloud.header.frame_id = msg->header.frame_id;
+	sensor_msgs::PointCloud2 floor_msg;
+    pcl::toROSMsg(*floor_cloud, floor_msg);
+	floor_msg.header.frame_id = msg->header.frame_id;
 
-	floor_pub.publish(msg_cloud);
+	floor_pub.publish(floor_msg);
+	
+	sensor_msgs::PointCloud2 obstacle_msg;
+    pcl::toROSMsg(*obstacle_cloud, obstacle_msg);
+	obstacle_msg.header.frame_id = msg->header.frame_id;
+	
+	obstacle_pub.publish(obstacle_msg);
 }
 
 int main(int argc, char** argv)
 {
     ros::init(argc, argv, "subsample_cloud");
 	ros::NodeHandle n;
+	
+	floor_cloud = pcl::PointCloud<pcl::PointXYZ>::Ptr(new pcl::PointCloud<pcl::PointXYZ>());
+	obstacle_cloud = pcl::PointCloud<pcl::PointXYZ>::Ptr(new pcl::PointCloud<pcl::PointXYZ>());
 	
 	ros::NodeHandle pn("~");
     // topic of input cloud
@@ -93,17 +119,11 @@ int main(int argc, char** argv)
     
     ros::Rate rate(5); // updating at 5 hz, slightly faster than move_base
     while (n.ok()) {
-        //tf::StampedTransform transform;
         try {
-            //listener.lookupTransform(camera_frame, "base_link", ros::Time(0), transform);
             listener.transformPoint(base_frame, ros::Time(0), pin, camera_frame, pout);
             height = pout.point.z;
-            std::cout << pout.point.x << ", " << pout.point.y << ", " << pout.point.z << std::endl;
             listener.transformVector(camera_frame, ros::Time(0), vin, base_frame, vout);
             normal = Eigen::Vector3f(vout.vector.x, vout.vector.y, vout.vector.z);
-            //std::cout << transform << std::endl;
-            std::cout << height << std::endl;
-            std::cout << normal.transpose() << std::endl;
             ros::spinOnce();
         }
         catch (tf::TransformException ex) {
