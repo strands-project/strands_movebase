@@ -4,27 +4,38 @@
 #include <pcl/point_types.h>
 #include <boost/thread/thread.hpp>
 #include <tf/transform_listener.h>
-#include <Eigen/Dense>
+//#include <Eigen/Dense>
 
-ros::Publisher pub;
+ros::Publisher obstacle_pub;
+ros::Publisher floor_pub;
 
-double height;
-Eigen::Vector3d normal;
+float height;
+Eigen::Vector3f normal;
 
 void callback(const sensor_msgs::PointCloud2::ConstPtr& msg)
 {
     pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>());
     pcl::fromROSMsg(*msg, *cloud);
 	
+	Eigen::Vector3f p = -height*normal;
+	float d = -p.dot(normal); // = height
+	pcl::PointCloud<pcl::PointXYZ>::Ptr floor_cloud(new pcl::PointCloud<pcl::PointXYZ>());
 	for (size_t i = 0; i < cloud->size(); ++i) {
 	    
+	    if (i%640 < 300 && i%640 > 200 && i < 640*200 && i > 640*100) {
+	        cloud->points[i].getVector3fMap() -= 0.06*normal;
+	    }
+	    
+	    if (fabs(normal.dot(cloud->points[i].getVector3fMap()) + d) < 0.1) {
+	        floor_cloud->points.push_back(cloud->points[i]);
+	    }
 	}
 
 	sensor_msgs::PointCloud2 msg_cloud;
-    //pcl::toROSMsg(voxel_cloud, msg_cloud);
+    pcl::toROSMsg(*floor_cloud, msg_cloud);
 	msg_cloud.header.frame_id = msg->header.frame_id;
 
-	pub.publish(msg_cloud);
+	floor_pub.publish(msg_cloud);
 }
 
 int main(int argc, char** argv)
@@ -66,13 +77,14 @@ int main(int argc, char** argv)
     pn.getParam("floor_output", floor_output);
     
 	ros::Subscriber sub = n.subscribe(input, 1, callback);
-    pub = n.advertise<sensor_msgs::PointCloud2>(obstacle_output, 1);
+    obstacle_pub = n.advertise<sensor_msgs::PointCloud2>(obstacle_output, 1);
+    floor_pub = n.advertise<sensor_msgs::PointCloud2>(floor_output, 1);
     
-    std::string base_frame("map");//"base_link");
+    std::string base_frame("base_link");
     tf::TransformListener listener;
     geometry_msgs::PointStamped pout;
     geometry_msgs::PointStamped pin;
-    pin.header.frame_id = base_frame;
+    pin.header.frame_id = camera_frame;
     pin.point.x = 0; pin.point.y = 0; pin.point.z = 0;
     geometry_msgs::Vector3Stamped vout;
     geometry_msgs::Vector3Stamped vin;
@@ -81,22 +93,23 @@ int main(int argc, char** argv)
     
     ros::Rate rate(5); // updating at 5 hz, slightly faster than move_base
     while (n.ok()) {
-        tf::StampedTransform transform;
+        //tf::StampedTransform transform;
         try {
             //listener.lookupTransform(camera_frame, "base_link", ros::Time(0), transform);
-            listener.transformPoint(camera_frame, ros::Time(0), pin, base_frame, pout);
+            listener.transformPoint(base_frame, ros::Time(0), pin, camera_frame, pout);
             height = pout.point.z;
+            std::cout << pout.point.x << ", " << pout.point.y << ", " << pout.point.z << std::endl;
             listener.transformVector(camera_frame, ros::Time(0), vin, base_frame, vout);
-            normal = Eigen::Vector3d(vout.vector.x, vout.vector.y, vout.vector.z);
+            normal = Eigen::Vector3f(vout.vector.x, vout.vector.y, vout.vector.z);
             //std::cout << transform << std::endl;
+            std::cout << height << std::endl;
+            std::cout << normal.transpose() << std::endl;
+            ros::spinOnce();
         }
         catch (tf::TransformException ex) {
             ROS_ERROR("%s",ex.what());
         }
-        std::cout << height << std::endl;
-        std::cout << normal.transpose() << std::endl;
         rate.sleep();
-        ros::spinOnce();
     }
 	
 	return 0;
