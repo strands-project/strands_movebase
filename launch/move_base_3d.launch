@@ -18,10 +18,20 @@
         <param name="input" value="$(arg camera)/depth/points"/>
         <param name="output" value="/move_base/points_subsampled"/>
     </node>
+    
+    <!-- This node divides into points below and above the floor -->
+    <node pkg="scitos_2d_navigation" type="mirror_floor_points" name="mirror_floor_points" output="screen">
+        <param name="input" value="/move_base/points_subsampled"/>
+        <param name="obstacle_output" value="/move_base/points_clearing"/>
+        <param name="floor_output" value="/move_base/points_cliff"/>
+        <param name="camera_frame" value="chest_xtion_rgb_optical_frame"/>
+        <!-- Distance below floor that's counted as stair -->
+        <param name="below_threshold" value="0.05"/>
+    </node>
 
     <!-- This node removes the desired cutoff pixels from the cloud edges -->
     <node pkg="scitos_2d_navigation" type="remove_edges_cloud" name="remove_edges_cloud" output="screen">
-        <param name="input" value="/move_base/points_subsampled"/>
+        <param name="input" value="/move_base/points_clearing"/>
         <param name="output" value="/move_base/points_obstacle"/>
         <param name="cutoff" value="50.0"/>
         <param name="cutoff_z" value="0.3"/>

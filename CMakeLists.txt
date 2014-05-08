@@ -4,7 +4,7 @@ project(scitos_2d_navigation)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED roscpp sensor_msgs std_msgs pcl_ros)
+find_package(catkin REQUIRED roscpp sensor_msgs std_msgs pcl_ros tf)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -76,6 +76,7 @@ add_library(noise_approximate_voxel_grid src/noise_approximate_voxel_grid.cpp)
 ## Declare a cpp executable
 add_executable(subsample_cloud src/subsample_cloud.cpp)
 add_executable(remove_edges_cloud src/remove_edges_cloud.cpp)
+add_executable(mirror_floor_points src/mirror_floor_points.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
@@ -90,6 +91,10 @@ target_link_libraries(subsample_cloud
 )
 
 target_link_libraries(remove_edges_cloud
+  ${catkin_LIBRARIES} ${PCL_LIBRARIES}
+)
+
+target_link_libraries(mirror_floor_points
   ${catkin_LIBRARIES} ${PCL_LIBRARIES}
 )
 
