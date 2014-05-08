@@ -54,13 +54,13 @@ void callback(const sensor_msgs::PointCloud2::ConstPtr& msg)
 
 	sensor_msgs::PointCloud2 floor_msg;
     pcl::toROSMsg(*floor_cloud, floor_msg);
-	floor_msg.header.frame_id = msg->header.frame_id;
+	floor_msg.header = msg->header;
 
 	floor_pub.publish(floor_msg);
 	
 	sensor_msgs::PointCloud2 obstacle_msg;
     pcl::toROSMsg(*obstacle_cloud, obstacle_msg);
-	obstacle_msg.header.frame_id = msg->header.frame_id;
+	obstacle_msg.header = msg->header;
 	
 	obstacle_pub.publish(obstacle_msg);
 }

@@ -37,7 +37,7 @@ void callback(const sensor_msgs::PointCloud2::ConstPtr& msg)
 
 	sensor_msgs::PointCloud2 msg_cloud;
     pcl::toROSMsg(new_cloud, msg_cloud);
-	msg_cloud.header.frame_id = msg->header.frame_id;
+	msg_cloud.header = msg->header;
 	pub.publish(msg_cloud);
 }
 
