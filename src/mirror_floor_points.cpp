@@ -8,15 +8,38 @@
 ros::Publisher obstacle_pub;
 ros::Publisher floor_pub;
 
-float height;
-Eigen::Vector3f normal;
 pcl::PointCloud<pcl::PointXYZ>::Ptr floor_cloud;
 pcl::PointCloud<pcl::PointXYZ>::Ptr obstacle_cloud;
 
 float below_threshold;
+tf::TransformListener* listener;
 
 void callback(const sensor_msgs::PointCloud2::ConstPtr& msg)
 {
+    std::string base_frame("base_link");
+    
+    geometry_msgs::PointStamped pout;
+    geometry_msgs::PointStamped pin;
+    pin.header.frame_id = msg->header.frame_id;
+    pin.point.x = 0; pin.point.y = 0; pin.point.z = 0;
+    geometry_msgs::Vector3Stamped vout;
+    geometry_msgs::Vector3Stamped vin;
+    vin.header.frame_id = base_frame;
+    vin.vector.x = 0; vin.vector.y = 0; vin.vector.z = 1;
+    
+    float height;
+    Eigen::Vector3f normal;
+    try {
+        listener->transformPoint(base_frame, ros::Time(0), pin, msg->header.frame_id, pout);
+        height = pout.point.z;
+        listener->transformVector(msg->header.frame_id, ros::Time(0), vin, base_frame, vout);
+        normal = Eigen::Vector3f(vout.vector.x, vout.vector.y, vout.vector.z);
+    }
+    catch (tf::TransformException ex) {
+        ROS_ERROR("%s",ex.what());
+        return;
+    }
+    
     pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>());
     pcl::fromROSMsg(*msg, *cloud);
 	
@@ -91,14 +114,6 @@ int main(int argc, char** argv)
     pn.getParam("obstacle_output", obstacle_output);
     
     // topic of output cloud
-    if (!pn.hasParam("camera_frame")) {
-        ROS_ERROR("Could not find parameter camera_frame.");
-        return -1;
-    }
-    std::string camera_frame;
-    pn.getParam("camera_frame", camera_frame);
-    
-    // topic of output cloud
     if (!pn.hasParam("floor_output")) {
         ROS_ERROR("Could not find parameter floor_output.");
         return -1;
@@ -110,35 +125,13 @@ int main(int argc, char** argv)
     pn.param<double>("below_threshold", bt, 0.05);
     below_threshold = -bt;
     
+    listener = new tf::TransformListener();
+    
 	ros::Subscriber sub = n.subscribe(input, 1, callback);
     obstacle_pub = n.advertise<sensor_msgs::PointCloud2>(obstacle_output, 1);
     floor_pub = n.advertise<sensor_msgs::PointCloud2>(floor_output, 1);
     
-    std::string base_frame("base_link");
-    tf::TransformListener listener;
-    geometry_msgs::PointStamped pout;
-    geometry_msgs::PointStamped pin;
-    pin.header.frame_id = camera_frame;
-    pin.point.x = 0; pin.point.y = 0; pin.point.z = 0;
-    geometry_msgs::Vector3Stamped vout;
-    geometry_msgs::Vector3Stamped vin;
-    vin.header.frame_id = base_frame;
-    vin.vector.x = 0; vin.vector.y = 0; vin.vector.z = 1;
-    
-    ros::Rate rate(20); // we can afford to update often since pointclouds rare
-    while (n.ok()) {
-        try {
-            listener.transformPoint(base_frame, ros::Time(0), pin, camera_frame, pout);
-            height = pout.point.z;
-            listener.transformVector(camera_frame, ros::Time(0), vin, base_frame, vout);
-            normal = Eigen::Vector3f(vout.vector.x, vout.vector.y, vout.vector.z);
-            ros::spinOnce();
-        }
-        catch (tf::TransformException ex) {
-            ROS_ERROR("%s",ex.what());
-        }
-        rate.sleep();
-    }
+    ros::spin();
 	
 	return 0;
 }
