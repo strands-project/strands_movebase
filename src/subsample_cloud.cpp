@@ -57,7 +57,7 @@ int main(int argc, char** argv)
 	ros::Subscriber sub = n.subscribe(input, 1, callback);
     pub = n.advertise<sensor_msgs::PointCloud2>(output, 1);
     
-    ros::Rate rate(5); // updating at 5 hz, slightly faster than move_base
+    ros::Rate rate(7); // updating at 5 hz, slightly faster than move_base
     while (n.ok()) {
         rate.sleep();
         ros::spinOnce();
