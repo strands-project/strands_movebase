@@ -36,7 +36,7 @@ void callback(const sensor_msgs::PointCloud2::ConstPtr& msg)
         normal = Eigen::Vector3f(vout.vector.x, vout.vector.y, vout.vector.z);
     }
     catch (tf::TransformException ex) {
-        ROS_ERROR("%s",ex.what());
+        ROS_INFO("%s",ex.what());
         return;
     }
     
