@@ -1,11 +1,14 @@
 <launch>
-
     <arg name="with_camera" default="false"/>
     <arg name="camera" default="chest_xtion"/>
     <arg name="map"/>
     <arg name="with_no_go_map" default="false"/>
     <arg name="no_go_map"/>
-    
+	<arg name="machine" default="localhost" />
+	<arg name="user" default="" />
+
+	<machine name="$(arg machine)" address="$(arg machine)" env-loader="/opt/strands/strands_catkin_ws/devel/env.sh" user="$(arg user)" default="true"/>
+
     <!-- lanch map server -->
     <node name="map_server" pkg="map_server" type="map_server" args="$(arg map)"/>
     
@@ -18,12 +21,20 @@
     </node>
 
     <!-- launch AMCL -->
-    <include file="$(find scitos_2d_navigation)/launch/amcl.launch"/>
+    <include file="$(find scitos_2d_navigation)/launch/amcl.launch">
+	    <arg name="machine"  value="$(arg machine)"/>
+	    <arg name="user"  value="$(arg user)"/>
+	</include>
 
     <!-- launch move base -->
     <include file="$(find scitos_2d_navigation)/launch/move_base_3d.launch" if="$(arg with_camera)">
         <arg name="camera" value="$(arg camera)"/>
+	    <arg name="machine"  value="$(arg machine)"/>
+	    <arg name="user"  value="$(arg user)"/>
     </include>
-    <include file="$(find scitos_2d_navigation)/launch/move_base.launch" unless="$(arg with_camera)"/>
+    <include file="$(find scitos_2d_navigation)/launch/move_base.launch" unless="$(arg with_camera)">
+	    <arg name="machine"  value="$(arg machine)"/>
+	    <arg name="user"  value="$(arg user)"/>
+    </include>
 
 </launch>
