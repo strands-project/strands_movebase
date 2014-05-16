@@ -2,6 +2,7 @@
     <arg name="camera"/>
 	<arg name="machine" default="localhost" />
 	<arg name="user" default="" />
+	<arg name="with_mux" default="false" />
 
 	<machine name="$(arg machine)" address="$(arg machine)" env-loader="/opt/strands/strands_catkin_ws/devel/env.sh" user="$(arg user)" default="true"/>
 
@@ -50,7 +51,22 @@
     <!-- This node enables us to visualize the 3d occupancy of the costmap -->
 	<node pkg="costmap_2d" type="costmap_2d_cloud" name="costmap_2d_cloud" output="screen"/>
 
-	<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen" clear_params="true">
+	<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen" clear_params="true" if="$(arg with_mux)">
+        <!-- default:20.0. with this value dwa planner fails to find a valid plan a lot more -->
+	    <remap from="/move_base/local_costmap/voxel_grid" to="/voxel_grid"/>
+        <remap from="/cmd_vel" to="/cmd_vel_mux/navigation"/>
+        <param name="controller_frequency" value="10.0" />
+        <param name="controller_patience" value="15.0" />
+        <param name="planner_frequency" value="2.0" />
+        <param name="clearing_rotation_allowed" value="false" />
+        <rosparam file="$(find scitos_2d_navigation)/scitos_move_base_params_3d/costmap_common_params.yaml" command="load" ns="global_costmap" />
+        <rosparam file="$(find scitos_2d_navigation)/scitos_move_base_params_3d/costmap_common_params.yaml" command="load" ns="local_costmap" />
+        <rosparam file="$(find scitos_2d_navigation)/scitos_move_base_params_3d/local_costmap_params.yaml" command="load" />
+        <rosparam file="$(find scitos_2d_navigation)/scitos_move_base_params_3d/global_costmap_params.yaml" command="load" />
+        <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" />
+        <rosparam file="$(find scitos_2d_navigation)/scitos_move_base_params_3d/dwa_planner_ros.yaml" command="load" />
+	</node>
+	<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen" clear_params="true" unless="$(arg with_mux)">
         <!-- default:20.0. with this value dwa planner fails to find a valid plan a lot more -->
 	    <remap from="/move_base/local_costmap/voxel_grid" to="/voxel_grid"/>
         <param name="controller_frequency" value="10.0" />
@@ -64,5 +80,7 @@
         <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" />
         <rosparam file="$(find scitos_2d_navigation)/scitos_move_base_params_3d/dwa_planner_ros.yaml" command="load" />
 	</node>
+
+
 
 </launch>
