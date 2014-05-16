@@ -21,7 +21,7 @@
 	</node>
 	<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen" clear_params="true" if="$(arg with_mux)">
 		<!-- default:20.0. with this value dwa planner fails to find a valid plan a lot more -->
-        <remap from="/cmd_vel" to="/cmd_vel_mux/navigation"/>
+        <remap from="/cmd_vel" to="/cmd_vel_mux/input/navigation"/>
 		<param name="controller_frequency" value="10.0" />
 		<param name="controller_patience" value="15.0" />
 		<param name="planner_frequency" value="2.0" />
