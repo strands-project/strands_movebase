@@ -5,7 +5,7 @@
 #include <pcl/point_types.h>
 #include <pcl/visualization/pcl_visualizer.h>
 #include <boost/thread/thread.hpp>
-#include "ros_datacentre/SetParam.h"
+#include "mongodb_store/SetParam.h"
 
 ros::ServiceClient client;
 
@@ -68,7 +68,7 @@ void extract_height_and_angle(const Eigen::Vector4f& plane)
     ROS_INFO("Angle radians: %f", angle);
     ROS_INFO("Angle degrees: %f", 180.0f*angle/M_PI);
     
-    ros_datacentre::SetParam srv;
+    mongodb_store::SetParam srv;
     char buffer[250];
     
     // store height above ground in datacentre
@@ -143,7 +143,7 @@ int main(int argc, char** argv)
 	ros::NodeHandle n;
 	
     std::string camera_topic = "chest_xtion";
-    client = n.serviceClient<ros_datacentre::SetParam>("/config_manager/set_param");
+    client = n.serviceClient<mongodb_store::SetParam>("/config_manager/set_param");
 	ros::Subscriber sub = n.subscribe(camera_topic + "/depth/points", 1, callback);
     
     ros::spin();
