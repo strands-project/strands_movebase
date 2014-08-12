@@ -5,7 +5,7 @@
   <description>
     This package contains one node that calculates the angle and height
     between the camera publishing on topic /chest_xtion and the floor.
-    This data is saved in the ros_datacentre and published by another
+    This data is saved in the mongodb_store and published by another
     node when starting the robot with the scitos_bringup launch file.
   </description>
 
@@ -40,11 +40,11 @@
   <build_depend>sensor_msgs</build_depend>
   <build_depend>roscpp</build_depend>
   <build_depend>std_msgs</build_depend>
-  <build_depend>ros_datacentre</build_depend>
+  <build_depend>mongodb_store</build_depend>
   <run_depend>sensor_msgs</run_depend>
   <run_depend>roscpp</run_depend>
   <run_depend>std_msgs</run_depend>
-  <run_depend>ros_datacentre</run_depend>
+  <run_depend>mongodb_store</run_depend>
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>

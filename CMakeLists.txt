@@ -4,7 +4,7 @@ project(calibrate_chest)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS roscpp sensor_msgs std_msgs ros_datacentre)
+find_package(catkin REQUIRED COMPONENTS roscpp sensor_msgs std_msgs mongodb_store)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -82,7 +82,7 @@ add_executable(chest_calibration_publisher src/chest_calibration_publisher.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
-add_dependencies(calibrate_chest ros_datacentre_generate_messages_cpp)
+add_dependencies(calibrate_chest mongodb_store_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(calibrate_chest
