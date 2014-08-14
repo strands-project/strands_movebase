@@ -30,7 +30,7 @@ void plot_best_plane(const pcl::PointCloud<pcl::PointXYZ>& points, const Eigen::
     
     pcl::visualization::PCLVisualizer viewer("3D Viewer");
     viewer.setBackgroundColor(0, 0, 0);
-    viewer.addCoordinateSystem(1.0);
+    viewer.addCoordinateSystem(1.0, "reference", 0);
     viewer.initCameraParameters();
     
     pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> inlier_color_handler(inlier_cloud, 255, 0, 0);
