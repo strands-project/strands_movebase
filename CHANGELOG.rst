@@ -2,8 +2,8 @@
 Changelog for package calibrate_chest
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.1 (2014-08-21)
+------------------
 * Removed my error.
 * Renamed ros_datacentre to mongodb_store
   This simply bulk replaces all ros_datacentre strings to mongodb_store strings inside files and also in file names.
