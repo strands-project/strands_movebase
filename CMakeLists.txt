@@ -7,7 +7,7 @@ project(calibrate_chest)
 find_package(catkin REQUIRED COMPONENTS roscpp sensor_msgs std_msgs mongodb_store)
 
 ## System dependencies are found with CMake's conventions
-# find_package(Boost REQUIRED COMPONENTS system)
+find_package(Boost REQUIRED COMPONENTS thread)
 
 find_package(PCL REQUIRED COMPONENTS common visualization)
 include_directories(${PCL_INCLUDE_DIRS})
