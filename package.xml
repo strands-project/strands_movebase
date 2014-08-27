@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>calibrate_chest</name>
-  <version>0.0.2</version>
+  <version>0.0.3</version>
   <description>
     This package contains one node that calculates the angle and height
     between the camera publishing on topic /chest_xtion and the floor.
