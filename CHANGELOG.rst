@@ -2,6 +2,11 @@
 Changelog for package calibrate_chest
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* included install target
+* Contributors: Marc Hanheide
+
 0.0.3 (2014-08-27)
 ------------------
 
