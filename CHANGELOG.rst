@@ -2,6 +2,12 @@
 Changelog for package calibrate_chest
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* added Boost::Thread
+* added PCL dependency
+* Contributors: Marc Hanheide
+
 0.0.1 (2014-08-21)
 ------------------
 * Removed my error.
