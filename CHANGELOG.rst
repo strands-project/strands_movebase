@@ -2,6 +2,9 @@
 Changelog for package calibrate_chest
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.0.2 (2014-08-27)
 ------------------
 * added Boost::Thread

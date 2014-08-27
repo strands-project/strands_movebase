@@ -41,13 +41,13 @@
   <build_depend>roscpp</build_depend>
   <build_depend>std_msgs</build_depend>
   <build_depend>mongodb_store</build_depend>
-  <build_depend>libpcl-all-dev</build_depend>
+  <build_depend>pcl_ros</build_depend>
   
   <run_depend>sensor_msgs</run_depend>
   <run_depend>roscpp</run_depend>
   <run_depend>std_msgs</run_depend>
   <run_depend>mongodb_store</run_depend>
-  <run_depend>libpcl-all-dev</run_depend>
+  <run_depend>pcl_ros</run_depend>
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>
