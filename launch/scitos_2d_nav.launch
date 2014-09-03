@@ -1,0 +1,44 @@
+<launch>
+    <arg name="machine" default="localhost" />
+    <arg name="user" default="" />
+    <arg name="with_camera" default="false"/>
+    <arg name="camera" default="chest_xtion"/>
+    <arg name="camera_ip" default="localhost"/>
+    <arg name="map"/>
+    <arg name="with_no_go_map" default="false"/>
+	<arg name="with_mux" default="false" />
+    <arg name="no_go_map"/>
+
+    <machine name="$(arg machine)" address="$(arg machine)" env-loader="/opt/strands/strands_catkin_ws/devel/env.sh" user="$(arg user)" default="true"/>
+
+    <!-- lanch map server -->
+    <node name="map_server" pkg="map_server" type="map_server" args="$(arg map)"/>
+
+    <!-- lanch no-go map server -->
+    <node name="no_go_map_server" pkg="map_server" type="map_server" args="$(arg no_go_map)" if="$(arg with_no_go_map)">
+        <remap from="/map" to="/no_go_map"/>
+    </node>
+    <node name="no_go_map_server" pkg="map_server" type="map_server" args="$(arg map)" unless="$(arg with_no_go_map)">
+        <remap from="/map" to="/no_go_map"/>
+    </node>
+
+    <!-- launch AMCL -->
+    <include file="$(find scitos_2d_navigation)/launch/amcl.launch">
+        <arg name="machine"  value="$(arg machine)"/>
+        <arg name="user"  value="$(arg user)"/>
+    </include>
+
+    <!-- launch move base -->
+    <include file="$(find scitos_2d_navigation)/launch/move_base_3d.launch" if="$(arg with_camera)">
+        <arg name="camera" value="$(arg camera)"/>
+        <arg name="machine"  value="$(arg camera_ip)"/>
+        <arg name="user"  value="$(arg user)"/>
+		<arg name="with_mux" value="$(arg with_mux)"/>
+    </include>
+    <include file="$(find scitos_2d_navigation)/launch/move_base.launch" unless="$(arg with_camera)">
+        <arg name="machine"  value="$(arg machine)"/>
+        <arg name="user"  value="$(arg user)"/>
+		<arg name="with_mux" value="$(arg with_mux)"/>
+    </include>
+
+</launch>
