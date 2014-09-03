@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package>
-  <name>scitos_2d_navigation</name>
+  <name>strands_movebase</name>
   <version>0.0.2</version>
   <description>
     This package contains components for using the ROS move base together
@@ -16,7 +16,7 @@
   <!-- One license tag required, multiple allowed, one license per tag -->
   <!-- Commonly used license strings: -->
   <!--   BSD, MIT, Boost Software License, GPLv2, GPLv3, LGPLv2.1, LGPLv3 -->
-  <license>BSD</license>
+  <license>MIT</license>
 
   <!-- Url tags are optional, but mutiple are allowed, one per tag -->
   <!-- Optional attribute type can be: website, bugtracker, or repository -->
