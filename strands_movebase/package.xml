@@ -42,6 +42,7 @@
   <run_depend>pcl_ros</run_depend>
   <run_depend>libpcl-all</run_depend>
   <run_depend>tf</run_depend>
+  <run_depend>scitos_2d_navigation</run_depend>
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>
