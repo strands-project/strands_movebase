@@ -20,7 +20,7 @@
 
   <!-- Url tags are optional, but mutiple are allowed, one per tag -->
   <!-- Optional attribute type can be: website, bugtracker, or repository -->
-  <url type="website">http://github.com/strands-project/scitos_2d_navigation</url>
+  <url type="website">http://github.com/strands-project/strands_movebase</url>
 
   <!-- Author tags are optional, mutiple are allowed, one per tag -->
   <!-- Authors do not have to be maintianers, but could be -->
