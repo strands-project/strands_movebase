@@ -7,13 +7,13 @@
 	<machine name="$(arg machine)" address="$(arg machine)" env-loader="/opt/strands/strands_catkin_ws/devel/env.sh" user="$(arg user)" default="true"/>
 
     <!-- This node downsamples cloud and removes voxels with too few points in them -->
-    <node pkg="scitos_2d_navigation" type="subsample_cloud" name="subsample_cloud" output="screen">
+    <node pkg="strands_movebase" type="subsample_cloud" name="subsample_cloud" output="screen">
         <param name="input" value="$(arg camera)/depth/points"/>
         <param name="output" value="/move_base/points_subsampled"/>
     </node>
     
     <!-- This node divides into points below and above the floor -->
-    <node pkg="scitos_2d_navigation" type="mirror_floor_points" name="mirror_floor_points" output="screen">
+    <node pkg="strands_movebase" type="mirror_floor_points" name="mirror_floor_points" output="screen">
         <param name="input" value="/move_base/points_subsampled"/>
         <param name="obstacle_output" value="/move_base/points_clearing"/>
         <param name="floor_output" value="/move_base/points_cliff"/>
@@ -22,7 +22,7 @@
     </node>
 
     <!-- This node removes the desired cutoff pixels from the cloud edges -->
-    <node pkg="scitos_2d_navigation" type="remove_edges_cloud" name="remove_edges_cloud" output="screen">
+    <node pkg="strands_movebase" type="remove_edges_cloud" name="remove_edges_cloud" output="screen">
         <param name="input" value="/move_base/points_clearing"/>
         <param name="output" value="/move_base/points_obstacle"/>
         <param name="cutoff" value="50.0"/>
@@ -40,12 +40,12 @@
         <param name="controller_patience" value="15.0" />
         <param name="planner_frequency" value="2.0" />
         <param name="clearing_rotation_allowed" value="false" />
-        <rosparam file="$(find scitos_2d_navigation)/scitos_move_base_params_3d/costmap_common_params.yaml" command="load" ns="global_costmap" />
-        <rosparam file="$(find scitos_2d_navigation)/scitos_move_base_params_3d/costmap_common_params.yaml" command="load" ns="local_costmap" />
-        <rosparam file="$(find scitos_2d_navigation)/scitos_move_base_params_3d/local_costmap_params.yaml" command="load" />
-        <rosparam file="$(find scitos_2d_navigation)/scitos_move_base_params_3d/global_costmap_params.yaml" command="load" />
+        <rosparam file="$(find strands_movebase)/strands_movebase_params/costmap_common_params.yaml" command="load" ns="global_costmap" />
+        <rosparam file="$(find strands_movebase)/strands_movebase_params/costmap_common_params.yaml" command="load" ns="local_costmap" />
+        <rosparam file="$(find strands_movebase)/strands_movebase_params/local_costmap_params.yaml" command="load" />
+        <rosparam file="$(find strands_movebase)/strands_movebase_params/global_costmap_params.yaml" command="load" />
         <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" />
-        <rosparam file="$(find scitos_2d_navigation)/scitos_move_base_params_3d/dwa_planner_ros.yaml" command="load" />
+        <rosparam file="$(find strands_movebase)/strands_movebase_params/dwa_planner_ros.yaml" command="load" />
 	</node>
 	<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen" clear_params="true" unless="$(arg with_mux)">
         <!-- default:20.0. with this value dwa planner fails to find a valid plan a lot more -->
@@ -54,12 +54,12 @@
         <param name="controller_patience" value="15.0" />
         <param name="planner_frequency" value="2.0" />
         <param name="clearing_rotation_allowed" value="false" />
-        <rosparam file="$(find scitos_2d_navigation)/scitos_move_base_params_3d/costmap_common_params.yaml" command="load" ns="global_costmap" />
-        <rosparam file="$(find scitos_2d_navigation)/scitos_move_base_params_3d/costmap_common_params.yaml" command="load" ns="local_costmap" />
-        <rosparam file="$(find scitos_2d_navigation)/scitos_move_base_params_3d/local_costmap_params.yaml" command="load" />
-        <rosparam file="$(find scitos_2d_navigation)/scitos_move_base_params_3d/global_costmap_params.yaml" command="load" />
+        <rosparam file="$(find strands_movebase)/strands_movebase_params/costmap_common_params.yaml" command="load" ns="global_costmap" />
+        <rosparam file="$(find strands_movebase)/strands_movebase_params/costmap_common_params.yaml" command="load" ns="local_costmap" />
+        <rosparam file="$(find strands_movebase)/strands_movebase_params/local_costmap_params.yaml" command="load" />
+        <rosparam file="$(find strands_movebase)/strands_movebase_params/global_costmap_params.yaml" command="load" />
         <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" />
-        <rosparam file="$(find scitos_2d_navigation)/scitos_move_base_params_3d/dwa_planner_ros.yaml" command="load" />
+        <rosparam file="$(find strands_movebase)/strands_movebase_params/dwa_planner_ros.yaml" command="load" />
 	</node>
 
 </launch>
