@@ -66,12 +66,13 @@ catkin_package(
 ## Your package locations should be listed before other locations
 # include_directories(include ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
 include_directories(
+  include
   ${catkin_INCLUDE_DIRS}
 )
 
 ## Declare a cpp library
 #add_library(noise_voxel_grid src/noise_voxel_grid.cpp)
-add_library(noise_approximate_voxel_grid src/noise_approximate_voxel_grid.cpp)
+add_library(noise_approximate_voxel_grid src/noise_approximate_voxel_grid.cpp include/noise_approximate_voxel_grid.h)
 
 ## Declare a cpp executable
 add_executable(subsample_cloud src/subsample_cloud.cpp)
