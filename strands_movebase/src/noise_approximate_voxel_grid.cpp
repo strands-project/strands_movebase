@@ -38,7 +38,7 @@
  *
  */
  
-#include "noise_approximate_voxel_grid.h"
+#include "strands_movebase/noise_approximate_voxel_grid.h"
 
 #include <pcl/common/common.h>
 #include <pcl/common/io.h>
