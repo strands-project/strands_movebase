@@ -54,8 +54,8 @@ add_definitions(${PCL_DEFINITIONS})
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES scitos_2d_navigation
-#  CATKIN_DEPENDS other_catkin_pkg
-#  DEPENDS system_lib
+  CATKIN_DEPENDS roscpp sensor_msgs std_msgs pcl_ros tf
+  DEPENDS libpcl-all-dev
 )
 
 ###########
