@@ -13,7 +13,6 @@
 
   <url type="website">http://github.com/strands-project/strands_movebase</url>
 
-  <author email="l.kunze@cs.bham.ac.uk">Lars Kunze</author>
   <author email="nbore@kth.se">Nils Bore</author>
 
   <buildtool_depend>catkin</buildtool_depend>
