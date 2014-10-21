@@ -12,4 +12,4 @@ A repository for all the STRANDS-augmented movebase, including 3D obstacle avoid
   * If you do not want to launch it with the 3d obstacle avoidance, provide the additional argument `with_camera:=false`.
   * Provide `camera=camera_namespace` if you have an OpenNI camera publishing on another namespace than the default `chest_xtion`.
 
-If you run with the camera option, be sure that you have a depth camera publishing on the `camera_namespace` topic. The camera also needs a valid TF transform connecting it to `base_link`. For more details on the Strands solution, see https://github.com/strands-project/strands_movebase/calibrate_chest and https://github.com/strands-project/strands_movebase/strands_description.
+If you run with the camera option, be sure that you have a depth camera publishing on the `camera_namespace` topic. The camera also needs a valid TF transform connecting it to `base_link`. For more details on the Strands solution, see https://github.com/strands-project/strands_movebase/tree/hydro-devel/calibrate_chest and https://github.com/strands-project/strands_movebase/tree/hydro-devel/strands_description.
