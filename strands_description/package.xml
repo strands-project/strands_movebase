@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package>
+  <name>strands_description</name>
+  <version>0.0.4</version>
+  <description>
+    The strands_description package contains the description
+    of the optional chest camera of the STRANDS robot.
+  </description>
+
+  <maintainer email="nbore@kth.se">Nils Bore</maintainer>
+
+  <license>MIT</license>
+
+  <url type="website">http://github.com/strands-project/strands_movebase</url>
+
+  <author email="nbore@kth.se">Nils Bore</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <run_depend>calibrate_chest</run_depend>
+
+</package>

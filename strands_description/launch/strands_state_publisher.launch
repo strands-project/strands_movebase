@@ -1,0 +1,21 @@
+<launch> 
+	<arg name="machine" default="localhost" />
+	<arg name="user" default="" />
+
+	<machine name="$(arg machine)" address="$(arg machine)" env-loader="/opt/strands/strands_catkin_ws/devel/env.sh" user="$(arg user)" default="true"/>
+
+    <!-- Robot -->
+    <arg name="urdf_file" default="$(find xacro)/xacro.py '$(find strands_description)/urdf/scitos_chest_camera.xacro'" />
+    <param name="robot_description" command="$(arg urdf_file)" />
+
+    <!-- Joint state publisher to accumulate joints -->
+    <node name="chest_joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+      <!-- include the pan/tilt unit joint states -->
+      <rosparam param="source_list">[/chest_calibration_publisher/state]</rosparam>
+    </node>
+
+    <node name="chest_robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
+
+    <node pkg="calibrate_chest" type="chest_calibration_publisher" name="chest_calibration_publisher" output="screen"/>
+
+</launch>
