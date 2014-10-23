@@ -2,8 +2,8 @@
 Changelog for package strands_movebase
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.5 (2014-10-23)
+------------------
 * added changelogs
 * Added launching of chest transform state publisher together with 3d movebase
 * Added the dependencies in catkin_package
