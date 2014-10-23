@@ -4,6 +4,7 @@ Changelog for package strands_movebase
 
 Forthcoming
 -----------
+* added changelogs
 * Added launching of chest transform state publisher together with 3d movebase
 * Added the dependencies in catkin_package
 * Placed include files in include/strands_movebase and added install targets
@@ -13,4 +14,4 @@ Forthcoming
 * Moved the headers to include folder
 * Removed move_base.launch since that will be in scitos_2d_navigation
 * Mad strands_movebase a package within the repo, to be able to put e.g. chest_calibration in another package
-* Contributors: Nils Bore
+* Contributors: Marc Hanheide, Nils Bore
