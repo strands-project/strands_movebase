@@ -2,6 +2,11 @@
 Changelog for package strands_movebase
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Decreased the cost_scaling_factor, making the robot stay away from walls if possible. This made navigation more robust on Rosie, particularly through doors
+* Contributors: Nils Bore
+
 0.0.5 (2014-10-23)
 ------------------
 * added changelogs
