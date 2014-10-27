@@ -17,7 +17,7 @@ no_go_layer:
 
 inflation_layer:
   inflation_radius: 0.8
-  cost_scaling_factor: 10.0
+  cost_scaling_factor: 5.0
     
 
 obstacle_layer:
