@@ -3,6 +3,8 @@
 	<arg name="machine" default="localhost" />
 	<arg name="user" default="" />
 	<arg name="with_mux" default="false" />
+	<arg name="z_stair_threshold" default="0.05"/>
+	<arg name="z_obstacle_threshold" default="0.1"/>
 
 	<machine name="$(arg machine)" address="$(arg machine)" env-loader="/opt/strands/strands_catkin_ws/devel/env.sh" user="$(arg user)" default="true"/>
 
@@ -18,7 +20,7 @@
         <param name="obstacle_output" value="/move_base/points_clearing"/>
         <param name="floor_output" value="/move_base/points_cliff"/>
         <!-- Distance below floor that's counted as stair -->
-        <param name="below_threshold" value="0.05"/>
+        <param name="below_threshold" value="$(z_stair_threshold)"/>
     </node>
 
     <!-- This node removes the desired cutoff pixels from the cloud edges -->
@@ -46,6 +48,8 @@
         <rosparam file="$(find strands_movebase)/strands_movebase_params/global_costmap_params.yaml" command="load" />
         <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" />
         <rosparam file="$(find strands_movebase)/strands_movebase_params/dwa_planner_ros.yaml" command="load" />
+        <param name="local_costmap/obstacle_layer/point_cloud_sensor/min_obstacle_height" value="0.1"/>
+        <param name="global_costmap/obstacle_layer/point_cloud_sensor/min_obstacle_height" value="0.1"/>
 	</node>
 	<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen" clear_params="true" unless="$(arg with_mux)">
         <!-- default:20.0. with this value dwa planner fails to find a valid plan a lot more -->
@@ -60,6 +64,8 @@
         <rosparam file="$(find strands_movebase)/strands_movebase_params/global_costmap_params.yaml" command="load" />
         <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" />
         <rosparam file="$(find strands_movebase)/strands_movebase_params/dwa_planner_ros.yaml" command="load" />
+        <param name="local_costmap/obstacle_layer/point_cloud_sensor/min_obstacle_height" value="0.1"/>
+        <param name="global_costmap/obstacle_layer/point_cloud_sensor/min_obstacle_height" value="0.1"/>
 	</node>
 
 </launch>
