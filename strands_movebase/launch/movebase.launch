@@ -39,8 +39,8 @@
         <arg name="machine"  value="$(arg camera_ip)"/>
         <arg name="user"  value="$(arg user)"/>
 		<arg name="with_mux" value="$(arg with_mux)"/>
-		<arg name="z_stair_threshold" value="$(z_stair_threshold)"/>
-		<arg name="z_obstacle_threshold" value="$(z_obstacle_threshold)"/>
+		<arg name="z_stair_threshold" value="$(arg z_stair_threshold)"/>
+		<arg name="z_obstacle_threshold" value="$(arg z_obstacle_threshold)"/>
     </include>
     <include file="$(find scitos_2d_navigation)/launch/move_base.launch" unless="$(arg with_camera)">
         <arg name="machine"  value="$(arg machine)"/>
