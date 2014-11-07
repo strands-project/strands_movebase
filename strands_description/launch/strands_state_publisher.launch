@@ -1,8 +1,9 @@
 <launch> 
-	<arg name="machine" default="localhost" />
-	<arg name="user" default="" />
+    <arg name="machine" default="localhost" />
+    <arg name="user" default="" />
 
-	<machine name="$(arg machine)" address="$(arg machine)" env-loader="/opt/strands/strands_catkin_ws/devel/env.sh" user="$(arg user)" default="true"/>
+	<!-- now has an IF checking for the arg "remote" -->
+	<machine name="$(arg machine)" address="$(arg machine)" env-loader="$(env ROS_ENV_LOADER)" user="$(arg user)" default="true"/>
 
     <!-- Robot -->
     <arg name="urdf_file" default="$(find xacro)/xacro.py '$(find strands_description)/urdf/scitos_chest_camera.xacro'" />
