@@ -1,12 +1,16 @@
 <launch>
-    <arg name="camera"/>
 	<arg name="machine" default="localhost" />
-	<arg name="user" default="" />
+	<arg name="user" default="strands" />
+
+	<arg name="camera" default="chest_xtion"/>
+
 	<arg name="with_mux" default="false" />
 	<arg name="z_stair_threshold" default="0.05"/>
 	<arg name="z_obstacle_threshold" default="0.1"/>
 
-	<machine name="$(arg machine)" address="$(arg machine)" env-loader="/opt/strands/strands_catkin_ws/devel/env.sh" user="$(arg user)" default="true"/>
+	<!-- now has an IF checking for the arg "remote" -->
+	<machine name="$(arg machine)" address="$(arg machine)" env-loader="$(env ROS_ENV_LOADER)" user="$(arg user)" default="true" />
+
 
     <!-- This node downsamples cloud and removes voxels with too few points in them -->
     <node pkg="strands_movebase" type="subsample_cloud" name="subsample_cloud" output="screen">
