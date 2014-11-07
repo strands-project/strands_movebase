@@ -8,8 +8,8 @@
 	<arg name="z_stair_threshold" default="0.05"/>
 	<arg name="z_obstacle_threshold" default="0.1"/>
 
-	<!-- now has an IF checking for the arg "remote" -->
-	<machine name="$(arg machine)" address="$(arg machine)" env-loader="$(env ROS_ENV_LOADER)" user="$(arg user)" default="true" />
+	<!-- NOW when launching in a remote mode it will need the ROS_ENV_LOADER set if not it will leave it empty -->
+	<machine name="$(arg machine)" address="$(arg machine)" env-loader="$(optenv ROS_ENV_LOADER )" user="$(arg user)" default="true" />
 
 
     <!-- This node downsamples cloud and removes voxels with too few points in them -->
