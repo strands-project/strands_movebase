@@ -2,8 +2,8 @@
     <arg name="machine" default="localhost" />
     <arg name="user" default="" />
 
-	<!-- now has an IF checking for the arg "remote" -->
-	<machine name="$(arg machine)" address="$(arg machine)" env-loader="$(env ROS_ENV_LOADER)" user="$(arg user)" default="true"/>
+	<!-- NOW when launching in a remote mode it will need the ROS_ENV_LOADER set if not it will leave it empty -->
+	<machine name="$(arg machine)" address="$(arg machine)" env-loader="$(optenv ROS_ENV_LOADER )" user="$(arg user)" default="true"/>
 
     <!-- Robot -->
     <arg name="urdf_file" default="$(find xacro)/xacro.py '$(find strands_description)/urdf/scitos_chest_camera.xacro'" />
