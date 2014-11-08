@@ -31,14 +31,6 @@
         <param name="cutoff" value="50.0"/>
         <param name="cutoff_z" value="0.3"/>
     </node>
-    
-    <!-- This node downsamples cloud and removes voxels with too few points in them -->
-    <!--
-    <node pkg="strands_movebase" type="subsample_cloud" name="head_subsample_cloud" output="screen" if="$(arg with_head_camera)">
-        <param name="input" value="$(arg head_camera)/depth/points"/>
-        <param name="output" value="/move_base/head_points_clearing"/>
-    </node>
-    -->
 
     <!-- This node removes the desired cutoff pixels from the cloud edges -->
     <node pkg="strands_movebase" type="remove_edges_cloud" name="head_remove_edges_cloud" output="screen" if="$(arg with_head_camera)">
