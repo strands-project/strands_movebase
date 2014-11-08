@@ -42,8 +42,7 @@
 
     <!-- This node removes the desired cutoff pixels from the cloud edges -->
     <node pkg="strands_movebase" type="remove_edges_cloud" name="head_remove_edges_cloud" output="screen" if="$(arg with_head_camera)">
-        <!-- <param name="input" value="/move_base/head_points_clearing"/> -->
-        <param name="input" value="/head_xtion/depth/points"/>
+        <param name="input" value="/move_base/head_points_clearing"/>
         <param name="output" value="/move_base/head_points_obstacle"/>
         <param name="cutoff" value="50.0"/>
         <param name="cutoff_z" value="0.3"/>
@@ -68,7 +67,6 @@
         <rosparam file="$(find strands_movebase)/strands_movebase_params/dwa_planner_ros.yaml" command="load" />
         <param name="local_costmap/obstacle_layer/point_cloud_sensor/min_obstacle_height" value="$(arg z_obstacle_threshold)"/>
         <param name="global_costmap/obstacle_layer/point_cloud_sensor/min_obstacle_height" value="$(arg z_obstacle_threshold)"/>
-        <rosparam param="local_costmap/obstacle_layer/observation_sources" unless="$(arg with_head_camera)">laser point_cloud_sensor clear_sensor cliff_sensor</rosparam>
         <rosparam param="local_costmap/obstacle_layer/observation_sources" if="$(arg with_head_camera)">laser point_cloud_sensor clear_sensor cliff_sensor head_cloud_sensor head_clear_sensor</rosparam>
         <param name="local_costmap/obstacle_layer/z_voxels" value="9" if="$(arg with_head_camera)"/>
 	</node>
@@ -87,7 +85,6 @@
         <rosparam file="$(find strands_movebase)/strands_movebase_params/dwa_planner_ros.yaml" command="load" />
         <param name="local_costmap/obstacle_layer/point_cloud_sensor/min_obstacle_height" value="$(arg z_obstacle_threshold)"/>
         <param name="global_costmap/obstacle_layer/point_cloud_sensor/min_obstacle_height" value="$(arg z_obstacle_threshold)"/>
-        <rosparam param="local_costmap/obstacle_layer/observation_sources" unless="$(arg with_head_camera)">laser point_cloud_sensor clear_sensor cliff_sensor</rosparam>
         <rosparam param="local_costmap/obstacle_layer/observation_sources" if="$(arg with_head_camera)">laser point_cloud_sensor clear_sensor cliff_sensor head_cloud_sensor head_clear_sensor</rosparam>
         <param name="local_costmap/obstacle_layer/z_voxels" value="9" if="$(arg with_head_camera)"/>
 	</node>
