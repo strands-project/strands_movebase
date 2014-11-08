@@ -42,7 +42,7 @@
 		<arg name="with_mux" value="$(arg with_mux)"/>
 		<arg name="z_stair_threshold" value="$(arg z_stair_threshold)"/>
 		<arg name="z_obstacle_threshold" value="$(arg z_obstacle_threshold)"/>
-		<arg mame="with_head_camera" value="$(arg with_head_camera)"/>
+		<arg name="with_head_camera" value="$(arg with_head_camera)"/>
     </include>
     <include file="$(find scitos_2d_navigation)/launch/move_base.launch" unless="$(arg with_camera)">
         <arg name="machine"  value="$(arg machine)"/>
