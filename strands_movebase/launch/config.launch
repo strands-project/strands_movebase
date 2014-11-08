@@ -6,7 +6,6 @@
 	<arg name="z_stair_threshold" default="0.05"/>
 	<arg name="z_obstacle_threshold" default="0.1"/>
 	<arg name="with_head_camera" default="false"/>
-	<arg name="head_camera" default="head_xtion"/>
 
 	<machine name="$(arg machine)" address="$(arg machine)" env-loader="/opt/strands/strands_catkin_ws/devel/env.sh" user="$(arg user)" default="true"/>
 
@@ -34,10 +33,12 @@
     </node>
     
     <!-- This node downsamples cloud and removes voxels with too few points in them -->
+    <!--
     <node pkg="strands_movebase" type="subsample_cloud" name="head_subsample_cloud" output="screen" if="$(arg with_head_camera)">
         <param name="input" value="$(arg head_camera)/depth/points"/>
         <param name="output" value="/move_base/head_points_clearing"/>
     </node>
+    -->
 
     <!-- This node removes the desired cutoff pixels from the cloud edges -->
     <node pkg="strands_movebase" type="remove_edges_cloud" name="head_remove_edges_cloud" output="screen" if="$(arg with_head_camera)">
