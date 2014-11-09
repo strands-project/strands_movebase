@@ -2,6 +2,14 @@
 Changelog for package strands_movebase
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* final and tested version of loader
+* new machine tags
+* Fixed typos in launch files
+* Added launch file options for changing the obstacle and stair heights to enable to tune the robustness
+* Contributors: Jaime Pulido Fentanes, Nils Bore, Rares Ambrus
+
 0.0.6 (2014-10-27)
 ------------------
 * Decreased the cost_scaling_factor, making the robot stay away from walls if possible. This made navigation more robust on Rosie, particularly through doors

@@ -2,6 +2,12 @@
 Changelog for package strands_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* final and tested version of loader
+* new machine tags
+* Contributors: Jaime Pulido Fentanes
+
 0.0.6 (2014-10-27)
 ------------------
 
