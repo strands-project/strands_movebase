@@ -2,6 +2,19 @@
 Changelog for package strands_movebase
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Merge pull request `#13 <https://github.com/strands-project/strands_movebase/issues/13>`_ from nilsbore/backtrack
+  [strands_movebase] Add option to use head_camera as well
+* Changed the unknown_threshold to 9 as well for consistency
+* Removed commented code
+* Removed unnecessary code and switched to the topics used in backtrack
+* Fixed the parameter settings, it actually works
+* Tidied up a bit and changed to the correct topic
+* Forgot to change the height
+* Added the option to have an extra head camera, with a higher voxelgrid
+* Contributors: Marc Hanheide, Nils Bore, Rares Ambrus
+
 0.0.7 (2014-11-09)
 ------------------
 * final and tested version of loader
