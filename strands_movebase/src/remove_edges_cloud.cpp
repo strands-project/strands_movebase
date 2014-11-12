@@ -46,34 +46,35 @@ int main(int argc, char** argv)
     ros::init(argc, argv, "remove_edges_cloud");
 	ros::NodeHandle n;	
 
+    ros::NodeHandle pn("~");
     // topic of input cloud
-    if (!n.hasParam("/remove_edges_cloud/input")) {
+    if (!pn.hasParam("input")) {
         ROS_ERROR("Could not find parameter input.");
         return -1;
     }
     std::string input;
-    n.getParam("/remove_edges_cloud/input", input);
+    pn.getParam("input", input);
     
     // topic of output cloud
-    if (!n.hasParam("/remove_edges_cloud/output")) {
+    if (!pn.hasParam("output")) {
         ROS_ERROR("Could not find parameter output.");
         return -1;
     }
     std::string output;
-    n.getParam("/remove_edges_cloud/output", output);
+    pn.getParam("output", output);
 
     // how many pixels to cut off in the depth image
-	if (!n.hasParam("/remove_edges_cloud/cutoff")) {
+	if (!pn.hasParam("cutoff")) {
         ROS_ERROR("Could not find parameter cutoff.");
         return -1;
     }
-    n.getParam("/remove_edges_cloud/cutoff", cutoff);
+    pn.getParam("cutoff", cutoff);
     
-    if (!n.hasParam("/remove_edges_cloud/cutoff_z")) {
+    if (!pn.hasParam("cutoff_z")) {
         ROS_ERROR("Could not find parameter cutoff_z.");
         return -1;
     }
-    n.getParam("/remove_edges_cloud/cutoff_z", cutoff_z);
+    pn.getParam("cutoff_z", cutoff_z);
     
 	ros::Subscriber sub = n.subscribe(input, 1, callback);
     pub = n.advertise<sensor_msgs::PointCloud2>(output, 1);
