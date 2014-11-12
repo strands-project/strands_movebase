@@ -2,8 +2,8 @@
 Changelog for package strands_movebase
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.8 (2014-11-12)
+------------------
 * Merge pull request `#13 <https://github.com/strands-project/strands_movebase/issues/13>`_ from nilsbore/backtrack
   [strands_movebase] Add option to use head_camera as well
 * Changed the unknown_threshold to 9 as well for consistency
