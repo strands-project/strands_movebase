@@ -1,13 +1,11 @@
 global_frame: /map
 robot_base_frame: /base_link
 
-  
 map_type: voxel
 publish_voxel_map: true
 
 footprint: [[0.235, 0.31], [-0.515, 0.31], [-0.515, -0.31], [0.235, -0.31]]
 #footprint: [[-0.211159,-0.295],[-0.0842764,-0.309861],[-0.0347691,-0.307378],[0.0137095,-0.297036],[0.0599199,-0.2791],[0.102681,-0.254027],[0.140898,-0.222459],[0.173596,-0.185203],[0.199937,-0.143212],[0.219249,-0.0975586],[0.231037,-0.0494112],[0.235,-3.89256e-07],[0.231037,0.0494104],[0.219249,0.0975578],[0.199938,0.143211],[0.173596,0.185202],[0.140899,0.222458],[0.102681,0.254026],[0.0599206,0.279099],[0.0137102,0.297036],[-0.0347683,0.307378],[-0.0842756,0.309861],[-0.211159,0.295],[-0.311159,0.25],[-0.411159,0.185],[-0.511159,0.10],[-0.515,0],[-0.511159,-0.10],[-0.411159,-0.185],[-0.311159,-0.25]]
-
 
 map_layer:
   map_topic: /map
@@ -18,29 +16,26 @@ no_go_layer:
 inflation_layer:
   inflation_radius: 0.8
   cost_scaling_factor: 5.0
-    
 
 obstacle_layer:
   max_obstacle_height: 2.0
   obstacle_range: 2.5
   raytrace_range: 3.0
-  
+
   origin_z: -0.08
   z_resolution: 0.2
   z_voxels: 6
   unknown_threshold: 6
   mark_threshold: 0
-  
+
   observation_sources: laser point_cloud_sensor clear_sensor cliff_sensor
-  
+
   laser: {sensor_frame: base_laser_link, data_type: LaserScan, topic: scan, marking: true, clearing: true}
-  
+
   point_cloud_sensor: {topic: /move_base/points_obstacle, data_type: PointCloud2, marking: true, clearing: false, min_obstacle_height: 0.1, max_obstacle_height: 0.9, observation_persistence: 0.0, obstacle_range: 2.0}
 
   clear_sensor: {topic: /move_base/points_clearing, data_type: PointCloud2, marking: false, clearing: true, min_obstacle_height: -0.1, max_obstacle_height: 1.1, observation_persistence: 0.0, raytrace_range: 4.0}
-  
   cliff_sensor: {topic: /move_base/points_cliff, data_type: PointCloud2, marking: true, clearing: false, min_obstacle_height: 0.1, max_obstacle_height: 0.15, observation_persistence: 0.0, obstacle_range: 3.0}
 
   head_cloud_sensor: {topic: /move_base/head_points_obstacle, data_type: PointCloud2, marking: true, clearing: false, min_obstacle_height: 0.3, max_obstacle_height: 0.9, observation_persistence: 0.0, obstacle_range: 3.0}
-  
   head_clear_sensor: {topic: /move_base/head_points_clearing, data_type: PointCloud2, marking: false, clearing: true, min_obstacle_height: -0.2, max_obstacle_height: 1.1, observation_persistence: 0.0, raytrace_range: 5.0}
