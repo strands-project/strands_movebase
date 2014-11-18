@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="machine" default="localhost"/>
+    <arg name="user" default="strands"/>
+
+    <arg name="chest_xtion_name" default="chest_xtion"/>
+    <arg name="z_stair_threshold" default="0.05"/>
+
+    <arg name="with_head_xtion" default="false"/>
+
+    <!-- NOW when launching in a remote mode it will need the ROS_ENV_LOADER set if not it will leave it empty -->
+    <machine name="$(arg machine)" address="$(arg machine)" env-loader="$(optenv ROS_ENV_LOADER )" user="$(arg user)" default="true"/>
+
+    <!-- This node downsamples cloud and removes voxels with too few points in them -->
+    <node pkg="strands_movebase" type="subsample_cloud" name="subsample_cloud" output="screen">
+        <param name="input" value="$(arg chest_xtion_name)/depth/points"/>
+        <param name="output" value="/move_base/points_subsampled"/>
+    </node>
+
+    <!-- This node divides into points below and above the floor -->
+    <node pkg="strands_movebase" type="mirror_floor_points" name="mirror_floor_points" output="screen">
+        <param name="input" value="/move_base/points_subsampled"/>
+        <param name="obstacle_output" value="/move_base/points_clearing"/>
+        <param name="floor_output" value="/move_base/points_cliff"/>
+        <!-- Distance below floor that's counted as stair -->
+        <param name="below_threshold" value="$(arg z_stair_threshold)"/>
+    </node>
+
+    <!-- This node removes the desired cutoff pixels from the cloud edges -->
+    <node pkg="strands_movebase" type="remove_edges_cloud" name="remove_edges_cloud" output="screen">
+        <param name="input" value="/move_base/points_clearing"/>
+        <param name="output" value="/move_base/points_obstacle"/>
+        <param name="cutoff" value="50.0"/>
+        <param name="cutoff_z" value="0.3"/>
+    </node>
+
+    <!-- This node removes the desired cutoff pixels from the cloud edges -->
+    <node pkg="strands_movebase" type="remove_edges_cloud" name="head_remove_edges_cloud" output="screen" if="$(arg with_head_xtion)">
+        <param name="input" value="/move_base/head_points_clearing"/>
+        <param name="output" value="/move_base/head_points_obstacle"/>
+        <param name="cutoff" value="50.0"/>
+        <param name="cutoff_z" value="0.3"/>
+    </node>
+
+    <!-- This node enables us to visualize the 3d occupancy of the costmap -->
+    <node pkg="costmap_2d" type="costmap_2d_cloud" name="costmap_2d_cloud" output="screen"/>
+</launch>
