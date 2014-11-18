@@ -1,25 +1,24 @@
+<?xml version="1.0"?>
 <launch>
-    <arg name="machine" default="localhost" />
-    <arg name="user" default="" />
+    <arg name="machine" default="localhost"/>
+    <arg name="user" default=""/>
 
     <arg name="with_camera" default="true"/>
     <arg name="camera" default="chest_xtion"/>
     <arg name="camera_ip" default="localhost"/>
-	<arg name="camera_user" default="strands"/>
+    <arg name="camera_user" default="strands"/>
 
     <arg name="map"/>
     <arg name="with_no_go_map" default="false"/>
-	<arg name="with_mux" default="false" />
+    <arg name="with_mux" default="false"/>
     <arg name="no_go_map"/>
 
     <arg name="z_stair_threshold" default="0.05"/>
     <arg name="z_obstacle_threshold" default="0.1"/>
     <arg name="with_head_camera" default="false"/>
 
-
-	<!-- NOW when launching in a remote mode it will need the ROS_ENV_LOADER set if not it will leave it empty -->
-	<machine name="$(arg machine)" address="$(arg machine)" env-loader="$(optenv ROS_ENV_LOADER )" user="$(arg user)" default="true"/>
-
+    <!-- NOW when launching in a remote mode it will need the ROS_ENV_LOADER set if not it will leave it empty -->
+    <machine name="$(arg machine)" address="$(arg machine)" env-loader="$(optenv ROS_ENV_LOADER )" user="$(arg user)" default="true"/>
 
     <!-- lanch map server -->
     <node name="map_server" pkg="map_server" type="map_server" args="$(arg map)"/>
@@ -33,37 +32,28 @@
     </node>
 
     <!-- launch AMCL -->
-
     <include file="$(find scitos_2d_navigation)/launch/amcl.launch">
-        <arg name="machine"  value="$(arg machine)"/>
-        <arg name="user"  value="$(arg user)"/>
+        <arg name="machine" value="$(arg machine)"/>
+        <arg name="user" value="$(arg user)"/>
     </include>
 
-    
     <!-- launch state publisher for valid chest camera transforms -->
-
     <include file="$(find strands_description)/launch/strands_state_publisher.launch" if="$(arg with_camera)"/>
 
-
-    <!-- launch move base -->
-
+    <!-- launch move base, potentially with all the chest-camera obstacle avoidance. -->
     <include file="$(find strands_movebase)/launch/config.launch" if="$(arg with_camera)">
         <arg name="camera" value="$(arg camera)"/>
-        <arg name="machine"  value="$(arg camera_ip)"/>
-        <arg name="user"  value="$(arg camera_user)"/>
+        <arg name="machine" value="$(arg camera_ip)"/>
+        <arg name="user" value="$(arg camera_user)"/>
 
-
-		<arg name="with_mux" value="$(arg with_mux)"/>
-		<arg name="z_stair_threshold" value="$(arg z_stair_threshold)"/>
-		<arg name="z_obstacle_threshold" value="$(arg z_obstacle_threshold)"/>
-		<arg name="with_head_camera" value="$(arg with_head_camera)"/>
+        <arg name="with_mux" value="$(arg with_mux)"/>
+        <arg name="z_stair_threshold" value="$(arg z_stair_threshold)"/>
+        <arg name="z_obstacle_threshold" value="$(arg z_obstacle_threshold)"/>
+        <arg name="with_head_camera" value="$(arg with_head_camera)"/>
     </include>
-
     <include file="$(find scitos_2d_navigation)/launch/move_base.launch" unless="$(arg with_camera)">
-        <arg name="machine"  value="$(arg machine)"/>
-        <arg name="user"  value="$(arg user)"/>
-		<arg name="with_mux" value="$(arg with_mux)"/>
+        <arg name="machine" value="$(arg machine)"/>
+        <arg name="user" value="$(arg user)"/>
+        <arg name="with_mux" value="$(arg with_mux)"/>
     </include>
-
-
 </launch>
