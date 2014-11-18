@@ -48,14 +48,6 @@
     </include>
     <!-- But when there is a chest_xtion, we first need to launch all the chest_xtion obstacle-avoiding
          stuff on the pc the chest_xtion is connected to, as well as our own move_base. -->
-    <include file="$(find strands_movebase)/launch/config.launch" if="$(arg with_chest_xtion)">
-        <arg name="chest_xtion_name" value="$(arg chest_xtion_name)"/>
-        <arg name="machine" value="$(arg chest_xtion_machine)"/>
-        <arg name="user" value="$(arg chest_xtion_user)"/>
-
-        <arg name="z_stair_threshold" value="$(arg z_stair_threshold)"/>
-        <arg name="with_head_xtion" value="$(arg with_head_xtion)"/>
-    </include>
     <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen" clear_params="true" if="$(arg with_chest_xtion)">
         <!-- default:20.0. with this value dwa planner fails to find a valid plan a lot more -->
         <remap from="/move_base/local_costmap/voxel_grid" to="/voxel_grid"/>
@@ -76,4 +68,14 @@
         <param name="local_costmap/obstacle_layer/z_voxels" value="9" if="$(arg with_head_xtion)"/>
         <param name="local_costmap/obstacle_layer/unknown_threshold" value="9" if="$(arg with_head_xtion)"/>
     </node>
+    <!-- NOTE: This changes the machine of ALL nodes coming after this to `chest_xtion_machine`!.
+         That means beware when you do anything below this! -->
+    <include file="$(find strands_movebase)/launch/obstacles.launch" if="$(arg with_chest_xtion)">
+        <arg name="chest_xtion_name" value="$(arg chest_xtion_name)"/>
+        <arg name="machine" value="$(arg chest_xtion_machine)"/>
+        <arg name="user" value="$(arg chest_xtion_user)"/>
+
+        <arg name="z_stair_threshold" value="$(arg z_stair_threshold)"/>
+        <arg name="with_head_xtion" value="$(arg with_head_xtion)"/>
+    </include>
 </launch>
