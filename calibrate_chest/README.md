@@ -5,7 +5,7 @@ calibrate_chest
   * To use these parameters when you launch the bringup next time, be sure to have the datacentre running.
   * The urdf can be updated manually by doing `rosrun calibrate_chest chest_calibration_publisher` if you don't want to restart the larger system (e.g. `strands_movebase.launch`, which includes this).
 
-# calibrate_chest
+# calibrate_chest node explanation
 
 When running `rosrun calibrate_chest calibrate_chest` the node tries to find the largest visible plane and determine the angle and height of the chest camera. It will display a window of the current point cloud, with the points belonging to the floor coloured in red. It should look something like the following, you might need a mouse to rotate:
 
