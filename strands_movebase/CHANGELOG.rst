@@ -2,6 +2,19 @@
 Changelog for package strands_movebase
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* fixing wrong machine tag
+* More precise footprint of the robot, including screen.
+* Cosmetic changes of `costmap_common_params.yaml`.
+* Renamed config.launch to obstacles.launch
+* Moved `move_base` to the main machine.
+  Obstacle handling with the chest xtion still run on the chest xtion's pc.
+* Since *any* tag supports `if`, no need to dup nodes.
+* Purely syntactic changes to move_base/launch
+  Because I'm allergic to working with inconsistent files.
+* Contributors: Jaime Pulido Fentanes, Lucas Beyer
+
 0.0.8 (2014-11-12)
 ------------------
 * Merge pull request `#13 <https://github.com/strands-project/strands_movebase/issues/13>`_ from nilsbore/backtrack
