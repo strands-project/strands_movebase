@@ -31,7 +31,7 @@
   <joint name="chest_xtion_height_joint" type="prismatic" >
     <!-- Z height from calibrate_chest -->
     <axis xyz="0 0 1"/>
-    <origin rpy="0 0 0" xyz="0.12 0 0" />
+    <origin rpy="0 0 0" xyz="-0.01 0 0" />
     <limit effort="1000" velocity="1000" lower="0.5" upper="1.5"/>
     <parent link="base_link"/>
     <child link="chest_xtion_height_tilt_link"/>
