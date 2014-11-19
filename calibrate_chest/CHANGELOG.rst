@@ -2,8 +2,8 @@
 Changelog for package calibrate_chest
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.10 (2014-11-19)
+-------------------
 * Added example chest calibration
 * Update README.md
 * Update README.md
