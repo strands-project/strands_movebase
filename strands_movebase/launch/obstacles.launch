@@ -43,5 +43,7 @@
     </node>
 
     <!-- This node enables us to visualize the 3d occupancy of the costmap -->
-    <node pkg="costmap_2d" type="costmap_2d_cloud" name="costmap_2d_cloud" output="screen"/>
+    <node pkg="costmap_2d" type="costmap_2d_cloud" name="costmap_2d_cloud" output="screen">
+        <remap from="voxel_grid" to="/move_base/local_costmap/obstacle_layer/voxel_grid"/>
+    </node>
 </launch>
