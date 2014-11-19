@@ -2,6 +2,17 @@
 Changelog for package calibrate_chest
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Added example chest calibration
+* Update README.md
+* Update README.md
+* Update README.md
+* Update README.md
+* Update README.md
+* Added a readme file for calibrate_chest and made the urdf for chest camera more accurate
+* Contributors: Nils Bore
+
 0.0.9 (2014-11-19)
 ------------------
 

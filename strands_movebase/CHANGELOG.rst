@@ -2,6 +2,9 @@
 Changelog for package strands_movebase
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.0.9 (2014-11-19)
 ------------------
 * fixing wrong machine tag
