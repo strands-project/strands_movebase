@@ -72,6 +72,7 @@
         <param name="local_costmap/obstacle_layer/point_cloud_sensor/min_obstacle_height" value="$(arg z_obstacle_threshold)"/>
         <param name="global_costmap/obstacle_layer/point_cloud_sensor/min_obstacle_height" value="$(arg z_obstacle_threshold)"/>
         <rosparam param="local_costmap/obstacle_layer/observation_sources" if="$(arg with_head_xtion)">laser point_cloud_sensor clear_sensor cliff_sensor head_cloud_sensor head_clear_sensor</rosparam>
+        <param name="local_costmap/obstacle_layer/publish_voxel_map" value="true"/>
         <param name="local_costmap/obstacle_layer/z_voxels" value="9" if="$(arg with_head_xtion)"/>
         <param name="local_costmap/obstacle_layer/unknown_threshold" value="9" if="$(arg with_head_xtion)"/>
         <!-- THIS SHOULD STAY LAST, so that sites can override anything. -->
