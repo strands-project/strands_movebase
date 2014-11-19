@@ -8,4 +8,4 @@ calibrate_chest
 # calibrate_chest
 
 When running `rosrun calibrate_chest calibrate_chest` the node tries to find the largest visible plane and determine the angle and height of the chest camera. It will display a window of the current point cloud, with the points belonging to the floor coloured in red. It should look something like the following, you might need a mouse to rotate:
-![Alt text](https://github.com/strands-project/strands_movebase/tree/hydro-devel/calibrate_chest/data/chest.png "Example of how the calibration should look.")
+![Calibration point cloud example](https://github.com/strands-project/strands_movebase/tree/hydro-devel/calibrate_chest/data/chest.png "Example of how the calibration should look.")
