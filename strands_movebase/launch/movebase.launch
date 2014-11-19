@@ -17,6 +17,13 @@
     <arg name="z_stair_threshold" default="0.05"/>
     <arg name="z_obstacle_threshold" default="0.1"/>
 
+    <!-- This can be pointed to a yaml file of parameters to load in the
+         movebase node so that each site can set the optimal parameters for
+         their environment, since there doesn't seem to be one true parameterset.
+    -->
+    <arg name="with_site_movebase_params" default="false"/>
+    <arg name="site_movebase_params" default=""/>
+
     <!-- NOW when launching in a remote mode it will need the ROS_ENV_LOADER set if not it will leave it empty -->
     <machine name="$(arg machine)" address="$(arg machine)" env-loader="$(optenv ROS_ENV_LOADER )" user="$(arg user)" default="true"/>
 
@@ -67,6 +74,8 @@
         <rosparam param="local_costmap/obstacle_layer/observation_sources" if="$(arg with_head_xtion)">laser point_cloud_sensor clear_sensor cliff_sensor head_cloud_sensor head_clear_sensor</rosparam>
         <param name="local_costmap/obstacle_layer/z_voxels" value="9" if="$(arg with_head_xtion)"/>
         <param name="local_costmap/obstacle_layer/unknown_threshold" value="9" if="$(arg with_head_xtion)"/>
+        <!-- THIS SHOULD STAY LAST, so that sites can override anything. -->
+        <rosparam file="$(arg site_movebase_params)" command="load" if="$(arg with_site_movebase_params)"/>
     </node>
     <!-- NOTE: This changes the machine of ALL nodes coming after this to `chest_xtion_machine`!.
          That means beware when you do anything below this! -->
