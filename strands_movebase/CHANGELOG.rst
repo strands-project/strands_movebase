@@ -2,8 +2,8 @@
 Changelog for package strands_movebase
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.9 (2014-11-19)
+------------------
 * fixing wrong machine tag
 * More precise footprint of the robot, including screen.
 * Cosmetic changes of `costmap_common_params.yaml`.
