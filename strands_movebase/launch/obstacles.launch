@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
     <arg name="machine" default="localhost"/>
-    <arg name="user" default="strands"/>
+    <arg name="user" default=""/>
 
     <arg name="chest_xtion_name" default="chest_xtion"/>
     <arg name="z_stair_threshold" default="0.05"/>
