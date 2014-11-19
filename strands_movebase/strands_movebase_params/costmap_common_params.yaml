@@ -2,7 +2,6 @@ global_frame: /map
 robot_base_frame: /base_link
 
 map_type: voxel
-publish_voxel_map: true
 
 footprint: [[-0.30,-0.32], # Back side right
             [-0.52,-0.11], # Back right
@@ -28,6 +27,7 @@ inflation_layer:
   cost_scaling_factor: 5.0
 
 obstacle_layer:
+  publish_voxel_map: true
   max_obstacle_height: 2.0
   obstacle_range: 2.5
   raytrace_range: 3.0
