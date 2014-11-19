@@ -2,6 +2,9 @@
 Changelog for package strands_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.0.10 (2014-11-19)
 -------------------
 * Added a readme file for calibrate_chest and made the urdf for chest camera more accurate
