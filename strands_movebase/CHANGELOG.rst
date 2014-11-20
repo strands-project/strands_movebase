@@ -2,6 +2,11 @@
 Changelog for package strands_movebase
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Set the obstacle adding thresholds to more reasonable values
+* Contributors: Nils Bore
+
 0.0.11 (2014-11-19)
 -------------------
 * Made the voxel map publish only for the local costmap as it might be demanding to publish the global
