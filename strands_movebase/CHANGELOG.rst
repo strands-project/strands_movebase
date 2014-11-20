@@ -2,8 +2,8 @@
 Changelog for package strands_movebase
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.12 (2014-11-20)
+-------------------
 * Set the obstacle adding thresholds to more reasonable values
 * Contributors: Nils Bore
 
