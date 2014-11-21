@@ -24,6 +24,10 @@
     <arg name="with_site_movebase_params" default="false"/>
     <arg name="site_movebase_params" default=""/>
 
+    <arg name="subsample_resolution" default="0.05"/>
+    <arg name="subsample_min_points" default="5"/>
+    <arg name="subsample_skip_points" default="20"/>
+
     <!-- NOW when launching in a remote mode it will need the ROS_ENV_LOADER set if not it will leave it empty -->
     <machine name="$(arg machine)" address="$(arg machine)" env-loader="$(optenv ROS_ENV_LOADER )" user="$(arg user)" default="true"/>
 
@@ -87,5 +91,8 @@
 
         <arg name="z_stair_threshold" value="$(arg z_stair_threshold)"/>
         <arg name="with_head_xtion" value="$(arg with_head_xtion)"/>
+        <arg name="resolution" value="$(arg subsample_resolution)"/>
+        <arg name="min_points" value="$(arg subsample_min_points)"/>
+        <arg name="skip_points" value="$(arg subsample_skip_points)"/>
     </include>
 </launch>

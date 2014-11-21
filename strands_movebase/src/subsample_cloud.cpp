@@ -8,6 +8,9 @@
 #include "strands_movebase/noise_approximate_voxel_grid.h"
 
 ros::Publisher pub;
+double resolution;
+int min_points;
+int skip_points;
 
 void callback(const sensor_msgs::PointCloud2::ConstPtr& msg)
 {
@@ -15,9 +18,9 @@ void callback(const sensor_msgs::PointCloud2::ConstPtr& msg)
     pcl::fromROSMsg(*msg, *cloud);
     pcl::PointCloud<pcl::PointXYZ> voxel_cloud;
 
-    noise_approximate_voxel_grid sor(5, 20); // a bit faster than nvg, not as accurate
+    noise_approximate_voxel_grid sor(min_points, skip_points); // a bit faster than nvg, not as accurate
     sor.setInputCloud(cloud);
-    sor.setLeafSize(0.05f, 0.05f, 0.05f);
+    sor.setLeafSize(resolution, resolution, resolution);
     sor.filter(voxel_cloud);
 
     /*pcl::StatisticalOutlierRemoval<pcl::PointXYZ> sor; // another possibility, slow
@@ -54,6 +57,10 @@ int main(int argc, char** argv)
     }
     std::string output;
     pn.getParam("output", output);
+
+    pn.param<double>("resolution", resolution, 0.05);
+    pn.param<int>("min_points", min_points, 5);
+    pn.param<int>("skip_points", skip_points, 20);
 
     ros::Subscriber sub = n.subscribe(input, 1, callback);
     pub = n.advertise<sensor_msgs::PointCloud2>(output, 1);
