@@ -8,6 +8,10 @@
 
     <arg name="with_head_xtion" default="false"/>
 
+    <arg name="resolution" default="0.05"/>
+    <arg name="min_points" default="5"/>
+    <arg name="skip_points" default="20"/>
+
     <!-- NOW when launching in a remote mode it will need the ROS_ENV_LOADER set if not it will leave it empty -->
     <machine name="$(arg machine)" address="$(arg machine)" env-loader="$(optenv ROS_ENV_LOADER )" user="$(arg user)" default="true"/>
 
@@ -15,6 +19,9 @@
     <node pkg="strands_movebase" type="subsample_cloud" name="subsample_cloud" output="screen">
         <param name="input" value="$(arg chest_xtion_name)/depth/points"/>
         <param name="output" value="/move_base/points_subsampled"/>
+        <param name="resolution" value="$(arg resolution)"/>
+        <param name="min_points" value="$(arg min_points)"/>
+        <param name="skip_points" value="$(arg skip_points)"/>
     </node>
 
     <!-- This node divides into points below and above the floor -->
