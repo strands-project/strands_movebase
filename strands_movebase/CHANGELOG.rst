@@ -2,6 +2,12 @@
 Changelog for package strands_movebase
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Made subsampling parameters configurable.
+* Whitespace only while I'm at it.
+* Contributors: Lucas Beyer
+
 0.0.12 (2014-11-20)
 -------------------
 * Set the obstacle adding thresholds to more reasonable values
