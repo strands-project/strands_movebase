@@ -2,8 +2,8 @@
 Changelog for package strands_movebase
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.13 (2014-11-21)
+-------------------
 * Made subsampling parameters configurable.
 * Whitespace only while I'm at it.
 * Contributors: Lucas Beyer
