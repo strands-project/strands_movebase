@@ -13,32 +13,32 @@ void callback(const sensor_msgs::PointCloud2::ConstPtr& msg)
 {
     pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>());
     pcl::fromROSMsg(*msg, *cloud);
-	pcl::PointCloud<pcl::PointXYZ> voxel_cloud;
-	
+    pcl::PointCloud<pcl::PointXYZ> voxel_cloud;
+
     noise_approximate_voxel_grid sor(5, 20); // a bit faster than nvg, not as accurate
-	sor.setInputCloud(cloud);
+    sor.setInputCloud(cloud);
     sor.setLeafSize(0.05f, 0.05f, 0.05f);
-	sor.filter(voxel_cloud);
+    sor.filter(voxel_cloud);
 
-	/*pcl::StatisticalOutlierRemoval<pcl::PointXYZ> sor; // another possibility, slow
-	sor.setInputCloud(new_cloud);
-	sor.setMeanK(20);
-	sor.setStddevMulThresh(1.0);
-	sor.filter(voxel_cloud);*/
+    /*pcl::StatisticalOutlierRemoval<pcl::PointXYZ> sor; // another possibility, slow
+    sor.setInputCloud(new_cloud);
+    sor.setMeanK(20);
+    sor.setStddevMulThresh(1.0);
+    sor.filter(voxel_cloud);*/
 
-	sensor_msgs::PointCloud2 msg_cloud;
+    sensor_msgs::PointCloud2 msg_cloud;
     pcl::toROSMsg(voxel_cloud, msg_cloud);
-	msg_cloud.header = msg->header;
+    msg_cloud.header = msg->header;
 
-	pub.publish(msg_cloud);
+    pub.publish(msg_cloud);
 }
 
 int main(int argc, char** argv)
 {
     ros::init(argc, argv, "subsample_cloud");
-	ros::NodeHandle n;
-	
-	ros::NodeHandle pn("~");
+    ros::NodeHandle n;
+
+    ros::NodeHandle pn("~");
     // topic of input cloud
     if (!pn.hasParam("input")) {
         ROS_ERROR("Could not find parameter input.");
@@ -46,7 +46,7 @@ int main(int argc, char** argv)
     }
     std::string input;
     pn.getParam("input", input);
-    
+
     // topic of output cloud
     if (!pn.hasParam("output")) {
         ROS_ERROR("Could not find parameter output.");
@@ -54,15 +54,15 @@ int main(int argc, char** argv)
     }
     std::string output;
     pn.getParam("output", output);
-    
-	ros::Subscriber sub = n.subscribe(input, 1, callback);
+
+    ros::Subscriber sub = n.subscribe(input, 1, callback);
     pub = n.advertise<sensor_msgs::PointCloud2>(output, 1);
-    
+
     ros::Rate rate(5); // updating at 5 hz, slightly faster than move_base
     while (n.ok()) {
         rate.sleep();
         ros::spinOnce();
     }
-	
-	return 0;
+
+    return 0;
 }
