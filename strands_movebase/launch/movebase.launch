@@ -24,6 +24,7 @@
     <arg name="with_site_movebase_params" default="false"/>
     <arg name="site_movebase_params" default=""/>
 
+    <arg name="laser_angle_cutoff" default="10"/>
     <arg name="subsample_resolution" default="0.05"/>
     <arg name="subsample_min_points" default="5"/>
     <arg name="subsample_skip_points" default="20"/>
@@ -75,7 +76,7 @@
         <rosparam file="$(find strands_movebase)/strands_movebase_params/dwa_planner_ros.yaml" command="load"/>
         <param name="local_costmap/obstacle_layer/point_cloud_sensor/min_obstacle_height" value="$(arg z_obstacle_threshold)"/>
         <param name="global_costmap/obstacle_layer/point_cloud_sensor/min_obstacle_height" value="$(arg z_obstacle_threshold)"/>
-        <rosparam param="local_costmap/obstacle_layer/observation_sources" if="$(arg with_head_xtion)">laser point_cloud_sensor clear_sensor cliff_sensor head_cloud_sensor head_clear_sensor</rosparam>
+        <rosparam param="local_costmap/obstacle_layer/observation_sources" if="$(arg with_head_xtion)">laser_obstacle laser_clearing point_cloud_sensor clear_sensor cliff_sensor head_cloud_sensor head_clear_sensor</rosparam>
         <param name="local_costmap/obstacle_layer/publish_voxel_map" value="true"/>
         <param name="local_costmap/obstacle_layer/z_voxels" value="9" if="$(arg with_head_xtion)"/>
         <param name="local_costmap/obstacle_layer/unknown_threshold" value="9" if="$(arg with_head_xtion)"/>
@@ -91,6 +92,7 @@
 
         <arg name="z_stair_threshold" value="$(arg z_stair_threshold)"/>
         <arg name="with_head_xtion" value="$(arg with_head_xtion)"/>
+        <arg name="laser_angle_cutoff" value="$(arg laser_angle_cutoff)"/>
         <arg name="resolution" value="$(arg subsample_resolution)"/>
         <arg name="min_points" value="$(arg subsample_min_points)"/>
         <arg name="skip_points" value="$(arg subsample_skip_points)"/>
