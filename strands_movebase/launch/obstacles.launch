@@ -8,7 +8,7 @@
 
     <arg name="with_head_xtion" default="false"/>
 
-    <arg name="laser_angle_cutoff" default="10"/>
+    <arg name="laser_angle_cutoff" default="10.0"/>
     <arg name="resolution" default="0.05"/>
     <arg name="min_points" default="5"/>
     <arg name="skip_points" default="20"/>

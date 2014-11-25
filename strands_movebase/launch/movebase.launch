@@ -24,7 +24,7 @@
     <arg name="with_site_movebase_params" default="false"/>
     <arg name="site_movebase_params" default=""/>
 
-    <arg name="laser_angle_cutoff" default="10"/>
+    <arg name="laser_angle_cutoff" default="10.0"/>
     <arg name="subsample_resolution" default="0.05"/>
     <arg name="subsample_min_points" default="5"/>
     <arg name="subsample_skip_points" default="20"/>
