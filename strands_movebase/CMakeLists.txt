@@ -120,7 +120,7 @@ target_link_libraries(mirror_floor_points
 # )
 
 ## Mark executables and/or libraries for installation
-install(TARGETS subsample_cloud remove_edges_cloud mirror_floor_points noise_approximate_voxel_grid
+install(TARGETS subsample_cloud remove_edges_cloud remove_edges_laser mirror_floor_points noise_approximate_voxel_grid
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
