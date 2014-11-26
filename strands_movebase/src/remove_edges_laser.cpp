@@ -1,14 +1,14 @@
 #include <ros/ros.h>
 #include <sensor_msgs/LaserScan.h>
 
-ros::Publisher pub; // publishes pointcloud with removed edges
+ros::Publisher pub; // publishes laser scan with removed edges
 float cutoff_angle; // how many angle to cut off in the laser
 
 void callback(const sensor_msgs::LaserScan::ConstPtr& msg)
 {
-    float angle_min = msg->angle_min + cutoff_angle;
-    float angle_max = msg->angle_max - cutoff_angle;
     int n_points = int(cutoff_angle / msg->angle_increment);
+    float angle_min = msg->angle_min + float(n_points)*msg->angle_increment;
+    float angle_max = msg->angle_max - float(n_points)*msg->angle_increment;
     int n_last = msg->ranges.size() - n_points;
     
     sensor_msgs::LaserScan msg_out;
@@ -32,7 +32,7 @@ int main(int argc, char** argv)
 	ros::NodeHandle n;
 
     ros::NodeHandle pn("~");
-    // topic of input cloud
+    // topic of input laser scan
     if (!pn.hasParam("input")) {
         ROS_ERROR("Could not find parameter input.");
         return -1;
@@ -40,7 +40,7 @@ int main(int argc, char** argv)
     std::string input;
     pn.getParam("input", input);
     
-    // topic of output cloud
+    // topic of output laser scan
     if (!pn.hasParam("output")) {
         ROS_ERROR("Could not find parameter output.");
         return -1;
@@ -48,7 +48,7 @@ int main(int argc, char** argv)
     std::string output;
     pn.getParam("output", output);
 
-    // how many pixels to cut off in the depth image
+    // how wide angle to cut off at the edges
 	if (!pn.hasParam("cutoff_angle")) {
         ROS_ERROR("Could not find parameter cutoff_angle.");
         return -1;
