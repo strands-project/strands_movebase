@@ -22,14 +22,14 @@ void callback(const sensor_msgs::LaserScan::ConstPtr& msg)
     msg_out.scan_time = msg->scan_time;
     msg_out.range_min = msg->range_min;
     msg_out.range_max = msg->range_max;
-	msg_out.header = msg->header;
-	pub.publish(msg_out);
+    msg_out.header = msg->header;
+    pub.publish(msg_out);
 }
 
 int main(int argc, char** argv)
 {
     ros::init(argc, argv, "remove_edges_laser");
-	ros::NodeHandle n;
+    ros::NodeHandle n;
 
     ros::NodeHandle pn("~");
     // topic of input laser scan
@@ -57,10 +57,10 @@ int main(int argc, char** argv)
     pn.getParam("cutoff_angle", temp);
     cutoff_angle = M_PI/180.0*temp;
     
-	ros::Subscriber sub = n.subscribe(input, 1, callback);
+    ros::Subscriber sub = n.subscribe(input, 1, callback);
     pub = n.advertise<sensor_msgs::LaserScan>(output, 1);
     
     ros::spin();
 	
-	return 0;
+    return 0;
 }
