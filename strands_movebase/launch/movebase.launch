@@ -6,7 +6,7 @@
     <arg name="with_chest_xtion" default="true"/>
     <arg name="chest_xtion_name" default="chest_xtion"/>
     <arg name="chest_xtion_machine" default="localhost"/>
-    <arg name="chest_xtion_user" default="strands"/>
+    <arg name="chest_xtion_user" default=""/>
     <arg name="with_head_xtion" default="false"/>
 
     <arg name="map"/>
