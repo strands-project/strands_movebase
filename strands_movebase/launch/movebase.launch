@@ -66,7 +66,7 @@
         <remap from="/cmd_vel" to="/cmd_vel_mux/input/navigation" if="$(arg with_mux)"/>
         <param name="controller_frequency" value="10.0"/>
         <param name="controller_patience" value="15.0"/>
-        <param name="planner_frequency" value="2.0"/>
+        <param name="planner_frequency" value="0.5"/>
         <param name="clearing_rotation_allowed" value="false"/>
         <rosparam file="$(find strands_movebase)/strands_movebase_params/costmap_common_params.yaml" command="load" ns="global_costmap"/>
         <rosparam file="$(find strands_movebase)/strands_movebase_params/costmap_common_params.yaml" command="load" ns="local_costmap"/>
