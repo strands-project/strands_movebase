@@ -162,14 +162,15 @@ private:
             joint_state.velocity[0] = 0;
             joint_state.velocity[1] = 0;
             pub.publish(joint_state);
-            rate.sleep();
-            ++counter;
 
             feedback.progress = float(counter+1)/5.0f;
             server.publishFeedback(feedback);
+
+            rate.sleep();
+            ++counter;
         }
 
-        ROS_INFO("Stopping to publish chest transform after 10 seconds, quitting...");
+        ROS_INFO("Stopping to publish chest transform after 5 seconds, quitting...");
 
         result.status = "Published calibration.";
         result.angle = 180.0f/M_PI*angle;
@@ -230,7 +231,7 @@ public:
                 best_inliers = inliers;
             }
 
-            if (i % 10 == 0) {
+            if (i % 10 == 0 || i == max - 1) {
                 feedback.progress = float(i+1)/float(max);
                 server.publishFeedback(feedback);
             }
