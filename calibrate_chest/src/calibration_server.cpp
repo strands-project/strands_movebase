@@ -15,12 +15,11 @@
 class CalibrateCameraServer {
 private:
 
-    //bool do_calibrate; // register and unregister instead
     ros::NodeHandle n;
     actionlib::SimpleActionServer<calibrate_chest::CalibrateCameraAction> server;
     std::string action_name;
     ros::ServiceClient client;
-    //ros::Subscriber sub;
+    std::string camera_name;
     std::string camera_topic;
     calibrate_chest::CalibrateCameraFeedback feedback;
     calibrate_chest::CalibrateCameraResult result;
@@ -28,13 +27,12 @@ private:
 public:
 
     CalibrateCameraServer(const std::string& name, const std::string& camera_name) :
-        //do_calibrate(false),
         server(n, name, boost::bind(&CalibrateCameraServer::execute_cb, this, _1), false),
         action_name(name),
         client(n.serviceClient<mongodb_store::SetParam>("/config_manager/set_param")),
+        camera_name(camera_name),
         camera_topic(camera_name + "/depth/points")
     {
-        //sub = n.subscribe(camera_topic, 1, &CalibrateCameraServer::msg_callback, this);
         server.start();
     }
 
@@ -116,16 +114,16 @@ private:
         char buffer[250];
         
         // store height above ground in datacentre
-        ros::param::set("/chest_xtion_height", height);
-        sprintf(buffer, "{\"path\":\"/chest_xtion_height\",\"value\":%f}", height);
+        ros::param::set(std::string("/") + camera_name + "_height", height);
+        sprintf(buffer, "{\"path\":\"/%s_height\",\"value\":%f}", camera_name.c_str(), height);
         srv.request.param = buffer;
         if (!client.call(srv)) {
             ROS_ERROR("Failed to call set height, is config manager running?");
         }
         
         // store angle between camera and horizontal plane
-        ros::param::set("/chest_xtion_angle", angle);
-        sprintf(buffer, "{\"path\":\"/chest_xtion_angle\",\"value\":%f}", angle);
+        ros::param::set(std::string("/") + camera_name + "_angle", angle);
+        sprintf(buffer, "{\"path\":\"/%s_angle\",\"value\":%f}", camera_name.c_str(), angle);
         srv.request.param = buffer;
         if (!client.call(srv)) {
             ROS_ERROR("Failed to call set angle, is config manager running?");
@@ -142,8 +140,8 @@ private:
 
         // get calibration with respect to ground plane from the calibrate_chest node
         double height, angle;
-        n.param<double>("/chest_xtion_height", height, 1.10f); // get the height calibration
-        n.param<double>("/chest_xtion_angle", angle, 0.72f); // get the angle calibration
+        n.param<double>(std::string("/") + camera_name + "_height", height, 1.10f); // get the height calibration
+        n.param<double>(std::string("/") + camera_name + "_angle", angle, 0.72f); // get the angle calibration
 
         ros::Rate rate(1.0f);
         ros::Publisher pub = n.advertise<sensor_msgs::JointState>("/chest_calibration_publisher/state", 1);
@@ -155,8 +153,8 @@ private:
             joint_state.name.resize(2);
             joint_state.position.resize(2);
             joint_state.velocity.resize(2);
-            joint_state.name[0] = "chest_xtion_height_joint";
-            joint_state.name[1] = "chest_xtion_tilt_joint";
+            joint_state.name[0] = camera_name + "_height_joint";
+            joint_state.name[1] = camera_name + "_tilt_joint";
             joint_state.position[0] = height;
             joint_state.position[1] = angle;
             joint_state.velocity[0] = 0;
