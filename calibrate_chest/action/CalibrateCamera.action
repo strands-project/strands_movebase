@@ -1,0 +1,11 @@
+#goal definition
+string command
+---
+#result definition
+string status
+float32 angle
+float32 height
+---
+#feedback definition
+string status
+float32 progress
