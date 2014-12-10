@@ -6,6 +6,7 @@
 #include <pcl/visualization/pcl_visualizer.h>
 #include <boost/thread/thread.hpp>
 #include "mongodb_store/SetParam.h"
+#include <sstream>
 
 #include <actionlib/server/simple_action_server.h>
 #include <calibrate_chest/CalibrateCameraAction.h>
@@ -21,17 +22,19 @@ private:
     ros::ServiceClient client;
     std::string camera_name;
     std::string camera_topic;
+    double desired_angle;
     calibrate_chest::CalibrateCameraFeedback feedback;
     calibrate_chest::CalibrateCameraResult result;
 
 public:
 
-    CalibrateCameraServer(const std::string& name, const std::string& camera_name) :
+    CalibrateCameraServer(const std::string& name, const std::string& camera_name, double angle) :
         server(n, name, boost::bind(&CalibrateCameraServer::execute_cb, this, _1), false),
         action_name(name),
         client(n.serviceClient<mongodb_store::SetParam>("/config_manager/set_param")),
         camera_name(camera_name),
-        camera_topic(camera_name + "/depth/points")
+        camera_topic(camera_name + "/depth/points"),
+        desired_angle(angle)
     {
         server.start();
     }
@@ -104,8 +107,10 @@ private:
         result.angle = angle_deg;
         result.height = height;
 
-        if (fabs(45.0f - angle_deg) > 3.0f) {
-            result.status = "Angle not close enough to 45 degrees.";
+        if (fabs(desired_angle - angle_deg) > 3.0f) {
+            std::stringstream ss;
+            ss << desired_angle;
+            result.status = std::string("Angle not close enough to ") + ss.str() + " degrees.";
             server.setAborted(result);
             return;
         }
@@ -264,7 +269,7 @@ public:
 int main(int argc, char** argv)
 {
     ros::init(argc, argv, "calibrate_chest");
-    CalibrateCameraServer calibrate(ros::this_node::getName(), "chest_xtion");
+    CalibrateCameraServer calibrate(ros::this_node::getName(), "chest_xtion", 46.0);
     ros::spin();
 	
 	return 0;
