@@ -10,6 +10,8 @@
 #include <actionlib/server/simple_action_server.h>
 #include <calibrate_chest/CalibrateCameraAction.h>
 
+#include <sensor_msgs/JointState.h>
+
 class CalibrateCameraServer {
 private:
 
@@ -133,6 +135,48 @@ private:
         server.setSucceeded(result);
     }
 
+    void publish_calibration()
+    {
+        feedback.status = "Publishing calibration...";
+        feedback.progress = 0.0f;
+
+        // get calibration with respect to ground plane from the calibrate_chest node
+        double height, angle;
+        n.param<double>("/chest_xtion_height", height, 1.10f); // get the height calibration
+        n.param<double>("/chest_xtion_angle", angle, 0.72f); // get the angle calibration
+
+        ros::Rate rate(1.0f);
+        ros::Publisher pub = n.advertise<sensor_msgs::JointState>("/chest_calibration_publisher/state", 1);
+
+        int counter = 0; // only publish for the first 10 secs, transforms will stay in tf
+        while (n.ok() && counter < 5) {
+            sensor_msgs::JointState joint_state;
+            joint_state.header.stamp = ros::Time::now();
+            joint_state.name.resize(2);
+            joint_state.position.resize(2);
+            joint_state.velocity.resize(2);
+            joint_state.name[0] = "chest_xtion_height_joint";
+            joint_state.name[1] = "chest_xtion_tilt_joint";
+            joint_state.position[0] = height;
+            joint_state.position[1] = angle;
+            joint_state.velocity[0] = 0;
+            joint_state.velocity[1] = 0;
+            pub.publish(joint_state);
+            rate.sleep();
+            ++counter;
+
+            feedback.progress = float(counter+1)/5.0f;
+            server.publishFeedback(feedback);
+        }
+
+        ROS_INFO("Stopping to publish chest transform after 10 seconds, quitting...");
+
+        result.status = "Published calibration.";
+        result.angle = 180.0f/M_PI*angle;
+        result.height = height;
+        server.setSucceeded(result);
+    }
+
 public:
 
     void msg_callback(const sensor_msgs::PointCloud2::ConstPtr& msg)
@@ -184,6 +228,9 @@ public:
             if (inliers > best_inliers) {
                 best_plane = plane;
                 best_inliers = inliers;
+            }
+
+            if (i % 10 == 0) {
                 feedback.progress = float(i+1)/float(max);
                 server.publishFeedback(feedback);
             }
@@ -204,6 +251,9 @@ public:
                 result.status = "Did not receive any point cloud.";
                 server.setAborted(result);
             }
+        }
+        else if (goal->command == "publish") {
+            publish_calibration();
         }
         else {
             result.status = "Enter command \"calibrate\" or \"publish\".";
