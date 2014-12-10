@@ -13,12 +13,12 @@
 class CalibrateCameraServer {
 private:
 
-    bool do_calibrate; // register and unregister instead
+    //bool do_calibrate; // register and unregister instead
     ros::NodeHandle n;
     actionlib::SimpleActionServer<calibrate_chest::CalibrateCameraAction> server;
     std::string action_name;
     ros::ServiceClient client;
-    ros::Subscriber sub;
+    //ros::Subscriber sub;
     std::string camera_topic;
     calibrate_chest::CalibrateCameraFeedback feedback;
     calibrate_chest::CalibrateCameraResult result;
@@ -26,13 +26,13 @@ private:
 public:
 
     CalibrateCameraServer(const std::string& name, const std::string& camera_name) :
-        do_calibrate(false),
+        //do_calibrate(false),
         server(n, name, boost::bind(&CalibrateCameraServer::execute_cb, this, _1), false),
         action_name(name),
         client(n.serviceClient<mongodb_store::SetParam>("/config_manager/set_param")),
         camera_topic(camera_name + "/depth/points")
     {
-        sub = n.subscribe(camera_topic, 1, &CalibrateCameraServer::msg_callback, this);
+        //sub = n.subscribe(camera_topic, 1, &CalibrateCameraServer::msg_callback, this);
         server.start();
     }
 
@@ -137,10 +137,10 @@ public:
 
     void msg_callback(const sensor_msgs::PointCloud2::ConstPtr& msg)
     {
-        if (!do_calibrate) {
-            return;
-        }
-        do_calibrate = false;
+        //if (!do_calibrate) {
+        //    return;
+        //}
+        //do_calibrate = false;
 
         feedback.status = "Calibrating...";
         feedback.progress = 0.0f;
@@ -196,7 +196,14 @@ public:
     void execute_cb(const calibrate_chest::CalibrateCameraGoalConstPtr& goal)
     {
         if (goal->command == "calibrate") {
-            do_calibrate = true;
+            sensor_msgs::PointCloud2::ConstPtr msg = ros::topic::waitForMessage<sensor_msgs::PointCloud2>(camera_topic, n);
+            if (msg) {
+                msg_callback(msg);
+            }
+            else {
+                result.status = "Did not receive any point cloud.";
+                server.setAborted(result);
+            }
         }
         else {
             result.status = "Enter command \"calibrate\" or \"publish\".";
