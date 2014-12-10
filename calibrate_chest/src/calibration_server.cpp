@@ -8,9 +8,10 @@
 #include "mongodb_store/SetParam.h"
 
 #include <actionlib/server/simple_action_server.h>
-#include <calibrate_chest/CalibrateCamera.h>
+#include <calibrate_chest/CalibrateCameraAction.h>
 
 class CalibrateCameraServer {
+private:
 
     bool do_calibrate; // register and unregister instead
     ros::NodeHandle n;
@@ -22,9 +23,11 @@ class CalibrateCameraServer {
     calibrate_chest::CalibrateCameraFeedback feedback;
     calibrate_chest::CalibrateCameraResult result;
 
+public:
+
     CalibrateCameraServer(const std::string& name, const std::string& camera_name) :
         do_calibrate(false),
-        server(nh, name, boost::bind(&CalibrateCameraServer::execute_cb, this, _1), false),
+        server(n, name, boost::bind(&CalibrateCameraServer::execute_cb, this, _1), false),
         action_name(name),
         client(n.serviceClient<mongodb_store::SetParam>("/config_manager/set_param")),
         camera_topic(camera_name + "/depth/points")
@@ -32,6 +35,8 @@ class CalibrateCameraServer {
         sub = n.subscribe(camera_topic, 1, &CalibrateCameraServer::msg_callback, this);
         server.start();
     }
+
+private:
 
     bool is_inlier(const Eigen::Vector3f& point, const Eigen::Vector4f plane, double threshold) const
     {
@@ -127,6 +132,8 @@ class CalibrateCameraServer {
         result.status = "Successfully computed and saved calibration.";
         server.setSucceeded(result);
     }
+
+public:
 
     void msg_callback(const sensor_msgs::PointCloud2::ConstPtr& msg)
     {

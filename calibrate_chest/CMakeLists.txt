@@ -4,7 +4,7 @@ project(calibrate_chest)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS roscpp sensor_msgs std_msgs mongodb_store actionlib_msgs)
+find_package(catkin REQUIRED COMPONENTS roscpp sensor_msgs std_msgs mongodb_store actionlib actionlib_msgs)
 
 ## System dependencies are found with CMake's conventions
 find_package(Boost REQUIRED COMPONENTS thread)
@@ -38,15 +38,16 @@ add_definitions(${PCL_DEFINITIONS})
 #   Service2.srv
 # )
 
-## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   sensor_msgs#   std_msgs
-# )
-
 add_action_files(
   DIRECTORY action
   FILES CalibrateCamera.action
+)
+
+## Generate added messages and services with any dependencies listed here
+generate_messages(
+  DEPENDENCIES
+  std_msgs
+  actionlib_msgs
 )
 
 ###################################
