@@ -4,7 +4,7 @@ project(calibrate_chest)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS roscpp sensor_msgs std_msgs mongodb_store)
+find_package(catkin REQUIRED COMPONENTS roscpp sensor_msgs std_msgs mongodb_store actionlib actionlib_msgs)
 
 ## System dependencies are found with CMake's conventions
 find_package(Boost REQUIRED COMPONENTS thread)
@@ -38,11 +38,17 @@ add_definitions(${PCL_DEFINITIONS})
 #   Service2.srv
 # )
 
+add_action_files(
+  DIRECTORY action
+  FILES CalibrateCamera.action
+)
+
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   sensor_msgs#   std_msgs
-# )
+generate_messages(
+  DEPENDENCIES
+  std_msgs
+  actionlib_msgs
+)
 
 ###################################
 ## catkin specific configuration ##
@@ -57,7 +63,7 @@ catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES calibrate_chest
 #  CATKIN_DEPENDS roscpp sensor_msgs std_msgs
-#  DEPENDS system_lib
+  DEPENDS actionlib_msgs
 )
 
 ###########
@@ -79,10 +85,12 @@ include_directories(
 ## Declare a cpp executable
 add_executable(calibrate_chest src/calibrate_chest.cpp)
 add_executable(chest_calibration_publisher src/chest_calibration_publisher.cpp)
+add_executable(calibration_server src/calibration_server.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
 add_dependencies(calibrate_chest mongodb_store_generate_messages_cpp)
+add_dependencies(calibration_server mongodb_store_generate_messages_cpp calibrate_chest_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(calibrate_chest
@@ -90,6 +98,10 @@ target_link_libraries(calibrate_chest
 )
 
 target_link_libraries(chest_calibration_publisher
+  ${catkin_LIBRARIES} ${PCL_LIBRARIES}
+)
+
+target_link_libraries(calibration_server
   ${catkin_LIBRARIES} ${PCL_LIBRARIES}
 )
 
