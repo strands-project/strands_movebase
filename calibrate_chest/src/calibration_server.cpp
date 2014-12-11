@@ -247,7 +247,7 @@ public:
     void execute_cb(const calibrate_chest::CalibrateCameraGoalConstPtr& goal)
     {
         if (goal->command == "calibrate") {
-            sensor_msgs::PointCloud2::ConstPtr msg = ros::topic::waitForMessage<sensor_msgs::PointCloud2>(camera_topic, n);
+            sensor_msgs::PointCloud2::ConstPtr msg = ros::topic::waitForMessage<sensor_msgs::PointCloud2>(camera_topic, n, ros::Duration(5));
             if (msg) {
                 msg_callback(msg);
             }
