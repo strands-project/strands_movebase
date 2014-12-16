@@ -15,6 +15,7 @@ class state_service {
 public:
 
     ros::NodeHandle n;
+    //ros::NodeHandle pn; 
     ros::ServiceServer service;
 
     //sensor_msgs::Image::ConstPtr last_img;
@@ -40,7 +41,7 @@ public:
     std::string global_path_input;
     std::string local_path_input;
 
-    state_service()
+    state_service(const std::string& name) //: n(), pn("~")
     {
         // Initialize node parameters from launch file or command line.
         // Use a private node handle so that multiple instances of the node can be run simultaneously
@@ -64,7 +65,7 @@ public:
         local_path_sub = n.subscribe(local_path_input, 1, &state_service::local_path_callback, this);
         counter = 0;
 
-        service = n.advertiseService("save_state_service", &state_service::service_callback, this);
+        service = n.advertiseService(name, &state_service::service_callback, this);
     }
 
     /*void image_callback(const sensor_msgs::Image::ConstPtr& image_msg)
@@ -254,7 +255,7 @@ int main(int argc, char** argv)
 {
     ros::init(argc, argv, "movebase_state_service");
 
-    state_service();
+    state_service sc(ros::this_node::getName());
     
     ros::spin();
     
