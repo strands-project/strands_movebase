@@ -49,7 +49,7 @@ public:
         pn.param<std::string>("image_input", image_input, std::string("/head_xtion/rgb/image_color"));
         pn.param<std::string>("global_costmap_input", global_costmap_input, std::string("/move_base/global_costmap/costmap"));
         pn.param<std::string>("local_costmap_input", local_costmap_input, std::string("/move_base/local_costmap/costmap"));
-        pn.param<std::string>("snapshot_folder", snapshot_folder, std::string(getenv("HOME")) + std::string("/.ros/state_snapshot_service"));
+        pn.param<std::string>("snapshot_folder", snapshot_folder, std::string(getenv("HOME")) + std::string("/.ros/movebase_state_service"));
         pn.param<std::string>("goal_input", goal_input, std::string("/move_base/current_goal"));
         pn.param<std::string>("pose_input", pose_input, std::string("/robot_pose"));
         pn.param<std::string>("global_path_input", global_path_input, std::string("/move_base/NavfnROS/plan"));
