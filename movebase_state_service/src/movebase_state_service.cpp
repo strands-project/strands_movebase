@@ -46,8 +46,8 @@ public:
         pn.param<std::string>("snapshot_folder", snapshot_folder, std::string(getenv("HOME")) + std::string("/.ros/movebase_state_service"));
         pn.param<std::string>("goal_input", goal_input, std::string("/move_base/current_goal"));
         pn.param<std::string>("pose_input", pose_input, std::string("/robot_pose"));
-        pn.param<std::string>("global_path_input", global_path_input, std::string("/move_base/NavfnROS/plan"));
-        pn.param<std::string>("local_path_input", local_path_input, std::string("TrajectoryPlannerROS/local_plan"));
+        pn.param<std::string>("global_path_input", global_path_input, std::string("/move_base/DWAPlannerROS/global_plan"));
+        pn.param<std::string>("local_path_input", local_path_input, std::string("/move_base/DWAPlannerROS/local_plan"));
 
         goal_sub = n.subscribe(goal_input, 1, &state_service::goal_callback, this);
         pose_sub = n.subscribe(pose_input, 1, &state_service::pose_callback, this);
