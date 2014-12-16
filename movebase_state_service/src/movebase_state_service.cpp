@@ -15,12 +15,8 @@ class state_service {
 public:
 
     ros::NodeHandle n;
-    //ros::NodeHandle pn; 
     ros::ServiceServer service;
 
-    //sensor_msgs::Image::ConstPtr last_img;
-    //nav_msgs::OccupancyGrid::ConstPtr global_last_map;
-    //nav_msgs::OccupancyGrid::ConstPtr local_last_map;
     geometry_msgs::PoseStampedConstPtr last_goal;
     geometry_msgs::PoseConstPtr last_pose;
     nav_msgs::Path::ConstPtr global_last_path;
@@ -41,11 +37,8 @@ public:
     std::string global_path_input;
     std::string local_path_input;
 
-    state_service(const std::string& name) //: n(), pn("~")
+    state_service(const std::string& name)
     {
-        // Initialize node parameters from launch file or command line.
-        // Use a private node handle so that multiple instances of the node can be run simultaneously
-        // while using different parameters.
         ros::NodeHandle pn("~");
         pn.param<std::string>("image_input", image_input, std::string("/head_xtion/rgb/image_color"));
         pn.param<std::string>("global_costmap_input", global_costmap_input, std::string("/move_base/global_costmap/costmap"));
@@ -56,9 +49,6 @@ public:
         pn.param<std::string>("global_path_input", global_path_input, std::string("/move_base/NavfnROS/plan"));
         pn.param<std::string>("local_path_input", local_path_input, std::string("TrajectoryPlannerROS/local_plan"));
 
-        //ros::Subscriber image_sub = n.subscribe(image_input, 1, image_callback);
-        //ros::Subscriber global_costmap_sub = n.subscribe(global_costmap_input, 1, global_costmap_callback);
-        //ros::Subscriber local_costmap_sub = n.subscribe(local_costmap_input, 1, local_costmap_callback);
         goal_sub = n.subscribe(goal_input, 1, &state_service::goal_callback, this);
         pose_sub = n.subscribe(pose_input, 1, &state_service::pose_callback, this);
         global_path_sub = n.subscribe(global_path_input, 1, &state_service::global_path_callback, this);
@@ -67,21 +57,6 @@ public:
 
         service = n.advertiseService(name, &state_service::service_callback, this);
     }
-
-    /*void image_callback(const sensor_msgs::Image::ConstPtr& image_msg)
-    {
-        last_img = image_msg;
-    }
-
-    void global_costmap_callback(const nav_msgs::OccupancyGrid::ConstPtr& map_msg)
-    {
-        global_last_map = map_msg;
-    }
-
-    void local_costmap_callback(const nav_msgs::OccupancyGrid::ConstPtr& map_msg)
-    {
-        local_last_map = map_msg;
-    }*/
 
     void goal_callback(const geometry_msgs::PoseStampedConstPtr& goal_msg)
     {
@@ -129,9 +104,7 @@ public:
         double map_origin_x = last_map->info.origin.position.x;
         double map_origin_y = last_map->info.origin.position.y;
         double map_res = last_map->info.resolution;
-        //mod_num = (int)(map_res/0.05 + 0.5); // solve generically! (0.05 = master_map.resolution...)
         ROS_INFO_STREAM("Map width x height: " << map_width << " x " << map_height);
-        // just copy dynamicMap for tableMap and dynMap
         costmap_2d::Costmap2D map(map_width, map_height, map_res, map_origin_x, map_origin_y);
 
         cv::Mat image = cv::Mat::zeros(map_height, map_width, CV_8UC3);
@@ -214,8 +187,6 @@ public:
             compression.push_back(CV_IMWRITE_PNG_COMPRESSION);
             compression.push_back(0); // no compression
 
-            //char buffer[250];
-            //sprintf(buffer, "%s/image%06d.png", snapshot_folder.c_str(), counter);
             std::string image_file = snapshot_folder + "/image" + std::to_string(counter) + ".png";
             cv::imwrite(image_file, rgb_cv_img_boost_ptr->image, compression);
         }
@@ -227,7 +198,6 @@ public:
         }
         std::string global_map_file = snapshot_folder + "/global_costmap" + std::to_string(counter) + ".pgm";
         std::string global_rgb_map_file = snapshot_folder + "/global_costmap_path" + std::to_string(counter) + ".png";
-        //save_map(global_map_file, global_rgb_map_file, global_last_map, global_last_path);
         save_map(res.global_costmap_image, global_map_file, global_rgb_map_file, global_costmap_msg, global_last_path, req.save_to_disk);
 
         nav_msgs::OccupancyGrid::ConstPtr local_costmap_msg = ros::topic::waitForMessage<nav_msgs::OccupancyGrid>(local_costmap_input, n, ros::Duration(5));
@@ -236,13 +206,7 @@ public:
         }
         std::string local_map_file = snapshot_folder + "/local_costmap" + std::to_string(counter) + ".pgm";
         std::string local_rgb_map_file = snapshot_folder + "/local_costmap_path" + std::to_string(counter) + ".png";
-        //save_map(local_map_file, local_rgb_map_file, local_last_map, local_last_path);
         save_map(res.local_costmap_image, local_map_file, local_rgb_map_file, local_costmap_msg, local_last_path, req.save_to_disk);
-
-        /*res.folder = snapshot_folder;
-        res.image_file = image_file;
-        res.global_costmap_file = global_rgb_map_file;
-        res.local_costmap_file = local_rgb_map_file;*/
 
         ++counter;
 
