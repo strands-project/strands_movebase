@@ -2,6 +2,21 @@
 Changelog for package strands_movebase
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* getting move base's own costmap clearance to clear the obstacle layer
+* reverting resolution as it is too much for the current depth cloud config and it creates a lot of lingering obstacles
+* new nav params
+* defaul user needs to be ""
+* Fixed indentation
+* Added remove_edges_laser to install targets
+* Made the calculation of the new points exact
+* Changed default arguments to make clear that they are floats
+* Added the new node in the launch file and included the decreased FOV obstacle adding laser in the sensor sources
+* Now it should work
+* Added a node that remove the edges of the laser
+* Contributors: Bruno Lacerda, Nils Bore
+
 0.0.13 (2014-11-21)
 -------------------
 * Made subsampling parameters configurable.

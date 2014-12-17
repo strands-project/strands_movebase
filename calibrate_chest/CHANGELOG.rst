@@ -2,6 +2,20 @@
 Changelog for package calibrate_chest
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Update README.md
+* Added timeout if no point cloud received
+* Made desired angle configurable
+* Changed all the camera names to be parameters
+* Polishing
+* Added the publish option to the action server as well
+* Made it a bit nicer
+* Got it compiling
+* Added dep also in package.xml
+* Initial commit for making camera calibration an action server instead
+* Contributors: Nils Bore
+
 0.0.13 (2014-11-21)
 -------------------
 
