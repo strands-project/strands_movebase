@@ -10,7 +10,6 @@ find_package(catkin REQUIRED COMPONENTS
                     roscpp
                     sensor_msgs
                     std_msgs
-                    pcl_ros
                     tf
                     costmap_2d
                     navfn
@@ -92,3 +91,9 @@ target_link_libraries(movebase_state_service
   ${catkin_LIBRARIES} ${OpenCV_LIBS}
 )
 
+## Mark executables and/or libraries for installation
+install(TARGETS movebase_state_service
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
