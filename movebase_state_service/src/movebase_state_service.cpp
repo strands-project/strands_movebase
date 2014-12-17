@@ -2,6 +2,7 @@
 #include <sensor_msgs/Image.h>
 #include <cv_bridge/cv_bridge.h>
 #include <opencv2/opencv.hpp>
+#include <opencv2/highgui/highgui.hpp>
 #include <costmap_2d/costmap_2d_ros.h>
 #include <navfn/navfn_ros.h>
 #include <geometry_msgs/PoseStamped.h>
@@ -149,7 +150,7 @@ public:
             map.saveMap(map_file);
             // use lossless png compression
             std::vector<int> compression;
-            compression.push_back(CV_IMWRITE_PNG_COMPRESSION);
+            compression.push_back(cv::IMWRITE_PNG_COMPRESSION);
             compression.push_back(0); // no compression
             cv::imwrite(rgb_map_file, image, compression);
         }
@@ -184,7 +185,7 @@ public:
             }
             // use lossless png compression
             std::vector<int> compression;
-            compression.push_back(CV_IMWRITE_PNG_COMPRESSION);
+            compression.push_back(cv::IMWRITE_PNG_COMPRESSION);
             compression.push_back(0); // no compression
 
             std::string image_file = snapshot_folder + "/image" + std::to_string(counter) + ".png";
