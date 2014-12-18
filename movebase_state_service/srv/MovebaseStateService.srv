@@ -1,0 +1,5 @@
+bool save_to_disk
+---
+sensor_msgs/Image global_costmap_image
+sensor_msgs/Image local_costmap_image
+sensor_msgs/Image camera_image

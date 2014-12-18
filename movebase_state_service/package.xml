@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<package>
+  <name>movebase_state_service</name>
+  <version>0.0.2</version>
+  <description>
+    This service returns the local and global costmaps as image with the global and local plans overlaid.
+    It also returns the last image from the camera.
+  </description>
+
+  <!-- One maintainer tag required, multiple allowed, one person per tag -->
+  <maintainer email="nilsbore@gmail.com">nbore</maintainer>
+
+  <!-- One license tag required, multiple allowed, one license per tag -->
+  <!-- Commonly used license strings: -->
+  <!--   BSD, MIT, Boost Software License, GPLv2, GPLv3, LGPLv2.1, LGPLv3 -->
+  <license>BSD</license>
+
+  <!-- Url tags are optional, but mutiple are allowed, one per tag -->
+  <!-- Optional attribute type can be: website, bugtracker, or repository -->
+  <url type="website">http://github.com/strands-project/scitos_2d_navigation</url>
+
+  <!-- Author tags are optional, mutiple are allowed, one per tag -->
+  <!-- Authors do not have to be maintianers, but could be -->
+  <author email="nilsbore@gmail.com">Nils Bore</author>
+  <author email="b.lacerda@cs.bham.ac.uk">Bruno Lacerda</author>
+
+  <!-- The *_depend tags are used to specify dependencies -->
+  <!-- Dependencies can be catkin packages or system dependencies -->
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>tf</build_depend>
+  <build_depend>costmap_2d</build_depend>
+  <build_depend>nav_core</build_depend>
+  <build_depend>cv_bridge</build_depend>
+  <build_depend>nav_msgs</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <run_depend>nav_core</run_depend>
+  <run_depend>message_runtime</run_depend> <!-- try -->
+  <run_depend>sensor_msgs</run_depend>
+  <run_depend>roscpp</run_depend>
+  <run_depend>std_msgs</run_depend>
+  <run_depend>tf</run_depend>
+  <run_depend>costmap_2d</run_depend>
+  <run_depend>cv_bridge</run_depend>
+  <run_depend>nav_msgs</run_depend>
+  <run_depend>geometry_msgs</run_depend>
+  <!-- The export tag contains other, unspecified, tags -->
+  <!-- <export> -->
+
+  <!-- </export> -->
+</package>
+
