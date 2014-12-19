@@ -93,4 +93,7 @@
         <arg name="min_points" value="$(arg subsample_min_points)"/>
         <arg name="skip_points" value="$(arg subsample_skip_points)"/>
     </include>
+    
+    <!-- Node providing costmap snapshot service -->
+    <node pkg="movebase_state_service" type="movebase_state_service" name="movebase_state_service" output="screen"/>
 </launch>
