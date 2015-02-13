@@ -2,8 +2,8 @@
 Changelog for package movebase_state_service
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.15 (2015-02-13)
+-------------------
 * fixed version number
 * Merge remote-tracking branch 'origin/state_snapshot' into state_snapshot
 * Changed enum to be portable
