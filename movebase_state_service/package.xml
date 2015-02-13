@@ -32,11 +32,13 @@
   <build_depend>std_msgs</build_depend>
   <build_depend>tf</build_depend>
   <build_depend>costmap_2d</build_depend>
+  <build_depend>navfn</build_depend>
   <build_depend>nav_core</build_depend>
   <build_depend>cv_bridge</build_depend>
   <build_depend>nav_msgs</build_depend>
   <build_depend>geometry_msgs</build_depend>
   <run_depend>nav_core</run_depend>
+  <run_depend>navfn</run_depend>
   <run_depend>message_runtime</run_depend> <!-- try -->
   <run_depend>sensor_msgs</run_depend>
   <run_depend>roscpp</run_depend>
