@@ -2,6 +2,13 @@
 Changelog for package movebase_state_service
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Merge pull request `#38 <https://github.com/strands-project/strands_movebase/issues/38>`_ from nilsbore/state_snapshot
+  [movebase_state_service] Added navfn as dependency in movebase_state_service
+* Forgot to add navfn as dependency in movebase_state_service
+* Contributors: Nils Bore
+
 0.0.15 (2015-02-13)
 -------------------
 * fixed version number
