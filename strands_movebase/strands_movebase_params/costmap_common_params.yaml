@@ -20,6 +20,7 @@ footprint_padding: 0.0001
 
 map_layer:
   map_topic: /map
+  unknown_cost_value: 100
 
 no_go_layer:
   map_topic: /no_go_map
