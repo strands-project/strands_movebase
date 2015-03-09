@@ -24,10 +24,14 @@ map_layer:
 no_go_layer:
   map_topic: /no_go_map
 
-inflation_layer:
+global_inflation_layer:
   inflation_radius: 0.8
   cost_scaling_factor: 5.0
 
+local_inflation_layer:
+  inflation_radius: 0.2
+  cost_scaling_factor: 5.0  
+  
 obstacle_layer:
   max_obstacle_height: 2.0
   obstacle_range: 2.5
