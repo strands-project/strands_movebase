@@ -20,6 +20,7 @@ footprint_padding: 0.0001
 
 map_layer:
   map_topic: /map
+#  unknown_cost_value: 100
 
 no_go_layer:
   map_topic: /no_go_map
@@ -38,7 +39,9 @@ obstacle_layer:
   z_voxels: 6
   unknown_threshold: 6
   mark_threshold: 0
-
+  
+  track_unknown_space: true
+  
   observation_sources: laser_obstacle laser_clearing point_cloud_sensor clear_sensor cliff_sensor
 
   laser_obstacle: {sensor_frame: base_laser_link, data_type: LaserScan, topic: /move_base/scan_obstacle, marking: true, clearing: false}

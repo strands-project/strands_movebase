@@ -1,0 +1,3 @@
+#see http://wiki.ros.org/navfn for param description
+NavfnROS:
+  allow_unknown: false
