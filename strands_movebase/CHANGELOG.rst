@@ -2,6 +2,9 @@
 Changelog for package strands_movebase
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.16 (2015-02-13)
+-------------------
+
 0.0.14 (2014-12-17)
 -------------------
 * getting move base's own costmap clearance to clear the obstacle layer
