@@ -2,6 +2,17 @@
 Changelog for package strands_movebase
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* really correcting import
+* Merge branch 'hydro-devel' into indigo-devel
+* correcting imports
+* Avoiding planning through Unknown Areas by adding tracking of unknown obstacles and not allowing them
+* adding slight inflation to local costmap
+* Not copying the intensities vector in remove_edges_laser if there are no values in the input message
+* setting unknown_cost_value to 100
+* Contributors: Bruno Lacerda, Jaime Pulido Fentanes, Nils Bore
+
 0.0.16 (2015-02-13)
 -------------------
 
