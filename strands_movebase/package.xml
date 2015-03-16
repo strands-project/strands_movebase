@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>strands_movebase</name>
-  <version>0.0.14</version>
+  <version>0.0.16</version>
   <description>
     This package contains components for using the ROS move base together
     with the Scitos G5 robot. There is options for running obstacle avoidance
