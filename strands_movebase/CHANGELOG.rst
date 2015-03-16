@@ -2,8 +2,8 @@
 Changelog for package strands_movebase
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.17 (2015-03-16)
+-------------------
 * really correcting import
 * Merge branch 'hydro-devel' into indigo-devel
 * correcting imports
