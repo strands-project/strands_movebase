@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>movebase_state_service</name>
-  <version>0.0.17</version>
+  <version>0.0.18</version>
   <description>
     This service returns the local and global costmaps as image with the global and local plans overlaid.
     It also returns the last image from the camera.

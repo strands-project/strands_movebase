@@ -2,8 +2,8 @@
 Changelog for package strands_movebase
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.18 (2015-03-28)
+-------------------
 * Added dependency to state service since it is included in launch file
 * Contributors: Nils Bore
 
