@@ -58,6 +58,7 @@ namespace strands_navfn {
 
   void NavfnROS::initialize(std::string name, costmap_2d::Costmap2DROS* costmap_ros){
     if(!initialized_){
+      name_=name;
       costmap_ros_ = costmap_ros;
       costmap_2d::Costmap2D* costmap = costmap_ros_->getCostmap();
       planner_ = boost::shared_ptr<NavFn>(new NavFn(costmap->getSizeInCellsX(), costmap->getSizeInCellsY()));
@@ -90,6 +91,8 @@ namespace strands_navfn {
   }
 
   bool NavfnROS::validPointPotential(const geometry_msgs::Point& world_point){
+    ros::NodeHandle nh("~/" + name_);
+    nh.param("default_tolerance", default_tolerance_, 0.0);
     return validPointPotential(world_point, default_tolerance_);
   }
 
@@ -191,6 +194,8 @@ namespace strands_navfn {
 
   bool NavfnROS::makePlan(const geometry_msgs::PoseStamped& start, 
       const geometry_msgs::PoseStamped& goal, std::vector<geometry_msgs::PoseStamped>& plan){
+    ros::NodeHandle nh("~/" + name_);
+    nh.param("default_tolerance", default_tolerance_, 0.0);
     return makePlan(start, goal, default_tolerance_, plan);
   }
 
