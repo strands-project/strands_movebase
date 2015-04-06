@@ -1,0 +1,2 @@
+catkin_add_gtest(strands_path_calc_test strands_path_calc_test.cpp ../src/strands_read_pgm_costmap.cpp)
+target_link_libraries(strands_path_calc_test strands_navfn netpbm)
