@@ -54,7 +54,7 @@ strands_navfn::NavFn* make_willow_nav()
   return nav;
 }
 
-void print_neighborhood_of_last_path_entry( navfn::NavFn* nav )  
+void print_neighborhood_of_last_path_entry( strands_navfn::NavFn* nav )  
 {
   printf("last path entries:\n");
   for( int i = nav->npath - 4; i < nav->npath; i++ )
