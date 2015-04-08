@@ -47,6 +47,7 @@
   <run_depend>dwa_local_planner</run_depend>
   <run_depend>map_server</run_depend>
   <run_depend>movebase_state_service</run_depend>
+  <run_depend>strands_navfn</run_depend>
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>

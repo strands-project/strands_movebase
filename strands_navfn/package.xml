@@ -1,8 +1,11 @@
 <package>
     <name>strands_navfn</name>
-    <version>1.12.2</version>
+    <version>0.0.18</version>
     <description>
-
+        This package is a copy of the navfn package, with a small edit to allow for setting of the goal_tolerance param
+        at runtime. The navfn package is currently maintained by David V. Lu!! davidvlu@gmail.com and 
+        Michael Ferguson mferguson@fetchrobotics.com
+        
         navfn provides a fast interpolated navigation function that can be used to create plans for
         a mobile base. The planner assumes a circular robot and operates on a costmap to find a
         minimum cost plan from a start point to an end point in a grid. The navigation function is
