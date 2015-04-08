@@ -7,8 +7,8 @@
        xmlns:xacro="http://ros.org/wiki/xacro">
 
   <!-- calibration data -->
-  <!-- <include filename="$(find scitos_description)/urdf/scitos_calibration.xacro" /> -->
-  <link name="base_link" />
+  <xacro:include filename="$(find scitos_description)/urdf/scitos.xacro" />
+  <!--<link name="base_link" />-->
 
   <!-- Connect base to chest_xtion_link -->
   <link name="chest_xtion_link">
