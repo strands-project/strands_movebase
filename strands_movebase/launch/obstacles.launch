@@ -1,7 +1,9 @@
 <?xml version="1.0"?>
 <launch>
-    <arg name="machine" default="localhost"/>
-    <arg name="user" default=""/>
+    <arg name="chest_xtion_machine" default="localhost"/>
+    <arg name="chest_xtion_user" default=""/>
+    <arg name="head_xtion_machine" default="localhost"/>
+    <arg name="head_xtion_user" default=""/>
 
     <arg name="chest_xtion_name" default="chest_xtion"/>
     <arg name="z_stair_threshold" default="0.12"/>
@@ -14,10 +16,11 @@
     <arg name="skip_points" default="20"/>
 
     <!-- NOW when launching in a remote mode it will need the ROS_ENV_LOADER set if not it will leave it empty -->
-    <machine name="$(arg machine)" address="$(arg machine)" env-loader="$(optenv ROS_ENV_LOADER )" user="$(arg user)" default="true"/>
+    <machine name="$(arg chest_xtion_machine)" address="$(arg chest_xtion_machine)" env-loader="$(optenv ROS_ENV_LOADER )" user="$(arg chest_xtion_user)" default="false"/>
+    <machine name="$(arg head_xtion_machine)" address="$(arg head_xtion_machine)" env-loader="$(optenv ROS_ENV_LOADER )" user="$(arg head_xtion_user)" default="false"/>
 
     <!-- This node downsamples cloud and removes voxels with too few points in them -->
-    <node pkg="strands_movebase" type="subsample_cloud" name="subsample_cloud" output="screen">
+    <node pkg="strands_movebase" type="subsample_cloud" name="subsample_cloud" output="screen" machine="$(arg chest_xtion_machine)">
         <param name="input" value="$(arg chest_xtion_name)/depth/points"/>
         <param name="output" value="/move_base/points_subsampled"/>
         <param name="resolution" value="$(arg resolution)"/>
@@ -26,7 +29,7 @@
     </node>
 
     <!-- This node divides into points below and above the floor -->
-    <node pkg="strands_movebase" type="mirror_floor_points" name="mirror_floor_points" output="screen">
+    <node pkg="strands_movebase" type="mirror_floor_points" name="mirror_floor_points" output="screen" machine="$(arg chest_xtion_machine)">
         <param name="input" value="/move_base/points_subsampled"/>
         <param name="obstacle_output" value="/move_base/points_clearing"/>
         <param name="floor_output" value="/move_base/points_cliff"/>
@@ -35,7 +38,7 @@
     </node>
 
     <!-- This node removes the desired cutoff pixels from the cloud edges -->
-    <node pkg="strands_movebase" type="remove_edges_cloud" name="remove_edges_cloud" output="screen">
+    <node pkg="strands_movebase" type="remove_edges_cloud" name="remove_edges_cloud" output="screen" machine="$(arg chest_xtion_machine)">
         <param name="input" value="/move_base/points_clearing"/>
         <param name="output" value="/move_base/points_obstacle"/>
         <param name="cutoff" value="50.0"/>
@@ -43,7 +46,7 @@
     </node>
 
     <!-- This node removes the desired cutoff pixels from the cloud edges -->
-    <node pkg="strands_movebase" type="remove_edges_cloud" name="head_remove_edges_cloud" output="screen" if="$(arg with_head_xtion)">
+    <node pkg="strands_movebase" type="remove_edges_cloud" name="head_remove_edges_cloud" output="screen" if="$(arg with_head_xtion)" machine="$(arg head_xtion_machine)">
         <param name="input" value="/move_base/head_points_clearing"/>
         <param name="output" value="/move_base/head_points_obstacle"/>
         <param name="cutoff" value="50.0"/>
