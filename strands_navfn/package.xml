@@ -1,6 +1,6 @@
 <package>
     <name>strands_navfn</name>
-    <version>0.0.19</version>
+    <version>0.0.20</version>
     <description>
         This package is a copy of the navfn package, with a small edit to allow for setting of the goal_tolerance param
         at runtime. The navfn package is currently maintained by David V. Lu!! davidvlu@gmail.com and 

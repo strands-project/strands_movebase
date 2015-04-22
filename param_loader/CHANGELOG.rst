@@ -2,8 +2,8 @@
 Changelog for package param_loader
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.20 (2015-04-22)
+-------------------
 * add simple package to dyn reconfigure move_base via yaml files
 * Contributors: Bruno Lacerda
 
