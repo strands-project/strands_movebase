@@ -2,6 +2,9 @@
 Changelog for package movebase_state_service
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.0.18 (2015-03-28)
 -------------------
 

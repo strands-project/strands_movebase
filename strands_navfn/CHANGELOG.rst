@@ -2,6 +2,9 @@
 Changelog for package strands_navfn
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.0.19 (2015-04-10)
 -------------------
 * prepare for release
