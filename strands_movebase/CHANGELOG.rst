@@ -2,8 +2,8 @@
 Changelog for package strands_movebase
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.21 (2015-04-27)
+-------------------
 * Changed the machine tags to be able to launch the head camera processing nodes on the correct pc
 * Contributors: Nils Bore
 
