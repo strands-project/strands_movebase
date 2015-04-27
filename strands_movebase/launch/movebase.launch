@@ -7,7 +7,10 @@
     <arg name="chest_xtion_name" default="chest_xtion"/>
     <arg name="chest_xtion_machine" default="localhost"/>
     <arg name="chest_xtion_user" default=""/>
+
     <arg name="with_head_xtion" default="false"/>
+    <arg name="head_xtion_machine" default="localhost"/>
+    <arg name="head_xtion_user" default=""/>
 
     <arg name="map"/>
     <arg name="with_no_go_map" default="false"/>
@@ -84,11 +87,14 @@
          That means beware when you do anything below this! -->
     <include file="$(find strands_movebase)/launch/obstacles.launch" if="$(arg with_chest_xtion)">
         <arg name="chest_xtion_name" value="$(arg chest_xtion_name)"/>
-        <arg name="machine" value="$(arg chest_xtion_machine)"/>
-        <arg name="user" value="$(arg chest_xtion_user)"/>
+        <arg name="chest_xtion_machine" value="$(arg chest_xtion_machine)"/>
+        <arg name="chest_xtion_user" value="$(arg chest_xtion_user)"/>
+
+        <arg name="with_head_xtion" value="$(arg with_head_xtion)"/>
+        <arg name="head_xtion_machine" value="$(arg head_xtion_machine)"/>
+        <arg name="head_xtion_user" value="$(arg head_xtion_user)"/>
 
         <arg name="z_stair_threshold" value="$(arg z_stair_threshold)"/>
-        <arg name="with_head_xtion" value="$(arg with_head_xtion)"/>
         <arg name="laser_angle_cutoff" value="$(arg laser_angle_cutoff)"/>
         <arg name="resolution" value="$(arg subsample_resolution)"/>
         <arg name="min_points" value="$(arg subsample_min_points)"/>
