@@ -120,7 +120,7 @@ target_link_libraries(calibration_server
 # )
 
 ## Mark executables and/or libraries for installation
-install(TARGETS calibrate_chest chest_calibration_publisher
+install(TARGETS calibrate_chest chest_calibration_publisher calibration_server
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
