@@ -50,7 +50,7 @@ private:
     {
         pcl::PointCloud<pcl::PointXYZ>::Ptr inlier_cloud(new pcl::PointCloud<pcl::PointXYZ>());
         pcl::PointCloud<pcl::PointXYZ>::Ptr outlier_cloud(new pcl::PointCloud<pcl::PointXYZ>());
-        
+
         for (int i = 0; i < points.size(); ++i) {
             if (is_inlier(points[i].getVector3fMap(), plane, threshold)) {
                 inlier_cloud->push_back(points[i]);
@@ -59,24 +59,24 @@ private:
                 outlier_cloud->push_back(points[i]);
             }
         }
-        
+
         pcl::visualization::PCLVisualizer viewer("3D Viewer");
         viewer.setBackgroundColor(0, 0, 0);
         viewer.addCoordinateSystem(1.0);
         viewer.initCameraParameters();
-        
+
         pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> inlier_color_handler(inlier_cloud, 255, 0, 0);
         viewer.addPointCloud(inlier_cloud, inlier_color_handler, "inliers");
-        
+
         pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> outlier_color_handler(outlier_cloud, 0, 0, 255);
         viewer.addPointCloud(outlier_cloud, outlier_color_handler, "outliers");
-        
+
         while (!viewer.wasStopped())
         {
             viewer.spinOnce(100);
             boost::this_thread::sleep(boost::posix_time::microseconds(100000));
         }
-        
+
     }
 
     void compute_plane(Eigen::Vector4f& plane, const pcl::PointCloud<pcl::PointXYZ>& points, int* inds) const
@@ -114,10 +114,10 @@ private:
             server.setAborted(result);
             return;
         }
-        
+
         mongodb_store::SetParam srv;
         char buffer[250];
-        
+
         // store height above ground in datacentre
         ros::param::set(std::string("/") + camera_name + "_height", height);
         sprintf(buffer, "{\"path\":\"/%s_height\",\"value\":%f}", camera_name.c_str(), height);
@@ -125,7 +125,7 @@ private:
         if (!client.call(srv)) {
             ROS_ERROR("Failed to call set height, is config manager running?");
         }
-        
+
         // store angle between camera and horizontal plane
         ros::param::set(std::string("/") + camera_name + "_angle", angle);
         sprintf(buffer, "{\"path\":\"/%s_angle\",\"value\":%f}", camera_name.c_str(), angle);
@@ -197,30 +197,30 @@ public:
         ROS_INFO("Got a pointcloud, calibrating...");
         pcl::PointCloud<pcl::PointXYZ> cloud;
         pcl::fromROSMsg(*msg, cloud);
-        
+
         int nbr = cloud.size();
-        
+
         int max = 1000; // ransac iterations
         double threshold = 0.02; // threshold for plane inliers
-        
+
         Eigen::Vector4f best_plane; // best plane parameters found
         int best_inliers = -1; // best number of inliers
-        
+
         int inds[3];
-        
+
         Eigen::Vector4f plane;
         int inliers;
         for (int i = 0; i < max; ++i) {
-            
+
             for (int j = 0; j < 3; ++j) {
                 inds[j] = rand() % nbr; // get a random point
             }
-            
+
             // check that the points aren't the same
             if (inds[0] == inds[1] || inds[0] == inds[2] || inds[1] == inds[2]) {
                 continue;
             }
-            
+
             compute_plane(plane, cloud, inds);
             inliers = 0;
             for (int j = 0; j < nbr; j += 30) { // count number of inliers
@@ -228,7 +228,7 @@ public:
                     ++inliers;
                 }
             }
-            
+
             if (inliers > best_inliers) {
                 best_plane = plane;
                 best_inliers = inliers;
@@ -239,7 +239,7 @@ public:
                 server.publishFeedback(feedback);
             }
         }
-        
+
         extract_height_and_angle(best_plane); // find parameters and feed them to datacentre
         //plot_best_plane(cloud, best_plane, threshold); // visually evaluate plane fit
     }
@@ -259,8 +259,19 @@ public:
         else if (goal->command == "publish") {
             publish_calibration();
         }
+        else if (goal->command == "calibrate_publish") {
+            sensor_msgs::PointCloud2::ConstPtr msg = ros::topic::waitForMessage<sensor_msgs::PointCloud2>(camera_topic, n, ros::Duration(5));
+            if (msg) {
+                msg_callback(msg);
+                publish_calibration();
+            }
+            else {
+                result.status = "Did not receive any point cloud.";
+                server.setAborted(result);
+            }
+        }
         else {
-            result.status = "Enter command \"calibrate\" or \"publish\".";
+            result.status = "Enter command \"calibrate\", \"publish\" or \"calibrate_publish\".";
             server.setAborted(result);
         }
     }
@@ -271,6 +282,6 @@ int main(int argc, char** argv)
     ros::init(argc, argv, "calibrate_chest");
     CalibrateCameraServer calibrate(ros::this_node::getName(), "chest_xtion", 46.0);
     ros::spin();
-	
+
 	return 0;
 }
