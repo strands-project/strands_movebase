@@ -89,7 +89,7 @@ private:
         plane(3) = -normal.dot(points[inds[0]].getVector3fMap());
     }
 
-    void extract_height_and_angle(const Eigen::Vector4f& plane)
+    void extract_height_and_angle(const Eigen::Vector4f& plane, bool only_calibrate)
     {
         feedback.status = "Checking and saving calibration...";
         server.publishFeedback(feedback);
@@ -135,7 +135,9 @@ private:
         }
 
         result.status = "Successfully computed and saved calibration.";
-        server.setSucceeded(result);
+        if (only_calibrate) {
+            server.setSucceeded(result);
+        }
     }
 
     void publish_calibration()
@@ -183,7 +185,7 @@ private:
 
 public:
 
-    void msg_callback(const sensor_msgs::PointCloud2::ConstPtr& msg)
+    void msg_callback(const sensor_msgs::PointCloud2::ConstPtr& msg, bool only_calibrate = true)
     {
         //if (!do_calibrate) {
         //    return;
@@ -240,7 +242,7 @@ public:
             }
         }
 
-        extract_height_and_angle(best_plane); // find parameters and feed them to datacentre
+        extract_height_and_angle(best_plane, only_calibrate); // find parameters and feed them to datacentre
         //plot_best_plane(cloud, best_plane, threshold); // visually evaluate plane fit
     }
 
@@ -262,8 +264,10 @@ public:
         else if (goal->command == "calibrate_publish") {
             sensor_msgs::PointCloud2::ConstPtr msg = ros::topic::waitForMessage<sensor_msgs::PointCloud2>(camera_topic, n, ros::Duration(5));
             if (msg) {
-                msg_callback(msg);
-                publish_calibration();
+                msg_callback(msg, false);
+                if (server.isActive()) {
+                    publish_calibration();
+                }
             }
             else {
                 result.status = "Did not receive any point cloud.";
