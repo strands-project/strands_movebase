@@ -4,7 +4,7 @@ project(strands_movebase)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED roscpp sensor_msgs std_msgs pcl_ros tf)
+find_package(catkin REQUIRED roscpp sensor_msgs std_msgs pcl_ros tf nodelet)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -73,6 +73,7 @@ include_directories(
 ## Declare a cpp library
 #add_library(noise_voxel_grid src/noise_voxel_grid.cpp)
 add_library(noise_approximate_voxel_grid src/noise_approximate_voxel_grid.cpp include/strands_movebase/noise_approximate_voxel_grid.h)
+add_library(subsample_cloud_nodelet src/subsample_cloud_nodelet.cpp)
 
 ## Declare a cpp executable
 add_executable(subsample_cloud src/subsample_cloud.cpp)
@@ -86,6 +87,10 @@ add_executable(mirror_floor_points src/mirror_floor_points.cpp)
 
 target_link_libraries(noise_approximate_voxel_grid
   ${PCL_LIBRARIES}
+)
+
+target_link_libraries(subsample_cloud_nodelet
+  ${catkin_LIBRARIES} ${PCL_LIBRARIES} noise_approximate_voxel_grid
 )
 
 target_link_libraries(subsample_cloud
