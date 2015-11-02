@@ -1,0 +1,7 @@
+<library path="lib/libsubsample_cloud_nodelet">
+  <class name="strands_movebase/subsample_cloud_nodelet" type="strands_movebase::subsample_cloud_nodelet" base_class_type="nodelet::Nodelet">
+  <description>
+  This is my nodelet.
+  </description>
+  </class>
+</library>
