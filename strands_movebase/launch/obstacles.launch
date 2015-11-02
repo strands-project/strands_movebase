@@ -6,6 +6,7 @@
     <arg name="head_xtion_user" default=""/>
 
     <arg name="chest_xtion_name" default="chest_xtion"/>
+    <arg name="chest_xtion_manager" default="/$(arg chest_xtion_name)/$(arg chest_xtion_name)_nodelet_manager"/>
     <arg name="z_stair_threshold" default="0.12"/>
 
     <arg name="with_head_xtion" default="false"/>
@@ -20,8 +21,20 @@
     <machine name="$(arg head_xtion_machine)" address="$(arg head_xtion_machine)" env-loader="$(optenv ROS_ENV_LOADER )" user="$(arg head_xtion_user)" default="false"/>
 
     <!-- This node downsamples cloud and removes voxels with too few points in them -->
+    <!-- This is commented out in favour of the more efficient nodelet version below -->
+    <!--
     <node pkg="strands_movebase" type="subsample_cloud" name="subsample_cloud" output="screen" machine="$(arg chest_xtion_machine)">
         <param name="input" value="$(arg chest_xtion_name)/depth/points"/>
+        <param name="output" value="/move_base/points_subsampled"/>
+        <param name="resolution" value="$(arg resolution)"/>
+        <param name="min_points" value="$(arg min_points)"/>
+        <param name="skip_points" value="$(arg skip_points)"/>
+    </node>
+    -->
+
+    <!-- The machine tag is not needed here since it is loaded into the nodelet manager of the chest_xtion driver -->
+    <node pkg="nodelet" type="nodelet" name="subsample_cloud_nodelet" args="load strands_movebase/subsample_cloud_nodelet $(arg chest_xtion_manager)" output="screen">
+        <param name="input" value="/$(arg chest_xtion_name)/depth/points"/>
         <param name="output" value="/move_base/points_subsampled"/>
         <param name="resolution" value="$(arg resolution)"/>
         <param name="min_points" value="$(arg min_points)"/>
