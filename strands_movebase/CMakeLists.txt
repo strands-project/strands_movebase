@@ -135,6 +135,10 @@ install(DIRECTORY launch/
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/launch
 )
 
+install(DIRECTORY plugins/
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/plugins
+)
+
 install(DIRECTORY strands_movebase_params/
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/strands_movebase_params
 )

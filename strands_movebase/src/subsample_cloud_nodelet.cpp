@@ -46,18 +46,13 @@ void subsample_cloud_nodelet::onInit()
 
     sub = nh.subscribe(input, 1, &subsample_cloud_nodelet::callback, this);
     pub = nh.advertise<sensor_msgs::PointCloud2>(output, 1);
-
-    /*ros::Rate rate(5); // updating at 5 hz, slightly faster than move_base
-    while (n.ok()) {
-        rate.sleep();
-        ros::spinOnce();
-    }*/
 }
 
 void subsample_cloud_nodelet::callback(const sensor_msgs::PointCloud2::ConstPtr& msg)
 {
+    // this will give us a rate of ~5hz
     ros::Time new_time = ros::Time::now();
-    if ((new_time - time).toSec() < 0.2) {
+    if ((new_time - time).toSec() < 0.18) {
         return;
     }
     time = new_time;
