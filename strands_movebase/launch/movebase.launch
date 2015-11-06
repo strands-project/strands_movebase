@@ -16,7 +16,7 @@
     <arg name="with_no_go_map" default="false"/>
     <arg name="with_mux" default="false"/>
     <arg name="no_go_map"/>
-
+    <arg name="with_social_layer" default="false"/>
     <arg name="z_stair_threshold" default="0.12"/>
     <arg name="z_obstacle_threshold" default="0.15"/>
 
@@ -60,6 +60,7 @@
         <arg name="machine" value="$(arg machine)"/>
         <arg name="user" value="$(arg user)"/>
         <arg name="with_mux" value="$(arg with_mux)"/>
+        <arg name="with_social_layer" value="$(arg with_social_layer)"/>
     </include>
     <!-- But when there is a chest_xtion, we first need to launch all the chest_xtion obstacle-avoiding
          stuff on the pc the chest_xtion is connected to, as well as our own move_base. -->
