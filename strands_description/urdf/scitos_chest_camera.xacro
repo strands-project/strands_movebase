@@ -1,8 +1,8 @@
 <?xml version="1.0" ?>
-<robot name="scitosA5chest" 
+<robot name="scitosA5chest"
        xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
-       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface" 
-       xmlns:joint="http://playerstage.sourceforge.net/gazebo/xmlschema/#slider" 
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:joint="http://playerstage.sourceforge.net/gazebo/xmlschema/#slider"
        xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
        xmlns:xacro="http://ros.org/wiki/xacro">
 
@@ -25,18 +25,18 @@
       </geometry>
     </collision>
   </link>
-  
+
   <link name="chest_xtion_height_tilt_link"/>
 
   <joint name="chest_xtion_height_joint" type="prismatic" >
     <!-- Z height from calibrate_chest -->
     <axis xyz="0 0 1"/>
-    <origin rpy="0 0 0" xyz="-0.01 0 0" />
+    <origin rpy="0 0 0" xyz="0.0294 0 0" />
     <limit effort="1000" velocity="1000" lower="0.5" upper="1.5"/>
     <parent link="base_link"/>
     <child link="chest_xtion_height_tilt_link"/>
   </joint>
-  
+
   <joint name="chest_xtion_tilt_joint" type="continuous" >
     <!-- Rotation y angle from calibrate_chest-->
     <axis xyz="0 1 0"/>
@@ -44,7 +44,7 @@
     <parent link="chest_xtion_height_tilt_link"/>
     <child link="chest_xtion_link"/>
   </joint>
- 
+
   <!-- chest_xtion internal frames -->
   <link name="chest_xtion_depth_frame"/>
   <link name="chest_xtion_rgb_frame"/>
@@ -52,28 +52,28 @@
   <link name="chest_xtion_rgb_optical_frame"/>
 
   <joint name="chest_xtion_base_link" type="fixed" >
-    <origin rpy="0 0 0" 
+    <origin rpy="0 0 0"
             xyz="0 0.045 0" />
     <parent link="chest_xtion_link"/>
     <child link="chest_xtion_depth_frame"/>
   </joint>
 
   <joint name="chest_xtion_base_link1" type="fixed" >
-    <origin rpy="0 0 0" 
+    <origin rpy="0 0 0"
             xyz="0 0.02 0" />
     <parent link="chest_xtion_link"/>
     <child link="chest_xtion_rgb_frame"/>
   </joint>
 
   <joint name="chest_xtion_base_link2" type="fixed" >
-    <origin rpy="-1.5707963267948966 0 -1.5707963267948966" 
+    <origin rpy="-1.5707963267948966 0 -1.5707963267948966"
             xyz="0 0 0" />
     <parent link="chest_xtion_depth_frame"/>
     <child link="chest_xtion_depth_optical_frame"/>
   </joint>
 
   <joint name="chest_xtion_base_link3" type="fixed" >
-    <origin rpy="-1.5707963267948966 0 -1.5707963267948966" 
+    <origin rpy="-1.5707963267948966 0 -1.5707963267948966"
             xyz="0 0 0" />
     <parent link="chest_xtion_rgb_frame"/>
     <child link="chest_xtion_rgb_optical_frame"/>
