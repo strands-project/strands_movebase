@@ -14,5 +14,5 @@ conservative_reset:
 
 aggressive_reset:
   layer_names: ["obstacle_layer"]
-  reset_distance: 0.0
+  reset_distance: 0.38 #distance from rotation centre to tail (0.32m) + 6cm slack
   
