@@ -66,12 +66,6 @@
         <param name="cutoff_z" value="0.3"/>
     </node>
 
-    <!-- This node removes the desired cutoff pixels from the cloud edges -->
-    <node pkg="strands_movebase" type="remove_edges_laser" name="remove_edges_laser" output="screen">
-        <param name="input" value="/scan"/>
-        <param name="output" value="/move_base/scan_obstacle"/>
-        <param name="cutoff_angle" value="$(arg laser_angle_cutoff)"/>
-    </node>
 
     <!-- This node enables us to visualize the 3d occupancy of the costmap -->
     <node pkg="costmap_2d" type="costmap_2d_cloud" name="costmap_2d_cloud" output="screen">
