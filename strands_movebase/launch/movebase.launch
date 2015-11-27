@@ -86,7 +86,7 @@
     </node>
     <!-- NOTE: This changes the machine of ALL nodes coming after this to `chest_xtion_machine`!.
          That means beware when you do anything below this! -->
-    <include file="$(find strands_movebase)/launch/obstacles.launch" if="$(arg with_chest_xtion)">
+    <include file="$(find strands_movebase)/launch/pointcloud_processing.launch" if="$(arg with_chest_xtion)">
         <arg name="chest_xtion_name" value="$(arg chest_xtion_name)"/>
         <arg name="chest_xtion_machine" value="$(arg chest_xtion_machine)"/>
         <arg name="chest_xtion_user" value="$(arg chest_xtion_user)"/>
