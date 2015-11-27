@@ -43,7 +43,7 @@
   <run_depend>pcl_ros</run_depend>
   <run_depend>libpcl-all</run_depend>
   <run_depend>tf</run_depend>
-  <run_depend>scitos_2d_navigation</run_depend>
+  <run_depend>amcl</run_depend>
   <run_depend>strands_description</run_depend>
   <run_depend>dwa_local_planner</run_depend>
   <run_depend>map_server</run_depend>
