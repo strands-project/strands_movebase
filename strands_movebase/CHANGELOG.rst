@@ -2,6 +2,22 @@
 Changelog for package strands_movebase
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* remove scitos_2d_nav dependency. add amcl dependency
+* Merge branch 'indigo-devel' of https://github.com/bfalacerda/strands_movebase into indigo-devel
+* adding default="" for no_go_map
+* renaming obstacles.launch to pointcloud_processing.launch
+* new footprint + stop loading stuff from scitos_2d_nav
+* proper value for aggressive costmap reset distance
+* Switched to the nodelet version in the obstacles launch file
+* Added install targets
+* Added a new nodelet class to make the subsampling more efficient
+* old params
+* new params
+* param changes to dwa
+* Contributors: Bruno Lacerda, Nils Bore
+
 0.0.21 (2015-04-27)
 -------------------
 * Changed the machine tags to be able to launch the head camera processing nodes on the correct pc
