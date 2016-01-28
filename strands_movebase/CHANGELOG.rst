@@ -2,8 +2,8 @@
 Changelog for package strands_movebase
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.22 (2016-01-28)
+-------------------
 * remove scitos_2d_nav dependency. add amcl dependency
 * Merge branch 'indigo-devel' of https://github.com/bfalacerda/strands_movebase into indigo-devel
 * adding default="" for no_go_map

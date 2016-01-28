@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>strands_description</name>
-  <version>0.0.21</version>
+  <version>0.0.22</version>
   <description>
     The strands_description package contains the description
     of the optional chest camera of the STRANDS robot.
