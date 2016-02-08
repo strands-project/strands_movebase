@@ -53,7 +53,7 @@ add_definitions(${PCL_DEFINITIONS})
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES scitos_2d_navigation
+#  LIBRARIES subsample_cloud_nodelet
   CATKIN_DEPENDS roscpp sensor_msgs std_msgs pcl_ros tf
   DEPENDS libpcl-all-dev
 )
@@ -129,6 +129,12 @@ install(TARGETS subsample_cloud remove_edges_cloud remove_edges_laser mirror_flo
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
+install(TARGETS subsample_cloud_nodelet
+  RUNTIME DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION}
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 )
 
 install(DIRECTORY launch/
