@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>param_loader</name>
-  <version>0.0.22</version>
+  <version>0.0.23</version>
   <description>The param_loader package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag --> 

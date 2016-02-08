@@ -2,8 +2,8 @@
 Changelog for package strands_movebase
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.23 (2016-02-08)
+-------------------
 * Added proper install target for subsampling nodelet
 * Contributors: Nils Bore
 
