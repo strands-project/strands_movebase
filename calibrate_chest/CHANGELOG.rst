@@ -2,6 +2,9 @@
 Changelog for package calibrate_chest
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.0.22 (2016-01-28)
 -------------------
 * Fixed bug

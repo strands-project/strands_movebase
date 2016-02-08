@@ -2,6 +2,9 @@
 Changelog for package strands_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.0.22 (2016-01-28)
 -------------------
 * Adjusted chest camera x direction
