@@ -43,7 +43,7 @@
 #include <pcl_conversions/pcl_conversions.h>
 
 //register this planner as a BaseGlobalPlanner plugin
-#PLUGINLIB_DECLARE_CLASS(strands_navfn, NavfnROS, strands_navfn::NavfnROS, nav_core::BaseGlobalPlanner)
+//PLUGINLIB_DECLARE_CLASS(strands_navfn, NavfnROS, strands_navfn::NavfnROS, nav_core::BaseGlobalPlanner)
 // see https://github.com/ros-perception/depthimage_to_laserscan/pull/27/files
 PLUGINLIB_EXPORT_CLASS(strands_navfn::NavfnROS, nav_core::BaseGlobalPlanner)
 
