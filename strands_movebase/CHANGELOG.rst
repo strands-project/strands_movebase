@@ -2,6 +2,13 @@
 Changelog for package strands_movebase
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Merge pull request `#75 <https://github.com/strands-project/strands_movebase/issues/75>`_ from strands-project/remove_strands_navfn
+  removed strands_navfn
+* removed strands_navfn
+* Contributors: Marc Hanheide
+
 0.0.23 (2016-02-08)
 -------------------
 * Added proper install target for subsampling nodelet
