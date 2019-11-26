@@ -2,8 +2,8 @@
 Changelog for package strands_movebase
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.0.0 (2019-11-26)
+------------------
 * Merge pull request `#75 <https://github.com/strands-project/strands_movebase/issues/75>`_ from strands-project/remove_strands_navfn
   removed strands_navfn
 * removed strands_navfn
